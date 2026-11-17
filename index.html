@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHADOW WATCH</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080610;color:white;font-family:Arial,sans-serif}
+header{padding:25px 18px;background:#120b20;border-bottom:1px solid #7135b7}
+h1{color:#b77aff;letter-spacing:3px}
+header p{color:#c8b5dc}
+main{padding:20px}
+h2{color:#bd8aff}
+.hero{background:linear-gradient(135deg,#32105c,#100b20);padding:25px;border-radius:16px;border:1px solid #7135b7}
+button{background:#813be0;color:white;border:0;padding:13px 18px;border-radius:9px;font-weight:bold;margin-top:10px}
+.card{background:#171122;padding:16px;margin:12px 0;border-radius:12px;border:1px solid #39234e}
+.card p{color:#c6b8d3}
+footer{text-align:center;padding:25px;color:#9886a9}
+</style>
+</head>
+<body>
+<header>
+<h1>SHADOW WATCH</h1>
+<p>L'ombre nous rassemble.</p>
+</header>
+<main>
+<section class="hero">
+<h2>Bienvenue dans l'ombre</h2>
+<p>Retrouve tes amis et partage tes moments anime.</p>
+<button onclick="creerSalon()">CRÉER UN SALON</button>
+</section>
+
+<h2>Nos animes</h2>
+<div class="card">
+<h3>The Eminence in Shadow</h3>
+<p>Action • Fantastique</p>
+<button onclick="alert('Bientôt disponible !')">Découvrir</button>
+</div>
+<div class="card">
+<h3>Catalogue à venir</h3>
+<p>D'autres animes seront ajoutés prochainement.</p>
+</div>
+<h2>Regarder avec des amis</h2>
+<div class="card">
+<p>Crée un salon et invite tes amis à te rejoindre.</p>
+<button onclick="creerSalon()">Créer mon salon</button>
+</div>
+</main>
+<footer>SHADOW WATCH © 2026</footer>
+<script>
+function creerSalon(){
+alert("Les salons entre amis arrivent bientôt !");
+}
+</script>
+</body>
+</html>
