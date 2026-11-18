@@ -14,9 +14,11 @@ header p{color:#c8b5dc}
 main{padding:20px}
 h2{color:#bd8aff}
 .hero{background:linear-gradient(135deg,#32105c,#100b20);padding:25px;border-radius:16px;border:1px solid #7135b7}
-button{background:#813be0;color:white;border:0;padding:13px 18px;border-radius:9px;font-weight:bold;margin-top:10px}
+button{background:#813be0;color:white;border:0;padding:13px 18px;border-radius:9px;font-weight:bold;margin-top:10px;cursor:pointer}
+input{width:100%;padding:13px;margin:10px 0;background:#171122;color:white;border:1px solid #7135b7;border-radius:9px}
 .card{background:#171122;padding:16px;margin:12px 0;border-radius:12px;border:1px solid #39234e}
 .card p{color:#c6b8d3}
+#resultat{display:none;margin-top:15px}
 footer{text-align:center;padding:25px;color:#9886a9}
 </style>
 </head>
@@ -29,7 +31,22 @@ footer{text-align:center;padding:25px;color:#9886a9}
 <section class="hero">
 <h2>Bienvenue dans l'ombre</h2>
 <p>Retrouve tes amis et partage tes moments anime.</p>
-<button onclick="creerSalon()">CRÉER UN SALON</button>
+<button onclick="ouvrirSalon()">CRÉER UN SALON</button>
+</section>
+
+<section id="creation" class="card" style="display:none">
+<h2>Nouveau salon</h2>
+<p>Choisis le nom de ton salon :</p>
+<input id="nomSalon" maxlength="30" placeholder="Ex : Shadow Garden">
+<button onclick="creerSalon()">Créer mon salon</button>
+<div id="resultat">
+<h3>Ton salon est prêt !</h3>
+<p id="nomAffiche"></p>
+<p>Code d'invitation :</p>
+<h2 id="code"></h2>
+<button onclick="copierCode()">COPIER LE CODE</button>
+<button onclick="partagerCode()">PARTAGER</button>
+</div>
 </section>
 
 <h2>Nos animes</h2>
@@ -45,14 +62,48 @@ footer{text-align:center;padding:25px;color:#9886a9}
 <h2>Regarder avec des amis</h2>
 <div class="card">
 <p>Crée un salon et invite tes amis à te rejoindre.</p>
-<button onclick="creerSalon()">Créer mon salon</button>
+<button onclick="ouvrirSalon()">Créer mon salon</button>
 </div>
 </main>
 <footer>SHADOW WATCH © 2026</footer>
+
 <script>
+function ouvrirSalon(){
+document.getElementById("creation").style.display="block";
+document.getElementById("nomSalon").focus();
+}
+
 function creerSalon(){
-alert("Les salons entre amis arrivent bientôt !");
+let nom=document.getElementById("nomSalon").value.trim();
+if(!nom){
+alert("Entre le nom de ton salon !");
+return;
+}
+let code="SHADOW-"+Math.random().toString(36).substring(2,7).toUpperCase();
+document.getElementById("nomAffiche").textContent="Salon : "+nom;
+document.getElementById("code").textContent=code;
+document.getElementById("resultat").style.display="block";
+}
+
+function copierCode(){
+let code=document.getElementById("code").textContent;
+if(navigator.clipboard){
+navigator.clipboard.writeText(code).then(()=>alert("Code copié !"));
+}else{
+alert("Ton code est : "+code);
+}
+}
+
+function partagerCode(){
+let code=document.getElementById("code").textContent;
+let message="Rejoins mon salon SHADOW WATCH avec le code : "+code;
+if(navigator.share){
+navigator.share({title:"SHADOW WATCH",text:message});
+}else{
+copierCode();
+}
 }
 </script>
 </body>
 </html>
+
