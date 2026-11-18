@@ -18,6 +18,8 @@ h2{color:#bd8aff}
 button{background:#813be0;color:white;border:0;padding:13px 18px;border-radius:9px;font-weight:bold;margin:5px 3px;cursor:pointer}
 input{width:100%;padding:13px;margin:10px 0;background:#171122;color:white;border:1px solid #7135b7;border-radius:9px}
 .panel{display:none}
+#messages{height:180px;overflow-y:auto;background:#080610;padding:10px;border-radius:9px;margin:10px 0}
+.message{background:#32105c;padding:9px;margin:7px 0;border-radius:8px;overflow-wrap:anywhere}
 footer{text-align:center;padding:25px;color:#9886a9}
 </style>
 </head>
@@ -43,15 +45,26 @@ footer{text-align:center;padding:25px;color:#9886a9}
 <p id="nomAffiche"></p>
 <h2 id="code"></h2>
 <button onclick="copierCode()">COPIER LE CODE</button>
+<button onclick="ouvrirChat()">OUVRIR LE CHAT</button>
 </div>
 </section>
 
 <section id="rejoindre" class="card panel">
 <h2>Rejoindre un salon</h2>
-<p>Entre ton code d'invitation :</p>
 <input id="codeInvite" placeholder="SHADOW-XXXXX">
 <button onclick="rejoindreSalon()">REJOINDRE</button>
 <p id="message"></p>
+</section>
+
+<section id="chat" class="card panel">
+<h2>SHADOW CHAT</h2>
+<p>👥 Membres : <span id="membres">1</span>/10</p>
+<div id="messages">
+<div class="message">Bienvenue dans l'ombre !</div>
+</div>
+<input id="pseudo" maxlength="20" placeholder="Ton pseudo">
+<input id="texteMessage" maxlength="300" placeholder="Écris ton message...">
+<button onclick="envoyerMessage()">ENVOYER</button>
 </section>
 
 <h2>Nos animes</h2>
@@ -86,9 +99,23 @@ navigator.clipboard.writeText(code).then(()=>alert("Code copié !"));
 }else{alert("Ton code : "+code);}
 }
 function rejoindreSalon(){
-let code=document.getElementById("codeInvite").value.trim().toUpperCase();
+let code=document.getElementById("codeInvite").value.trim();
 if(!code){document.getElementById("message").textContent="Entre un code !";return;}
-document.getElementById("message").textContent="Cette démonstration ne vérifie pas encore les codes entre plusieurs téléphones.";
+document.getElementById("message").textContent="La connexion entre téléphones arrive bientôt.";
+}
+function ouvrirChat(){
+afficher("chat");
+}
+function envoyerMessage(){
+let pseudo=document.getElementById("pseudo").value.trim();
+let texte=document.getElementById("texteMessage").value.trim();
+if(!pseudo||!texte){alert("Entre ton pseudo et ton message !");return;}
+let message=document.createElement("div");
+message.className="message";
+message.textContent=pseudo+" : "+texte;
+document.getElementById("messages").appendChild(message);
+document.getElementById("texteMessage").value="";
+document.getElementById("messages").scrollTop=document.getElementById("messages").scrollHeight;
 }
 </script>
 </body>
