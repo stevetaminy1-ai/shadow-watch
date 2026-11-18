@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -9,252 +8,248 @@
 
 <style>
 :root {
-  --black:#080810;
-  --purple:#852cff;
+  --black:#08080d;
+  --panel:#13121c;
+  --purple:#9b4dff;
   --green:#19e69a;
   --blue:#168bff;
-  --white:#ffffff;
-  --muted:#aaa9bd;
+  --white:#fff;
+  --muted:#aaa8b8;
 }
-
-* { box-sizing:border-box; }
-
+* {box-sizing:border-box}
 body {
   margin:0;
   background:var(--black);
   color:var(--white);
   font-family:Arial,sans-serif;
 }
-
 header {
+  height:75px;
+  padding:0 6%;
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  padding:20px 6%;
-  border-bottom:1px solid #282239;
-  background:#0d0b18;
+  justify-content:space-between;
+  background:#0c0b12;
+  border-bottom:1px solid #252333;
+  position:sticky;
+  top:0;
+  z-index:10;
 }
-
 .logo {
-  font-size:22px;
+  font-size:23px;
   font-weight:900;
   letter-spacing:2px;
 }
-
-.logo span { color:var(--purple); }
-
-.menu {
-  color:var(--green);
-  font-size:13px;
-  font-weight:bold;
+.logo span {color:var(--purple)}
+nav {display:flex;gap:25px}
+nav a {
+  color:#ddd;
+  text-decoration:none;
+  font-size:14px;
 }
+nav a:hover {color:var(--green)}
+.menu-tag {color:var(--green);font-size:12px}
 
 .hero {
-  text-align:center;
-  padding:75px 20px 65px;
-  background:
-    radial-gradient(ellipse at 20% 20%,#32105b 0%,transparent 45%),
-    radial-gradient(ellipse at 85% 70%,#082c52 0%,transparent 45%),
-    linear-gradient(145deg,#090812,#111022,#080810);
-  position:relative;
-  overflow:hidden;
-}
-
-.hero:after {
-  content:"";
-  position:absolute;
-  width:250px;
-  height:250px;
-  border:1px solid #852cff55;
-  border-radius:50%;
-  top:10px;
-  left:50%;
-  transform:translateX(-50%);
-  box-shadow:0 0 80px #852cff44;
-  pointer-events:none;
-}
-
-.hero-content { position:relative; z-index:1; }
-
-.tag {
-  display:inline-block;
-  border:1px solid #19e69a77;
-  color:var(--green);
-  padding:8px 15px;
-  border-radius:30px;
-  font-size:11px;
-  letter-spacing:2px;
-}
-
-h1 {
-  font-size:clamp(38px,9vw,72px);
-  margin:24px 0 10px;
-  letter-spacing:3px;
-  text-shadow:0 0 25px #852cff88;
-}
-
-h1 span { color:var(--purple); }
-
-.slogan {
-  color:var(--green);
-  font-weight:bold;
-  letter-spacing:3px;
-}
-
-.hero p {
-  color:#c5c2d6;
-  line-height:1.7;
-}
-
-.buttons {
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:12px;
-  margin-top:30px;
-}
-
-button {
-  cursor:pointer;
-  border:0;
-  padding:14px 22px;
-  border-radius:10px;
-  color:white;
-  font-weight:bold;
-  background:linear-gradient(110deg,#7025ce,#a13dff);
-  transition:.25s;
-}
-
-button:hover {
-  transform:translateY(-3px);
-  box-shadow:0 0 20px #852cff88;
-}
-
-button.secondary {
-  background:#101c2d;
-  border:1px solid var(--blue);
-}
-
-button.green {
-  background:linear-gradient(110deg,#087d57,#19c989);
-  color:#06140e;
-}
-
-main {
-  max-width:1100px;
-  margin:auto;
-  padding:30px 18px;
-}
-
-.panel {
-  display:none;
-  background:#11101d;
-  border:1px solid #49306b;
-  padding:22px;
-  border-radius:16px;
-  margin:20px 0;
-}
-
-input {
-  display:block;
-  width:100%;
-  padding:15px;
-  margin:12px 0;
-  background:#080810;
-  border:1px solid #44365c;
-  color:white;
-  border-radius:9px;
-  font-size:15px;
-}
-
-input:focus {
-  outline:none;
-  border-color:var(--green);
-}
-
-.code {
-  color:var(--green);
-  font-size:23px;
-  font-weight:bold;
-  letter-spacing:2px;
-  margin:15px 0;
-}
-
-.section-title {
-  font-size:25px;
-  margin:35px 0 18px;
-}
-
-.section-title span { color:var(--purple); }
-
-.cards {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:16px;
-}
-
-.card {
-  background:linear-gradient(145deg,#171326,#0d0d17);
-  border:1px solid #302440;
-  padding:20px;
-  border-radius:15px;
-  transition:.3s;
-}
-
-.card:hover {
-  transform:translateY(-5px);
-  border-color:var(--purple);
-  box-shadow:0 0 22px #852cff22;
-}
-
-.anime-art {
-  height:135px;
-  border-radius:10px;
+  min-height:440px;
+  padding:90px 8%;
   display:flex;
   align-items:center;
-  justify-content:center;
-  font-size:45px;
   background:
-    radial-gradient(circle at 50% 40%,#6124a9,#171024 65%,#080810);
+    linear-gradient(90deg,#08080d 5%,#08080ddc 48%,#08080d55),
+    radial-gradient(circle at 75% 40%,#6120a9,#101027 50%,#08080d);
 }
-
-.card p { color:var(--muted); }
-
-.purple { color:#bd8bff; }
-.blue { color:var(--blue); }
-.green-text { color:var(--green); }
-
-#messages {
-  height:180px;
-  overflow-y:auto;
-  background:#080810;
-  padding:12px;
-  border-radius:10px;
-  margin:15px 0;
+.hero-content {max-width:620px}
+.tag {
+  color:var(--green);
+  font-size:12px;
+  letter-spacing:3px;
+  font-weight:bold;
 }
-
-.message {
-  background:#201735;
-  border-left:3px solid var(--green);
-  padding:10px;
-  margin:8px 0;
-  border-radius:6px;
-  overflow-wrap:anywhere;
+.hero h1 {
+  font-size:clamp(38px,7vw,70px);
+  line-height:1;
+  margin:20px 0;
 }
-
-footer {
-  text-align:center;
-  padding:30px 15px;
-  border-top:1px solid #282239;
-  color:#8d899d;
+.hero h1 span {color:var(--purple)}
+.hero p {
+  color:#d0cddd;
+  line-height:1.8;
+  max-width:500px;
+}
+.actions {
+  display:flex;
+  flex-wrap:wrap;
+  gap:13px;
+  margin-top:28px;
+}
+.btn {
+  border:0;
+  padding:15px 22px;
+  border-radius:7px;
+  font-weight:bold;
+  cursor:pointer;
   font-size:13px;
 }
-
-@media(max-width:500px) {
-  header { padding:16px; }
-  .logo { font-size:18px; }
-  .hero { padding:60px 15px; }
-  .buttons button { width:100%; }
+.primary {
+  background:var(--purple);
+  color:white;
+}
+.secondary {
+  background:#ffffff12;
+  border:1px solid #ffffff40;
+  color:white;
+}
+.btn:hover {filter:brightness(1.2)}
+main {
+  width: min(1150px,90%);
+  margin:auto;
+}
+.section {padding:35px 0}
+.section-title {
+  font-size:21px;
+  margin-bottom:20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.section-title span {
+  color:var(--purple);
+  font-size:12px;
+}
+.anime-row {
+  display:grid;
+  grid-auto-flow:column;
+  grid-auto-columns:minmax(180px,1fr);
+  grid-auto-columns:190px;
+  gap:17px;
+  overflow-x:auto;
+  padding:5px 2px 18px;
+  scrollbar-color:var(--purple) #171522;
+}
+.anime-card {
+  min-width:0;
+  border-radius:12px;
+  overflow:hidden;
+  background:var(--panel);
+  transition:transform .2s;
+}
+.anime-card:hover {transform:translateY(-5px)}
+.poster {
+  height:245px;
+  display:flex;
+  align-items:end;
+  padding:16px;
+  font-size:19px;
+  font-weight:900;
+  line-height:1.2;
+  background:linear-gradient(145deg,#35105b,#111326 55%,#071e32);
+}
+.poster.two {background:linear-gradient(145deg,#075342,#101321 60%,#092a4b)}
+.poster.three {background:linear-gradient(145deg,#153d80,#171020 60%,#5a176f)}
+.poster.four {background:linear-gradient(145deg,#651c36,#15111e 60%,#29235b)}
+.poster.five {background:linear-gradient(145deg,#49320b,#15111e 60%,#174d43)}
+.anime-info {padding:13px}
+.anime-info h3 {font-size:14px;margin:0 0 7px}
+.anime-info p {font-size:12px;color:var(--muted);margin:0}
+.panel {
+  background:var(--panel);
+  border:1px solid #292538;
+  border-radius:14px;
+  padding:23px;
+  margin-bottom:20px;
+}
+.panel h2 {margin-top:0;font-size:20px}
+.room-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+}
+input {
+  width:100%;
+  padding:14px;
+  margin:9px 0 14px;
+  border-radius:7px;
+  border:1px solid #383449;
+  background:#090911;
+  color:white;
+  font-size:15px;
+}
+input:focus {outline:1px solid var(--purple)}
+.panel button {width:100%}
+.result {
+  display:none;
+  margin-top:18px;
+  padding:15px;
+  background:#20172e;
+  border-radius:9px;
+  line-height:1.8;
+}
+.room-code {
+  font-size:22px;
+  color:var(--green);
+  font-weight:bold;
+  letter-spacing:2px;
+}
+.chat-box {
+  background:#090911;
+  border:1px solid #302b40;
+  border-radius:10px;
+  padding:15px;
+  min-height:140px;
+  max-height:260px;
+  overflow-y:auto;
+  margin-bottom:12px;
+}
+.message {
+  background:#20172e;
+  border-radius:8px;
+  padding:9px 12px;
+  margin:8px 0;
+  overflow-wrap:anywhere;
+}
+.message strong {color:var(--green)}
+.chat-form {
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+}
+.chat-form input {margin:0}
+.chat-form button {width:auto}
+.feature-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:17px;
+}
+.feature {
+  padding:23px;
+  background:var(--panel);
+  border:1px solid #292538;
+  border-radius:12px;
+}
+.feature .symbol {font-size:27px}
+.feature h3 {font-size:16px}
+.feature p {color:var(--muted);font-size:13px;line-height:1.6}
+footer {
+  margin-top:50px;
+  padding:30px 5%;
+  text-align:center;
+  border-top:1px solid #282333;
+  color:var(--muted);
+  font-size:12px;
+}
+footer strong {color:var(--purple)}
+@media(max-width:650px) {
+  header {padding:0 5%;height:65px}
+  nav {gap:12px}
+  nav a {font-size:11px}
+  .logo {font-size:18px}
+  .hero {padding:65px 7%;min-height:390px}
+  .room-grid,.feature-grid {grid-template-columns:1fr}
+  .anime-row {grid-auto-columns:155px}
+  .poster {height:205px}
+  .chat-form {grid-template-columns:1fr}
+  .chat-form button {width:100%}
 }
 </style>
 </head>
@@ -263,22 +258,27 @@ footer {
 
 <header>
   <div class="logo">SHADOW <span>WATCH</span></div>
-  <div class="menu">● L'UNIVERS SHADOW</div>
+  <nav>
+    <a href="#animes">Animes</a>
+    <a href="#salons">Salons</a>
+    <a href="#communaute">Communauté</a>
+  </nav>
 </header>
 
 <section class="hero">
   <div class="hero-content">
-    <div class="tag">✦ ENTRE DANS L'OMBRE ✦</div>
-    <h1>SHADOW <span>WATCH</span></h1>
-    <div class="slogan">L'OMBRE NOUS RASSEMBLE.</div>
+    <div class="tag">✦ L'UNIVERS SHADOW ✦</div>
+    <h1>ENTRE DANS <span>L'OMBRE.</span></h1>
     <p>
       Retrouve tes amis, découvre tes animes préférés
       et partage des moments inoubliables.
+      L'aventure commence ici.
     </p>
-
-    <div class="buttons">
-      <button onclick="afficher('creation')">✦ CRÉER UN SALON</button>
-      <button class="secondary" onclick="afficher('rejoindre')">
+    <div class="actions">
+      <button class="btn primary" onclick="afficherSalons()">
+        ✦ CRÉER UN SALON
+      </button>
+      <button class="btn secondary" onclick="afficherSalons()">
         ◈ REJOINDRE UN SALON
       </button>
     </div>
@@ -287,145 +287,234 @@ footer {
 
 <main>
 
-<section class="panel" id="creation">
-  <h2>✦ Nouveau salon</h2>
-  <p class="green-text">Crée ton espace avec tes amis.</p>
-  <input id="nomSalon" placeholder="Nom de ton salon">
-  <button onclick="creerSalon()">CRÉER MON SALON</button>
+<section class="section" id="animes">
+  <div class="section-title">
+    <div>✦ ANIMES À DÉCOUVRIR</div>
+    <span>EXPLORER</span>
+  </div>
 
-  <div id="resultat" style="display:none">
-    <h3 class="green-text">Salon créé !</h3>
-    <p id="nomAffiche"></p>
-    <div class="code" id="code"></div>
-    <button class="green" onclick="copierCode()">COPIER LE CODE</button>
-    <button onclick="ouvrirChat()">OUVRIR LE CHAT</button>
+  <div class="anime-row">
+    <article class="anime-card">
+      <div class="poster">THE EMINENCE<br>IN SHADOW</div>
+      <div class="anime-info">
+        <h3>The Eminence in Shadow</h3>
+        <p>Action • Fantastique</p>
+      </div>
+    </article>
+
+    <article class="anime-card">
+      <div class="poster two">SHADOW<br>LEGENDS</div>
+      <div class="anime-info">
+        <h3>Nouvelle aventure</h3>
+        <p>Fantastique • Mystère</p>
+      </div>
+    </article>
+
+    <article class="anime-card">
+      <div class="poster three">THE<br>UNKNOWN</div>
+      <div class="anime-info">
+        <h3>Univers inconnu</h3>
+        <p>Action • Aventure</p>
+      </div>
+    </article>
+
+    <article class="anime-card">
+      <div class="poster four">DARK<br>WORLD</div>
+      <div class="anime-info">
+        <h3>Dark World</h3>
+        <p>Fantastique • Drame</p>
+      </div>
+    </article>
+
+    <article class="anime-card">
+      <div class="poster five">NEW<br>HORIZON</div>
+      <div class="anime-info">
+        <h3>New Horizon</h3>
+        <p>Aventure • Mystère</p>
+      </div>
+    </article>
+  </div>
+  <p style="color:#999;font-size:12px">
+    Les visuels sont des illustrations provisoires.
+  </p>
+</section>
+
+<section class="section" id="salons">
+  <div class="section-title">
+    <div>◈ ESPACE MULTIJOUEUR</div>
+    <span>MAX. 10 MEMBRES</span>
+  </div>
+
+  <div class="room-grid">
+    <div class="panel">
+      <h2>✦ Nouveau salon</h2>
+      <p style="color:#aaa">Crée ton espace avec tes amis.</p>
+      <input id="roomName" placeholder="Nom de ton salon">
+      <button class="btn primary" onclick="creerSalon()">
+        CRÉER MON SALON
+      </button>
+      <div class="result" id="created">
+        <strong>Salon créé !</strong>
+        <div id="createdName"></div>
+        <div class="room-code" id="createdCode"></div>
+        <button class="btn secondary" onclick="copierCode()">
+          COPIER LE CODE
+        </button>
+        <button class="btn primary" style="margin-top:9px" onclick="ouvrirChat()">
+          OUVRIR LE CHAT
+        </button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>◈ Rejoindre un salon</h2>
+      <p style="color:#aaa">Entre ton code d'invitation.</p>
+      <input id="joinCode" placeholder="SHADOW-XXXXX">
+      <button class="btn secondary" onclick="rejoindreSalon()">
+        REJOINDRE
+      </button>
+      <div class="result" id="joinResult"></div>
+    </div>
   </div>
 </section>
 
-<section class="panel" id="rejoindre">
-  <h2>◈ Rejoindre un salon</h2>
-  <input id="codeInvite" placeholder="Entre ton code d'invitation">
-  <button class="secondary" onclick="rejoindreSalon()">REJOINDRE</button>
-  <p id="message" class="green-text"></p>
+<section class="section" id="chat">
+  <div class="panel">
+    <h2>💬 SHADOW CHAT</h2>
+    <p style="color:#aaa">👥 Membres : 1/10</p>
+    <div class="chat-box" id="messages">
+      <div class="message">
+        <strong>SHADOW WATCH :</strong> Bienvenue dans l'ombre !
+      </div>
+    </div>
+    <div class="chat-form">
+      <input id="pseudo" placeholder="Ton pseudo">
+      <input id="messageInput" placeholder="Écris ton message...">
+      <button class="btn primary" onclick="envoyerMessage()">
+        ENVOYER
+      </button>
+    </div>
+  </div>
 </section>
 
-<section class="panel" id="chat">
-  <h2>SHADOW <span class="purple">CHAT</span></h2>
-  <p class="green-text">👥 Membres : 1/10</p>
-  <div id="messages">
-    <div class="message">Bienvenue dans l'ombre !</div>
+<section class="section" id="communaute">
+  <div class="section-title">L'UNIVERS SHADOW</div>
+  <div class="feature-grid">
+    <div class="feature">
+      <div class="symbol">✦</div>
+      <h3>Communauté</h3>
+      <p>Un espace pour partager ta passion des animes.</p>
+    </div>
+    <div class="feature">
+      <div class="symbol">◈</div>
+      <h3>Salons privés</h3>
+      <p>Prépare tes soirées anime avec tes amis.</p>
+    </div>
+    <div class="feature">
+      <div class="symbol">⚡</div>
+      <h3>Nouvelle aventure</h3>
+      <p>Une expérience anime à construire ensemble.</p>
+    </div>
   </div>
-  <input id="pseudo" placeholder="Ton pseudo">
-  <input id="texteMessage" placeholder="Écris ton message...">
-  <button class="green" onclick="envoyerMessage()">ENVOYER</button>
 </section>
-
-<h2 class="section-title">NOS <span>ANIMES</span></h2>
-
-<div class="cards">
-  <div class="card">
-    <div class="anime-art">🌑</div>
-    <h3>The Eminence in Shadow</h3>
-    <p>Action • Fantastique</p>
-    <button onclick="alert('Bientôt disponible !')">DÉCOUVRIR</button>
-  </div>
-
-  <div class="card">
-    <div class="anime-art">⚡</div>
-    <h3>Catalogue anime</h3>
-    <p>De nouvelles découvertes arrivent.</p>
-    <button class="secondary" onclick="alert('Catalogue bientôt disponible !')">
-      EXPLORER
-    </button>
-  </div>
-</div>
-
-<h2 class="section-title">L'UNIVERS <span>SHADOW</span></h2>
-
-<div class="cards">
-  <div class="card">
-    <h3 class="green-text">✦ Communauté</h3>
-    <p>Un espace pour partager ta passion des animes.</p>
-  </div>
-  <div class="card">
-    <h3 class="blue">◈ Salons privés</h3>
-    <p>Prépare tes soirées anime avec tes amis.</p>
-  </div>
-  <div class="card">
-    <h3 class="purple">⚔️ Nouvelle aventure</h3>
-    <p>Une expérience anime à construire ensemble.</p>
-  </div>
-</div>
 
 </main>
 
 <footer>
-  SHADOW WATCH © 2026
+  <strong>SHADOW WATCH</strong> © 2026
   <p>L'OMBRE NOUS RASSEMBLE.</p>
 </footer>
 
 <script>
-function afficher(id) {
-  document.getElementById(id).style.display="block";
-  document.getElementById(id).scrollIntoView({behavior:"smooth"});
+let codeSalon = "";
+
+function afficherSalons() {
+  document.getElementById("salons").scrollIntoView({
+    behavior:"smooth"
+  });
 }
 
 function creerSalon() {
-  let nom=document.getElementById("nomSalon").value.trim();
-  if(!nom){alert("Entre le nom du salon !");return;}
+  const nom = document.getElementById("roomName").value.trim();
 
-  let code="SHADOW-"+Math.random().toString(36).substring(2,7).toUpperCase();
+  if (!nom) {
+    alert("Entre le nom de ton salon.");
+    return;
+  }
 
-  document.getElementById("nomAffiche").textContent="Salon : "+nom;
-  document.getElementById("code").textContent=code;
-  document.getElementById("resultat").style.display="block";
+  const caracteres = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let code = "SHADOW-";
+
+  for (let i = 0; i < 5; i++) {
+    code += caracteres[Math.floor(Math.random() * caracteres.length)];
+  }
+
+  codeSalon = code;
+  document.getElementById("createdName").textContent = "Salon : " + nom;
+  document.getElementById("createdCode").textContent = code;
+  document.getElementById("created").style.display = "block";
 }
 
 function copierCode() {
-  let code=document.getElementById("code").textContent;
-  if(navigator.clipboard) {
-    navigator.clipboard.writeText(code).then(
-      ()=>alert("Code copié !")
-    ).catch(()=>alert("Ton code : "+code));
+  if (!codeSalon) return;
+
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(codeSalon)
+      .then(() => alert("Code copié !"))
+      .catch(() => alert("Ton code : " + codeSalon));
   } else {
-    alert("Ton code : "+code);
+    alert("Ton code : " + codeSalon);
   }
 }
 
 function rejoindreSalon() {
-  let code=document.getElementById("codeInvite").value.trim();
-  if(!code) {
-    document.getElementById("message").textContent="Entre un code !";
+  const code = document.getElementById("joinCode").value.trim().toUpperCase();
+  const resultat = document.getElementById("joinResult");
+
+  resultat.style.display = "block";
+
+  if (!code.startsWith("SHADOW-")) {
+    resultat.textContent = "Code invalide. Vérifie ton invitation.";
     return;
   }
-  document.getElementById("message").textContent=
-    "La connexion entre téléphones arrive bientôt.";
+
+  resultat.textContent =
+    "Le code est bien saisi. La connexion entre téléphones sera disponible avec le serveur multijoueur.";
 }
 
 function ouvrirChat() {
-  afficher("chat");
+  document.getElementById("chat").scrollIntoView({
+    behavior:"smooth"
+  });
 }
 
 function envoyerMessage() {
-  let pseudo=document.getElementById("pseudo").value.trim();
-  let texte=document.getElementById("texteMessage").value.trim();
+  const pseudo = document.getElementById("pseudo").value.trim() || "Shadow";
+  const texte = document.getElementById("messageInput").value.trim();
 
-  if(!pseudo||!texte) {
-    alert("Entre ton pseudo et ton message !");
-    return;
-  }
+  if (!texte) return;
 
-  let message=document.createElement("div");
-  message.className="message";
-  message.textContent=pseudo+" : "+texte;
+  const message = document.createElement("div");
+  message.className = "message";
+
+  const nom = document.createElement("strong");
+  nom.textContent = pseudo + " : ";
+
+  message.appendChild(nom);
+  message.appendChild(document.createTextNode(texte));
 
   document.getElementById("messages").appendChild(message);
-  document.getElementById("texteMessage").value="";
-  document.getElementById("messages").scrollTop=
-    document.getElementById("messages").scrollHeight;
+  document.getElementById("messageInput").value = "";
+
+  const zone = document.getElementById("messages");
+  zone.scrollTop = zone.scrollHeight;
 }
 </script>
 
 </body>
   </html>
+  
+
+  
+
   
