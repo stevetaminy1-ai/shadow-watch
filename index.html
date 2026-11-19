@@ -4,209 +4,286 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SHADOW WATCH - Univers Anime</title>
-
+<title>SHADOW WATCH — L'ombre nous rassemble</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-
-body{
-  font-family:Arial,sans-serif;
-  background:#fff;
-  color:#17152b;
+:root {
+  --purple: #7545df;
+  --blue: #3989f5;
+  --dark: #17152a;
+  --muted: #77758a;
 }
 
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:20px 7%;
-  border-bottom:1px solid #eee;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.logo{
-  font-size:25px;
-  font-weight:900;
-  color:#7045d5;
-  letter-spacing:1px;
+body {
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  color: var(--dark);
+  background: #f5f5ff;
 }
 
-header span{
-  color:#56516b;
-  font-size:13px;
+header {
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 7%;
+  background: rgba(255,255,255,.94);
+  border-bottom: 1px solid #ece9f8;
 }
 
-main{
-  max-width:1100px;
-  margin:45px auto;
-  padding:20px;
-  display:grid;
-  grid-template-columns:1fr 420px;
-  gap:45px;
-  align-items:center;
+.logo {
+  font-size: 23px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: var(--purple);
 }
 
-.hero h1{
-  font-size:48px;
-  line-height:1.12;
-  margin:20px 0;
+.tagline {
+  color: #77758a;
+  font-size: 13px;
 }
 
-.hero h1 strong{color:#7045d5}
-
-.hero p{
-  color:#68647a;
-  line-height:1.7;
-  font-size:16px;
-  max-width:480px;
+main {
+  min-height: calc(100vh - 76px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 38px 5%;
 }
 
-.tag{
-  display:inline-block;
-  background:#f0eaff;
-  color:#7045d5;
-  padding:10px 15px;
-  border-radius:30px;
-  font-weight:bold;
-  font-size:12px;
+.layout {
+  width: 100%;
+  max-width: 1180px;
+  min-height: 570px;
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  background: white;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 22px 65px rgba(66, 42, 130, .13);
+  border: 1px solid #eeeafa;
 }
 
-.anime-art{
-  margin-top:28px;
-  height:280px;
-  border-radius:25px;
-  background:linear-gradient(120deg,#eee8ff,#e6f3ff);
-  overflow:hidden;
+/* Décor anime intégré à la composition */
+.anime-side {
+  position: relative;
+  min-height: 570px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 48px;
+  background: linear-gradient(135deg, #e9e5ff, #dceaff);
 }
 
-.anime-art img{
-  width:100%;
-  height:100%;
-  display:block;
-  object-fit:cover;
-  object-position:center;
+.anime-side img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
-.art-caption{
-  margin-top:12px;
-  color:#777187;
-  font-size:12px;
+.anime-side::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    0deg,
+    rgba(20, 13, 50, .83),
+    rgba(36, 22, 83, .18) 65%,
+    rgba(255,255,255,.05)
+  );
 }
 
-.card{
-  background:white;
-  padding:30px;
-  border:1px solid #eeeaf5;
-  border-radius:24px;
-  box-shadow:0 15px 45px #34205c12;
+.anime-caption {
+  position: relative;
+  z-index: 2;
+  color: white;
+  max-width: 490px;
 }
 
-.card h2{
-  font-size:27px;
-  margin-bottom:8px;
+.eyebrow {
+  color: #d7c9ff;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  margin-bottom: 15px;
 }
 
-.subtitle{
-  color:#777187;
-  font-size:14px;
-  margin-bottom:22px;
+.anime-caption h1 {
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.08;
+  margin-bottom: 15px;
 }
 
-.google{
-  width:100%;
-  padding:13px;
-  background:white;
-  border:1px solid #ddd;
-  border-radius:10px;
-  font-weight:bold;
-  cursor:pointer;
-  color:#242238;
+.anime-caption p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #eeeaff;
 }
 
-.separator{
-  text-align:center;
-  color:#999;
-  font-size:12px;
-  margin:20px 0;
+.anime-caption .mini {
+  display: inline-block;
+  margin-top: 22px;
+  padding: 10px 16px;
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius: 30px;
+  font-size: 11px;
+  letter-spacing: 1px;
 }
 
-label{
-  display:block;
-  font-size:13px;
-  font-weight:bold;
-  margin:14px 0 7px;
+/* Espace de connexion */
+.auth-side {
+  padding: 55px 48px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background: white;
 }
 
-input{
-  width:100%;
-  padding:14px;
-  border:1px solid #ddd9e8;
-  border-radius:10px;
-  outline:none;
-  font-size:14px;
+.auth-side h2 {
+  font-size: 29px;
+  margin-bottom: 9px;
 }
 
-input:focus{
-  border-color:#7045d5;
-  box-shadow:0 0 0 3px #7045d51a;
+.subtitle {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 30px;
 }
 
-.primary{
-  width:100%;
-  border:0;
-  padding:15px;
-  margin-top:20px;
-  background:linear-gradient(100deg,#7045d5,#477be8);
-  color:white;
-  border-radius:10px;
-  font-weight:bold;
-  cursor:pointer;
+.field {
+  margin-bottom: 17px;
 }
 
-.primary:hover{opacity:.9}
-
-.switch{
-  text-align:center;
-  margin-top:20px;
-  font-size:13px;
-  color:#777187;
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 8px;
 }
 
-.switch button{
-  border:0;
-  background:none;
-  color:#7045d5;
-  font-weight:bold;
-  cursor:pointer;
+.field input {
+  width: 100%;
+  height: 49px;
+  border: 1px solid #dedbea;
+  border-radius: 12px;
+  padding: 0 15px;
+  outline: none;
+  font-size: 14px;
+  background: #fcfbff;
 }
 
-#message{
-  margin-top:15px;
-  font-size:13px;
-  line-height:1.5;
-  color:#5940a5;
+.field input:focus {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(117,69,223,.10);
 }
 
-footer{
-  text-align:center;
-  padding:30px;
-  color:#999;
-  font-size:12px;
+.main-button {
+  width: 100%;
+  height: 51px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(100deg, var(--purple), var(--blue));
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 5px;
 }
 
-.hidden{display:none}
+.main-button:disabled {
+  opacity: .65;
+  cursor: wait;
+}
 
-@media(max-width:800px){
-  main{
-    grid-template-columns:1fr;
-    margin:15px auto;
-    gap:25px;
+.google-button {
+  width: 100%;
+  height: 48px;
+  border: 1px solid #e0ddeb;
+  border-radius: 12px;
+  background: white;
+  margin-top: 14px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--dark);
+}
+
+.switch {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.switch button {
+  border: none;
+  background: none;
+  color: var(--purple);
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.status {
+  font-size: 13px;
+  line-height: 1.5;
+  margin-top: 14px;
+  color: #6041b5;
+  overflow-wrap: anywhere;
+}
+
+.hidden {
+  display: none;
+}
+
+footer {
+  text-align: center;
+  padding: 15px;
+  color: #89869b;
+  font-size: 11px;
+}
+
+@media (max-width: 800px) {
+  main {
+    padding: 22px 14px;
   }
-  .hero h1{font-size:37px}
-  .card{padding:23px}
-  header{padding:18px 5%}
-  .anime-art{height:230px}
+
+  .layout {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+  }
+
+  .anime-side {
+    min-height: 310px;
+    padding: 27px;
+  }
+
+  .anime-caption h1 {
+    font-size: 33px;
+  }
+
+  .auth-side {
+    padding: 35px 25px;
+  }
+
+  header {
+    padding: 0 18px;
+  }
+
+  .tagline {
+    font-size: 11px;
+  }
 }
 </style>
 </head>
@@ -215,98 +292,106 @@ footer{
 
 <header>
   <div class="logo">SHADOW WATCH</div>
-  <span>L'ombre nous rassemble.</span>
+  <div class="tagline">L'ombre nous rassemble.</div>
 </header>
 
 <main>
+  <section class="layout">
 
-<section class="hero">
-  <span class="tag">✦ L'UNIVERS DES ANIMÉS ✦</span>
+    <div class="anime-side">
+      <img
+        src="file_000000002bfc81f4baf7ba73d34af6d7.png"
+        alt="Univers anime SHADOW WATCH"
+      >
 
-  <h1>
-    ENTRE DANS<br>
-    L'UNIVERS <strong>ANIME !</strong>
-  </h1>
-
-  <p>
-    Découvre un monde rempli d'animés, retrouve les passionnés
-    et construis ton aventure au sein de la communauté SHADOW WATCH.
-  </p>
-
-  <div class="anime-art">
-    <img
-      src="file_000000002bfc81f4baf7ba73d34af6d7.png"
-      alt="Univers anime SHADOW WATCH">
-  </div>
-
-  <div class="art-caption">
-    ANIMÉS • PASSION • COMMUNAUTÉ
-  </div>
-</section>
-
-<section class="card">
-
-  <div id="signup">
-    <h2>Rejoins l'ombre</h2>
-    <p class="subtitle">Crée ton compte gratuitement.</p>
-
-    <button class="google" onclick="googleLogin()">
-      🌐 Continuer avec Google
-    </button>
-
-    <div class="separator">OU AVEC TON EMAIL</div>
-
-    <form id="signupForm">
-      <label>Ton pseudo</label>
-      <input id="pseudo" type="text"
-        placeholder="Ex : Shadow_01" required maxlength="25">
-
-      <label>Adresse email</label>
-      <input id="email" type="email"
-        placeholder="toi@exemple.com" required>
-
-      <label>Mot de passe</label>
-      <input id="password" type="password"
-        placeholder="Au moins 8 caractères" required minlength="8">
-
-      <button class="primary" type="submit">
-        CRÉER MON COMPTE
-      </button>
-    </form>
-
-    <div class="switch">
-      Déjà membre ?
-      <button onclick="showLogin()">Se connecter</button>
+      <div class="anime-caption">
+        <div class="eyebrow">✦ L'UNIVERS DES ANIMÉS ✦</div>
+        <h1>ENTRE DANS<br>L'UNIVERS ANIME !</h1>
+        <p>
+          Découvre un monde rempli d'animés, retrouve les passionnés
+          et construis ton aventure au sein de la communauté
+          SHADOW WATCH.
+        </p>
+        <span class="mini">ANIMÉS • PASSION • COMMUNAUTÉ</span>
+      </div>
     </div>
-  </div>
 
-  <div id="login" class="hidden">
-    <h2>Bon retour !</h2>
-    <p class="subtitle">Retrouve la communauté SHADOW WATCH.</p>
+    <div class="auth-side">
 
-    <form id="loginForm">
-      <label>Adresse email</label>
-      <input id="loginEmail" type="email"
-        placeholder="toi@exemple.com" required>
+      <div id="loginPanel">
+        <h2>Bon retour !</h2>
+        <p class="subtitle">
+          Connecte-toi pour retrouver ton univers et ta communauté.
+        </p>
 
-      <label>Mot de passe</label>
-      <input id="loginPassword" type="password"
-        placeholder="Ton mot de passe" required>
+        <form id="loginForm">
+          <div class="field">
+            <label for="loginEmail">Adresse e-mail</label>
+            <input id="loginEmail" type="email"
+              placeholder="ton@email.com" required>
+          </div>
 
-      <button class="primary" type="submit">
-        SE CONNECTER
-      </button>
-    </form>
+          <div class="field">
+            <label for="loginPassword">Mot de passe</label>
+            <input id="loginPassword" type="password"
+              placeholder="Ton mot de passe" required>
+          </div>
 
-    <div class="switch">
-      Pas encore de compte ?
-      <button onclick="showSignup()">S'inscrire</button>
+          <button class="main-button" type="submit">
+            SE CONNECTER
+          </button>
+        </form>
+
+        <button class="google-button" id="googleLogin" type="button">
+          Continuer avec Google
+        </button>
+
+        <p class="switch">
+          Pas encore de compte ?
+          <button id="showSignup" type="button">Créer un compte</button>
+        </p>
+      </div>
+
+      <div id="signupPanel" class="hidden">
+        <h2>Rejoins l'ombre</h2>
+        <p class="subtitle">
+          Crée ton compte gratuitement et entre dans SHADOW WATCH.
+        </p>
+
+        <form id="signupForm">
+          <div class="field">
+            <label for="pseudo">Ton pseudo</label>
+            <input id="pseudo" type="text"
+              placeholder="Ex : Shadow99" maxlength="24" required>
+          </div>
+
+          <div class="field">
+            <label for="signupEmail">Adresse e-mail</label>
+            <input id="signupEmail" type="email"
+              placeholder="ton@email.com" required>
+          </div>
+
+          <div class="field">
+            <label for="signupPassword">Mot de passe</label>
+            <input id="signupPassword" type="password"
+              placeholder="8 caractères minimum" minlength="8" required>
+          </div>
+
+          <button class="main-button" type="submit">
+            CRÉER MON COMPTE
+          </button>
+        </form>
+
+        <p class="switch">
+          Tu as déjà un compte ?
+          <button id="showLogin" type="button">Se connecter</button>
+        </p>
+      </div>
+
+      <p id="status" class="status" aria-live="polite"></p>
+
     </div>
-  </div>
-
-  <div id="message" role="status" aria-live="polite"></div>
-
-</section>
+  </section>
 </main>
 
 <footer>
@@ -314,113 +399,119 @@ footer{
 </footer>
 
 <script>
-const SUPABASE_URL =
-  "https://ycjbzxzwdvmujdawaewh.supabase.co";
+const SUPABASE_URL = "https://ycjbzxzwdvmujdawaewh.supabase.co";
+const SUPABASE_KEY = "sb_publishable_SRzPt8W5qQkrwX5OV0HT4Q_TloQzh0c";
 
-const SUPABASE_KEY =
-  "sb_publishable_SRzPt8W5qQkrwX5OV0HT4Q_TloQzh0c";
-
-const db = window.supabase.createClient(
+const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
 
-const message = document.getElementById("message");
+const loginPanel = document.getElementById("loginPanel");
+const signupPanel = document.getElementById("signupPanel");
+const statusBox = document.getElementById("status");
 
-function showMessage(text){
-  message.textContent = text;
+function showStatus(message) {
+  statusBox.textContent = message;
 }
 
-function showLogin(){
-  document.getElementById("signup").classList.add("hidden");
-  document.getElementById("login").classList.remove("hidden");
-  showMessage("");
-}
+document.getElementById("showSignup").addEventListener("click", () => {
+  loginPanel.classList.add("hidden");
+  signupPanel.classList.remove("hidden");
+  showStatus("");
+});
 
-function showSignup(){
-  document.getElementById("login").classList.add("hidden");
-  document.getElementById("signup").classList.remove("hidden");
-  showMessage("");
-}
+document.getElementById("showLogin").addEventListener("click", () => {
+  signupPanel.classList.add("hidden");
+  loginPanel.classList.remove("hidden");
+  showStatus("");
+});
 
-document.getElementById("signupForm")
-.addEventListener("submit", async (event)=>{
+document.getElementById("signupForm").addEventListener("submit", async (event) => {
   event.preventDefault();
 
+  const button = event.submitter;
   const pseudo = document.getElementById("pseudo").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
+  const email = document.getElementById("signupEmail").value.trim();
+  const password = document.getElementById("signupPassword").value;
 
-  if(pseudo.length < 3){
-    showMessage("Ton pseudo doit contenir au moins 3 caractères.");
+  if (pseudo.length < 3) {
+    showStatus("Ton pseudo doit contenir au moins 3 caractères.");
     return;
   }
 
-  showMessage("Création de ton compte en cours...");
+  button.disabled = true;
+  button.textContent = "CRÉATION EN COURS...";
+  showStatus("Préparation de ton compte...");
 
-  const {data,error} = await db.auth.signUp({
-    email,
-    password,
-    options:{
-      emailRedirectTo:
-        "https://stevetaminy1-ai.github.io/shadow-watch/",
-      data:{pseudo}
-    }
-  });
+  try {
+    const { data, error } = await supabaseClient.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { pseudo },
+        emailRedirectTo: "https://stevetaminy1-ai.github.io/shadow-watch/"
+      }
+    });
 
-  if(error){
-    showMessage("Erreur : " + error.message);
-    return;
-  }
+    if (error) throw error;
 
-  if(data.session){
-    showMessage("Bienvenue dans SHADOW WATCH !");
-  }else{
-    showMessage(
-      "Compte créé ! Vérifie ta boîte email pour confirmer ton inscription."
+    showStatus(
+      "Compte créé ! Vérifie ta boîte e-mail pour confirmer ton inscription."
     );
+  } catch (error) {
+    showStatus("Inscription : " + error.message);
+  } finally {
+    button.disabled = false;
+    button.textContent = "CRÉER MON COMPTE";
   }
 });
 
-document.getElementById("loginForm")
-.addEventListener("submit", async (event)=>{
+document.getElementById("loginForm").addEventListener("submit", async (event) => {
   event.preventDefault();
 
+  const button = event.submitter;
   const email = document.getElementById("loginEmail").value.trim();
   const password = document.getElementById("loginPassword").value;
 
-  showMessage("Connexion en cours...");
+  button.disabled = true;
+  button.textContent = "CONNEXION...";
+  showStatus("Connexion en cours...");
 
-  const {data,error} = await db.auth.signInWithPassword({
-    email,
-    password
-  });
+  try {
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
 
-  if(error){
-    showMessage("Erreur : " + error.message);
-    return;
+    if (error) throw error;
+
+    showStatus("Connexion réussie ! Bienvenue dans SHADOW WATCH.");
+  } catch (error) {
+    showStatus("Connexion : " + error.message);
+  } finally {
+    button.disabled = false;
+    button.textContent = "SE CONNECTER";
   }
-
-  showMessage("Connexion réussie ! Bienvenue dans l'ombre.");
 });
 
-async function googleLogin(){
-  const {error} = await db.auth.signInWithOAuth({
-    provider:"google",
-    options:{
-      redirectTo:
-        "https://stevetaminy1-ai.github.io/shadow-watch/"
+document.getElementById("googleLogin").addEventListener("click", async () => {
+  showStatus("Connexion Google en préparation...");
+
+  const { error } = await supabaseClient.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: "https://stevetaminy1-ai.github.io/shadow-watch/"
     }
   });
 
-  if(error){
-    showMessage("Google : " + error.message);
-  }
-}
+  if (error) showStatus("Google : " + error.message);
+});
 </script>
 
 </body>
-      </html>
+  </html>
+  
   
 
 
