@@ -74,14 +74,18 @@ main{
 
 .anime-art{
   margin-top:28px;
-  min-height:190px;
+  height:280px;
   border-radius:25px;
   background:linear-gradient(120deg,#eee8ff,#e6f3ff);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:18px;
-  font-size:65px;
+  overflow:hidden;
+}
+
+.anime-art img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+  object-position:center;
 }
 
 .art-caption{
@@ -202,6 +206,7 @@ footer{
   .hero h1{font-size:37px}
   .card{padding:23px}
   header{padding:18px 5%}
+  .anime-art{height:230px}
 }
 </style>
 </head>
@@ -229,9 +234,9 @@ footer{
   </p>
 
   <div class="anime-art">
-    <span>⚔️</span>
-    <span>🌌</span>
-    <span>✨</span>
+    <img
+      src="file_000000002bfc81f4baf7ba73d34af6d7.png"
+      alt="Univers anime SHADOW WATCH">
   </div>
 
   <div class="art-caption">
@@ -415,7 +420,7 @@ async function googleLogin(){
 </script>
 
 </body>
-        </html>
+      </html>
   
 
-        
+
