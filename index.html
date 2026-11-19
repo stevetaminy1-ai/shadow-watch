@@ -4,7 +4,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07130d">
+<meta name="description" content="SHADOW WATCH, l'univers des animés et de la communauté.">
 <title>SHADOW WATCH</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
@@ -12,7 +15,7 @@
   --green:#159957;
   --green-dark:#08713d;
   --green-light:#e6f7ed;
-  --white:#ffffff;
+  --white:#fff;
   --background:#f7fbf8;
   --text:#153b28;
   --muted:#718579;
@@ -29,18 +32,17 @@ body{
 
 /* NAVIGATION */
 header{
-  min-height:76px;
+  min-height:70px;
   padding:12px 5%;
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:20px;
-  background:rgba(255,255,255,.96);
+  background:#fff;
   border-bottom:1px solid var(--border);
   position:sticky;
   top:0;
   z-index:20;
-  box-shadow:0 3px 15px #174b2b0a;
 }
 .logo{
   font-size:23px;
@@ -49,19 +51,13 @@ header{
   color:var(--green-dark);
   white-space:nowrap;
 }
-nav{
-  display:flex;
-  align-items:center;
-  gap:22px;
-}
+nav{display:flex;align-items:center;gap:22px}
 nav a{
   color:#365d46;
   text-decoration:none;
   font-size:14px;
   font-weight:600;
   cursor:pointer;
-  white-space:nowrap;
-  transition:.2s;
 }
 nav a:hover{color:var(--green)}
 .header-right{
@@ -75,10 +71,8 @@ nav a:hover{color:var(--green)}
   background:#f5faf6;
   border:1px solid var(--border);
   border-radius:25px;
-  color:var(--text);
   outline:none;
 }
-.search:focus{border-color:var(--green)}
 .avatar{
   width:39px;height:39px;
   border-radius:50%;
@@ -90,18 +84,38 @@ nav a:hover{color:var(--green)}
   font-weight:bold;
 }
 
-/* BANNIÈRE */
+/* ACCUEIL */
 .hero{
-  min-height:550px;
+  min-height:calc(100vh - 70px);
   display:flex;
   align-items:center;
-  padding:85px 7%;
+  padding:65px 7%;
   position:relative;
+  isolation:isolate;
+  background:#07130d;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-2;
+  background-image:url("shadow_watch_accueil_optimisee.webp");
+  background-size:cover;
+  background-position:center 35%;
+  background-repeat:no-repeat;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
   background:
-    linear-gradient(90deg,rgba(5,25,13,.86),rgba(5,25,13,.46) 55%,rgba(5,25,13,.05)),
-    linear-gradient(0deg,rgba(5,25,13,.35),transparent),
-    url("from-PixAI-2078003211904014643-逆転世界.png")
-    center 35%/cover no-repeat;
+    linear-gradient(90deg,
+      rgba(3,15,9,.88),
+      rgba(3,15,9,.62) 48%,
+      rgba(3,15,9,.18)),
+    linear-gradient(0deg,rgba(3,15,9,.35),transparent);
 }
 .hero-content{
   max-width:590px;
@@ -119,18 +133,14 @@ nav a:hover{color:var(--green)}
   line-height:1.04;
   margin-bottom:20px;
 }
-.hero h1 span{color:#a4f0bd}
+.hero h1 span{color:#65e6a0}
 .hero p{
   color:#effaf2;
   max-width:490px;
   line-height:1.7;
   margin-bottom:28px;
 }
-.actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:12px;
-}
+.actions{display:flex;flex-wrap:wrap;gap:12px}
 .btn{
   padding:13px 22px;
   border-radius:8px;
@@ -138,25 +148,15 @@ nav a:hover{color:var(--green)}
   font-size:14px;
   border:1px solid transparent;
   cursor:pointer;
-  transition:.25s;
+  transition:.2s;
 }
-.primary{
-  background:var(--green);
-  color:white;
-}
-.primary:hover{
-  background:#08713d;
-  transform:translateY(-2px);
-}
+.primary{background:var(--green);color:white}
+.primary:hover{background:var(--green-dark)}
 .secondary{
   background:#ffffffed;
   color:var(--green-dark);
-  border-color:#ffffff;
 }
-.secondary:hover{
-  background:#e7f8ed;
-  transform:translateY(-2px);
-}
+.btn:active{transform:scale(.98)}
 
 /* CONTENU */
 main{
@@ -171,15 +171,12 @@ main{
   color:var(--text);
 }
 .section h2 span{color:var(--green)}
-
-/* CARTES ANIMÉS */
 .cards{
   display:flex;
   gap:17px;
   overflow-x:auto;
   padding:5px 3px 16px;
   scrollbar-width:thin;
-  scrollbar-color:#75c995 #edf6ef;
 }
 .anime-card{
   flex:0 0 190px;
@@ -189,14 +186,10 @@ main{
   border-radius:12px;
   background:linear-gradient(145deg,#dff5e6,#b9e7c9);
   border:1px solid var(--border);
-  box-shadow:0 5px 16px #184b2b0d;
-  transition:.25s;
+  transition:.2s;
   cursor:pointer;
 }
-.anime-card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 10px 24px #15995725;
-}
+.anime-card:hover{transform:translateY(-4px)}
 .poster{
   height:100%;
   display:flex;
@@ -213,20 +206,10 @@ main{
   text-align:center;
   font-size:66px;
 }
-.poster h3{
-  font-size:18px;
-  position:relative;
-}
-.poster small{
-  color:#c1f6d2;
-  margin-top:7px;
-  position:relative;
-}
-.empty{
-  display:none;
-  padding:20px;
-  color:var(--muted);
-}
+.poster h3,.poster small{position:relative}
+.poster h3{font-size:18px}
+.poster small{color:#c1f6d2;margin-top:7px}
+.empty{display:none;padding:20px;color:var(--muted)}
 
 /* SALONS */
 .room-grid{
@@ -239,14 +222,9 @@ main{
   border:1px solid var(--border);
   border-radius:15px;
   padding:25px;
-  box-shadow:0 5px 20px #16492b0b;
-  transition:.25s;
+  transition:.2s;
 }
-.room:hover{
-  transform:translateY(-4px);
-  border-color:#a7dfba;
-  box-shadow:0 10px 25px #15995718;
-}
+.room:hover{border-color:#a7dfba}
 .room-icon{
   width:53px;height:53px;
   border-radius:15px;
@@ -257,26 +235,15 @@ main{
   font-size:25px;
   margin-bottom:17px;
 }
-.room h3{
-  margin-bottom:10px;
-  color:var(--green-dark);
-  font-size:19px;
-}
-.room p{
-  color:var(--muted);
-  font-size:14px;
-  line-height:1.6;
-}
+.room h3{margin-bottom:10px;color:var(--green-dark)}
+.room p{color:var(--muted);font-size:14px;line-height:1.6}
 .room .btn{margin-top:20px;width:100%}
-
-/* AUTRES ÉLÉMENTS */
 .empty-list{
   background:white;
   border:1px solid var(--border);
   padding:23px;
   border-radius:12px;
   color:var(--muted);
-  font-size:14px;
 }
 footer{
   background:white;
@@ -286,6 +253,8 @@ footer{
   font-size:13px;
 }
 footer strong{color:var(--green-dark)}
+
+/* RESPONSIVE */
 @media(max-width:900px){
   header{flex-wrap:wrap}
   nav{
@@ -298,19 +267,30 @@ footer strong{color:var(--green-dark)}
   .header-right{margin-left:auto}
 }
 @media(max-width:600px){
-  header{padding:13px 4%;gap:12px}
+  header{padding:12px 4%;gap:12px}
   .logo{font-size:19px}
   .search{width:125px;padding:10px}
   .hero{
-    min-height:540px;
-    padding:75px 6%;
-    background-position:60% center;
+    min-height:calc(100svh - 110px);
+    padding:65px 6%;
+  }
+  .hero::before{background-position:60% center}
+  .hero::after{
+    background:linear-gradient(90deg,
+      rgba(3,15,9,.78),
+      rgba(3,15,9,.48));
   }
   .hero h1{font-size:44px}
   main{padding:30px 4% 55px}
   .anime-card{flex-basis:155px;height:225px}
   .section h2{font-size:20px}
   .room-grid{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    scroll-behavior:auto!important;
+    transition:none!important;
+  }
 }
 </style>
 </head>
@@ -329,12 +309,9 @@ footer strong{color:var(--green-dark)}
   </nav>
 
   <div class="header-right">
-    <input
-      class="search"
-      id="search"
+    <input class="search" id="search"
       placeholder="Rechercher..."
-      oninput="searchAnime()"
-    >
+      oninput="searchAnime()">
     <div class="avatar" id="avatar">S</div>
   </div>
 </header>
@@ -344,8 +321,9 @@ footer strong{color:var(--green-dark)}
     <div class="tag">✦ L'UNIVERS SHADOW ✦</div>
     <h1>ENTRE DANS<br><span>L'OMBRE.</span></h1>
     <p>
-      Découvre un univers rempli d'animés, retrouve les passionnés
-      et construis ton aventure avec la communauté SHADOW WATCH.
+      Découvre un univers rempli d'animés,
+      retrouve les passionnés et construis ton aventure
+      avec la communauté SHADOW WATCH.
     </p>
     <div class="actions">
       <button class="btn primary" onclick="showSection('anime')">
@@ -360,54 +338,54 @@ footer strong{color:var(--green-dark)}
 
 <main>
 
-  <section class="section" id="anime">
-    <h2>🔥 À découvrir <span>maintenant</span></h2>
-    <div class="cards" id="animeCards"></div>
-    <div class="empty" id="empty">Aucun animé trouvé.</div>
-  </section>
+<section class="section" id="anime">
+  <h2>🔥 À découvrir <span>maintenant</span></h2>
+  <div class="cards" id="animeCards"></div>
+  <div class="empty" id="empty">Aucun animé trouvé.</div>
+</section>
 
-  <section class="section" id="popular">
-    <h2>✦ Les <span>tendances</span></h2>
-    <div class="cards" id="popularCards"></div>
-  </section>
+<section class="section" id="popular">
+  <h2>✦ Les <span>tendances</span></h2>
+  <div class="cards" id="popularCards"></div>
+</section>
 
-  <section class="section" id="rooms">
-    <h2>👥 Espace <span>Salons</span></h2>
-    <div class="room-grid">
+<section class="section" id="rooms">
+  <h2>👥 Espace <span>Salons</span></h2>
+  <div class="room-grid">
 
-      <div class="room">
-        <div class="room-icon">＋</div>
-        <h3>Créer un salon</h3>
-        <p>
-          Crée ton propre espace et prépare une aventure
-          avec tes amis et les membres de la communauté.
-        </p>
-        <button class="btn primary" onclick="roomNotice('créer')">
-          Créer un salon
-        </button>
-      </div>
-
-      <div class="room">
-        <div class="room-icon">♧</div>
-        <h3>Rejoindre un salon</h3>
-        <p>
-          Retrouve un salon existant et rejoins les autres
-          passionnés pour partager tes moments anime.
-        </p>
-        <button class="btn primary" onclick="roomNotice('rejoindre')">
-          Rejoindre un salon
-        </button>
-      </div>
-
+    <div class="room">
+      <div class="room-icon">＋</div>
+      <h3>Créer un salon</h3>
+      <p>
+        Crée ton propre espace et prépare une aventure
+        avec tes amis et les membres de la communauté.
+      </p>
+      <button class="btn primary" onclick="roomNotice('créer')">
+        Créer un salon
+      </button>
     </div>
-  </section>
 
-  <section class="section" id="mylist">
-    <h2>♡ Ma <span>liste</span></h2>
-    <div class="empty-list">
-      Ta sélection personnelle apparaîtra ici prochainement.
+    <div class="room">
+      <div class="room-icon">♧</div>
+      <h3>Rejoindre un salon</h3>
+      <p>
+        Retrouve un salon existant et rejoins les autres
+        passionnés pour partager tes moments anime.
+      </p>
+      <button class="btn primary" onclick="roomNotice('rejoindre')">
+        Rejoindre un salon
+      </button>
     </div>
-  </section>
+
+  </div>
+</section>
+
+<section class="section" id="mylist">
+  <h2>♡ Ma <span>liste</span></h2>
+  <div class="empty-list">
+    Ta sélection personnelle apparaîtra ici prochainement.
+  </div>
+</section>
 
 </main>
 
@@ -419,25 +397,25 @@ footer strong{color:var(--green-dark)}
 
 <script>
 const SUPABASE_URL =
-  "https://ycjbzxzwdvmujdawaewh.supabase.co";
+"https://ycjbzxzwdvmujdawaewh.supabase.co";
 
 const SUPABASE_KEY =
-  "sb_publishable_SRzPt8W5qQkrwX5OV0HT4Q_TloQzh0c";
+"sb_publishable_SRzPt8W5qQkrwX5OV0HT4Q_TloQzh0c";
 
-let supabaseClient = null;
+let supabaseClient=null;
 
 try{
   if(window.supabase){
-    supabaseClient = window.supabase.createClient(
+    supabaseClient=window.supabase.createClient(
       SUPABASE_URL,
       SUPABASE_KEY
     );
   }
 }catch(error){
-  console.error("Connexion Supabase :",error);
+  console.error("Supabase :",error);
 }
 
-const animeList = [
+const animeList=[
   {name:"One Punch Man",genre:"Action • Comédie",symbol:"👊"},
   {name:"Naruto",genre:"Aventure • Ninja",symbol:"🍥"},
   {name:"Demon Slayer",genre:"Action • Fantastique",symbol:"⚔️"},
@@ -449,41 +427,40 @@ const animeList = [
 ];
 
 function createCard(anime){
-  const card = document.createElement("div");
-  card.className = "anime-card";
+  const card=document.createElement("div");
+  card.className="anime-card";
 
-  card.innerHTML = `
-    <div class="poster">
-      <div class="symbol">${anime.symbol}</div>
-      <h3></h3>
-      <small></small>
-    </div>
-  `;
+  const poster=document.createElement("div");
+  poster.className="poster";
 
-  card.querySelector("h3").textContent = anime.name;
-  card.querySelector("small").textContent = anime.genre;
+  const symbol=document.createElement("div");
+  symbol.className="symbol";
+  symbol.textContent=anime.symbol;
+
+  const title=document.createElement("h3");
+  title.textContent=anime.name;
+
+  const genre=document.createElement("small");
+  genre.textContent=anime.genre;
+
+  poster.append(symbol,title,genre);
+  card.appendChild(poster);
 
   card.addEventListener("click",()=>{
-    alert(
-      "La fiche de " + anime.name +
-      " sera disponible dans une prochaine version."
-    );
+    alert("La fiche de "+anime.name+
+      " sera disponible dans une prochaine version.");
   });
 
   return card;
 }
 
 function renderAnime(list,container){
-  container.innerHTML = "";
-  list.forEach(anime=>{
-    container.appendChild(createCard(anime));
-  });
+  const fragment=document.createDocumentFragment();
+  list.forEach(anime=>fragment.appendChild(createCard(anime)));
+  container.replaceChildren(fragment);
 }
 
-renderAnime(
-  animeList,
-  document.getElementById("animeCards")
-);
+renderAnime(animeList,document.getElementById("animeCards"));
 
 renderAnime(
   [animeList[2],animeList[5],animeList[3],animeList[0]],
@@ -491,22 +468,16 @@ renderAnime(
 );
 
 function searchAnime(){
-  const query = document
-    .getElementById("search")
-    .value.toLowerCase().trim();
+  const query=document.getElementById("search").value.toLowerCase().trim();
 
-  const results = animeList.filter(anime=>
-    anime.name.toLowerCase().includes(query) ||
+  const results=animeList.filter(anime=>
+    anime.name.toLowerCase().includes(query)||
     anime.genre.toLowerCase().includes(query)
   );
 
-  renderAnime(
-    results,
-    document.getElementById("animeCards")
-  );
-
-  document.getElementById("empty").style.display =
-    results.length ? "none" : "block";
+  renderAnime(results,document.getElementById("animeCards"));
+  document.getElementById("empty").style.display=
+    results.length?"none":"block";
 }
 
 function scrollToTop(){
@@ -514,38 +485,31 @@ function scrollToTop(){
 }
 
 function showSection(id){
-  const section = document.getElementById(id);
-  if(section){
-    section.scrollIntoView({behavior:"smooth"});
-  }
+  const section=document.getElementById(id);
+  if(section) section.scrollIntoView({behavior:"smooth"});
 }
 
 function roomNotice(action){
-  if(action === "créer"){
-    alert("La création de salons sera disponible après activation du système multijoueur.");
-  }else{
-    alert("La liste des salons sera disponible après activation du système multijoueur.");
-  }
+  alert(action==="créer"
+    ?"La création de salons sera disponible après activation du système multijoueur."
+    :"La liste des salons sera disponible après activation du système multijoueur."
+  );
 }
 
 async function loadProfile(){
-  if(!supabaseClient) return;
+  if(!supabaseClient)return;
 
   try{
-    const {data,error} =
-      await supabaseClient.auth.getSession();
+    const {data,error}=await supabaseClient.auth.getSession();
+    if(error)throw error;
 
-    if(error) throw error;
-
-    const user = data.session?.user;
+    const user=data.session?.user;
 
     if(user){
-      const pseudo =
-        user.user_metadata?.pseudo ||
-        user.email?.[0] ||
-        "S";
+      const pseudo=user.user_metadata?.pseudo||
+        user.email?.[0]||"S";
 
-      document.getElementById("avatar").textContent =
+      document.getElementById("avatar").textContent=
         pseudo.charAt(0).toUpperCase();
     }
   }catch(error){
@@ -553,13 +517,15 @@ async function loadProfile(){
   }
 }
 
+if(supabaseClient){
+  supabaseClient.auth.onAuthStateChange(()=>{
+    loadProfile();
+  });
+}
+
 loadProfile();
 </script>
 
 </body>
   </html>
-    
-                                         
-  
-
-
+                        
