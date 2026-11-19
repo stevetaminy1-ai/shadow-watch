@@ -22,9 +22,10 @@
   --border:rgba(255,255,255,.09);
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
+* {box-sizing:border-box;margin:0;padding:0}
+html {scroll-behavior:smooth}
+
+body {
   background:var(--bg);
   color:var(--white);
   font-family:Arial,Helvetica,sans-serif;
@@ -32,39 +33,23 @@ body{
   padding-bottom:85px;
   overflow-x:hidden;
 }
-button,input{font:inherit}
-button{cursor:pointer}
-a{color:inherit;text-decoration:none}
 
-/* PETITES ETOILES */
-.sparkle{
-  position:fixed;
-  width:3px;
-  height:3px;
-  border-radius:50%;
-  background:#fff;
-  box-shadow:0 0 9px #fff,0 0 17px var(--cyan);
-  pointer-events:none;
-  z-index:1;
-  animation:twinkle 3s infinite ease-in-out;
-  opacity:.35;
-}
-@keyframes twinkle{
-  0%,100%{opacity:.15;transform:scale(.7)}
-  50%{opacity:.8;transform:scale(1.5)}
-}
+button,input {font:inherit}
+button {cursor:pointer}
+a {color:inherit;text-decoration:none}
 
 /* HEADER */
-header{
+header {
   height:70px;
   position:sticky;
   top:0;
   z-index:50;
-  background:rgba(16,17,20,.96);
+  background:rgba(16,17,20,.94);
   backdrop-filter:blur(18px);
   border-bottom:1px solid var(--border);
 }
-.topbar{
+
+.topbar {
   max-width:1350px;
   height:100%;
   margin:auto;
@@ -74,27 +59,33 @@ header{
   justify-content:space-between;
   gap:25px;
 }
-.logo{
+
+.logo {
   font-size:23px;
   font-weight:900;
   letter-spacing:1.5px;
   white-space:nowrap;
 }
-.logo span{color:var(--cyan)}
-.desktop-nav{
+
+.logo span {color:var(--cyan)}
+
+.desktop-nav {
   display:flex;
   gap:26px;
   color:var(--muted);
   font-size:14px;
 }
+
 .desktop-nav a:hover,
-.desktop-nav a.active{color:var(--cyan)}
-.header-right{
+.desktop-nav a.active {color:var(--cyan)}
+
+.header-right {
   display:flex;
   align-items:center;
   gap:13px;
 }
-.search-button,.profile-button{
+
+.search-button,.profile-button {
   border:1px solid var(--border);
   background:var(--panel);
   color:var(--white);
@@ -104,24 +95,25 @@ header{
   display:grid;
   place-items:center;
 }
-.profile-button{
+
+.profile-button {
   border-radius:13px;
   width:auto;
   padding:0 13px;
   color:var(--green);
-  font-size:13px;
 }
 
 /* SEARCH */
-.search-panel{
+.search-panel {
   display:none;
   max-width:1350px;
   margin:auto;
   padding:12px 28px;
-  background:var(--bg);
 }
-.search-panel.open{display:block}
-.search-panel input{
+
+.search-panel.open {display:block}
+
+.search-panel input {
   width:100%;
   padding:14px 17px;
   border:1px solid var(--border);
@@ -130,17 +122,18 @@ header{
   border-radius:12px;
   outline:none;
 }
-.search-panel input:focus{border-color:var(--cyan)}
+
+.search-panel input:focus {border-color:var(--cyan)}
 
 /* MAIN */
-main{
+main {
   max-width:1350px;
   margin:auto;
   padding:25px 28px 45px;
 }
 
 /* HERO */
-.hero{
+.hero {
   min-height:430px;
   border-radius:20px;
   overflow:hidden;
@@ -151,65 +144,81 @@ main{
   background:
     linear-gradient(90deg,rgba(8,10,15,.97),rgba(8,10,15,.72) 48%,rgba(8,10,15,.12)),
     linear-gradient(0deg,rgba(8,10,15,.7),transparent 70%),
-    url("shadow_watch_accueil_optimisee.webp") center 35% / cover no-repeat,
+    url("shadow_watch_accueil_optimisee.webp") center 35%/cover no-repeat,
     linear-gradient(120deg,#102b42,#182039,#25213c);
   border:1px solid var(--border);
 }
-.hero-content{
+
+.hero-content {
   max-width:550px;
   position:relative;
   z-index:2;
 }
-.hero-tag{
+
+.hero-tag {
   color:var(--green);
   font-size:12px;
   font-weight:bold;
   letter-spacing:3px;
   margin-bottom:15px;
 }
-.hero h1{
+
+.hero h1 {
   font-size:clamp(34px,5vw,58px);
   line-height:1.05;
   margin-bottom:15px;
 }
-.hero h1 span{color:var(--cyan)}
-.hero p{
+
+.hero h1 span {color:var(--cyan)}
+
+.hero p {
   max-width:480px;
   color:#d0d5dc;
   line-height:1.7;
   font-size:14px;
   margin-bottom:22px;
 }
-.hero-buttons{display:flex;gap:12px;flex-wrap:wrap}
-.btn{
+
+.hero-buttons {
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.btn {
   border:0;
   border-radius:9px;
   padding:13px 21px;
   font-weight:bold;
   transition:.2s;
 }
-.btn:hover{transform:translateY(-2px)}
-.btn-primary{
+
+.btn:hover {transform:translateY(-2px)}
+
+.btn-primary {
   color:#06151d;
   background:var(--cyan);
   box-shadow:0 5px 22px rgba(28,183,255,.2);
 }
-.btn-secondary{
+
+.btn-secondary {
   color:white;
   background:rgba(255,255,255,.13);
   border:1px solid rgba(255,255,255,.2);
 }
 
 /* CATEGORIES */
-.category-list{
+.category-list {
   display:flex;
   gap:10px;
   overflow-x:auto;
   padding:23px 0 8px;
   scrollbar-width:none;
 }
-.category-list::-webkit-scrollbar{display:none}
-.category{
+
+.category-list::-webkit-scrollbar {display:none}
+
+.category {
   flex-shrink:0;
   background:var(--panel);
   color:var(--muted);
@@ -218,7 +227,8 @@ main{
   padding:10px 18px;
   font-size:13px;
 }
-.category.active{
+
+.category.active {
   color:#06151d;
   background:var(--green);
   border-color:var(--green);
@@ -226,20 +236,30 @@ main{
 }
 
 /* SECTIONS */
-.section{margin-top:35px}
-.section-heading{
+.section {margin-top:35px}
+
+.section-heading {
   display:flex;
   justify-content:space-between;
   align-items:center;
   margin-bottom:17px;
   gap:12px;
 }
-.section-heading h2{font-size:20px;font-weight:750}
-.section-heading h2 span{color:var(--cyan)}
-.section-heading small{color:var(--muted);font-size:12px}
+
+.section-heading h2 {
+  font-size:20px;
+  font-weight:750;
+}
+
+.section-heading h2 span {color:var(--cyan)}
+
+.section-heading small {
+  color:var(--muted);
+  font-size:12px;
+}
 
 /* POSTERS */
-.poster-row{
+.poster-row {
   display:grid;
   grid-auto-flow:column;
   grid-auto-columns:160px;
@@ -249,13 +269,16 @@ main{
   scrollbar-width:thin;
   scrollbar-color:#343944 transparent;
 }
-.poster{
+
+.poster {
   min-width:0;
   cursor:pointer;
   transition:transform .2s;
 }
-.poster:hover{transform:translateY(-5px)}
-.poster-art{
+
+.poster:hover {transform:translateY(-5px)}
+
+.poster-art {
   height:225px;
   border-radius:12px;
   overflow:hidden;
@@ -268,47 +291,87 @@ main{
     radial-gradient(circle at 50% 30%,var(--glow),transparent 43%),
     linear-gradient(145deg,var(--color1),var(--color2));
 }
-.poster-art::before{
+
+/* VRAIES AFFICHES */
+.poster-image {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  z-index:0;
+  opacity:0;
+  transition:opacity .35s ease;
+}
+
+.poster-image.loaded {opacity:1}
+
+.poster-art::before {
   content:"✦";
   position:absolute;
-  top:20px;
-  right:20px;
+  top:12px;
+  right:14px;
+  z-index:2;
   color:rgba(255,255,255,.65);
-  font-size:24px;
+  font-size:22px;
   text-shadow:0 0 18px white;
+  pointer-events:none;
 }
-.poster-art::after{
+
+.poster-art::after {
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(0deg,rgba(0,0,0,.78),transparent 65%);
+  z-index:1;
+  background:linear-gradient(
+    0deg,
+    rgba(0,0,0,.88),
+    rgba(0,0,0,.12) 65%,
+    transparent
+  );
+  pointer-events:none;
 }
-.poster-symbol{
+
+.poster-symbol {
   position:absolute;
   inset:0;
   display:grid;
   place-items:center;
   font-size:65px;
+  z-index:0;
   filter:drop-shadow(0 0 18px rgba(255,255,255,.35));
 }
-.poster-name{
+
+.poster-name {
   position:relative;
-  z-index:2;
+  z-index:3;
   font-size:17px;
   font-weight:900;
   line-height:1.1;
   text-shadow:0 2px 7px black;
 }
-.poster-info{padding:10px 2px 0}
-.poster-info h3{font-size:14px;margin-bottom:6px}
-.poster-info p{color:var(--muted);font-size:11px}
-.poster-badge{
+
+.poster-info {padding:10px 2px 0}
+
+.poster-info h3 {
+  font-size:14px;
+  margin-bottom:6px;
+}
+
+.poster-info p {
+  color:var(--muted);
+  font-size:11px;
+}
+
+.poster-badge {
   display:inline-block;
   color:var(--yellow);
   font-size:10px;
   margin-top:7px;
 }
-.favorite-button{
+
+.favorite-button {
   margin-top:9px;
   padding:7px 9px;
   border:1px solid rgba(255,255,255,.12);
@@ -317,8 +380,13 @@ main{
   color:var(--green);
   font-size:11px;
 }
-.favorite-button:hover{border-color:var(--green)}
-.empty{
+
+.favorite-button:hover {
+  border-color:var(--green);
+}
+
+/* EMPTY */
+.empty {
   color:var(--muted);
   background:var(--panel);
   border:1px dashed var(--border);
@@ -328,8 +396,14 @@ main{
   font-size:13px;
 }
 
+.image-status {
+  color:var(--muted);
+  font-size:11px;
+  margin-top:10px;
+}
+
 /* COMMUNITY */
-.community{
+.community {
   padding:28px;
   background:
     radial-gradient(circle at 90% 20%,rgba(28,183,255,.12),transparent 35%),
@@ -341,78 +415,30 @@ main{
   justify-content:space-between;
   gap:20px;
 }
-.community h2{margin-bottom:9px}
-.community p{
+
+.community h2 {margin-bottom:9px}
+
+.community p {
   color:var(--muted);
   font-size:13px;
   line-height:1.6;
 }
-.community button{white-space:nowrap}
 
-/* MODAL */
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:100;
-  background:rgba(0,0,0,.82);
-  backdrop-filter:blur(8px);
-  align-items:center;
-  justify-content:center;
-  padding:18px;
-}
-.modal.open{display:flex}
-.modal-content{
-  width:100%;
-  max-width:470px;
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:18px;
-  overflow:hidden;
-  box-shadow:0 20px 70px rgba(0,0,0,.5);
-}
-.modal-art{
-  height:210px;
-  display:grid;
-  place-items:center;
-  font-size:75px;
-  position:relative;
-}
-.modal-art::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(0deg,var(--panel),transparent 80%);
-}
-.modal-details{padding:20px}
-.modal-details h2{margin-bottom:8px}
-.modal-details p{
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.7;
-}
-.modal-close{
-  float:right;
-  background:var(--panel2);
-  border:1px solid var(--border);
-  color:white;
-  width:34px;
-  height:34px;
-  border-radius:50%;
-}
+.community button {white-space:nowrap}
 
 /* FOOTER */
-footer{
+footer {
   text-align:center;
   color:var(--muted);
   border-top:1px solid var(--border);
   padding:25px 15px;
   font-size:12px;
 }
-footer strong{color:var(--cyan)}
+
+footer strong {color:var(--cyan)}
 
 /* BOTTOM NAV */
-.bottom-nav{
+.bottom-nav {
   display:none;
   position:fixed;
   bottom:0;
@@ -427,7 +453,8 @@ footer strong{color:var(--cyan)}
   align-items:center;
   padding-bottom:env(safe-area-inset-bottom);
 }
-.bottom-nav a{
+
+.bottom-nav a {
   color:var(--muted);
   display:flex;
   flex-direction:column;
@@ -435,46 +462,69 @@ footer strong{color:var(--cyan)}
   gap:5px;
   font-size:10px;
 }
-.bottom-nav a span{font-size:20px}
-.bottom-nav a.active{color:var(--cyan)}
+
+.bottom-nav a span {font-size:20px}
+.bottom-nav a.active {color:var(--cyan)}
 
 /* RESPONSIVE */
-@media(max-width:850px){
-  .desktop-nav{display:none}
-  .bottom-nav{display:flex}
-  body{padding-bottom:85px}
-  main{padding:17px 17px 35px}
-  .hero{min-height:410px;padding:27px;background-position:center}
-  .poster-row{grid-auto-columns:145px}
-  .poster-art{height:205px}
+@media(max-width:850px) {
+  .desktop-nav {display:none}
+  .bottom-nav {display:flex}
+  body {padding-bottom:85px}
+  main {padding:17px 17px 35px}
+
+  .hero {
+    min-height:410px;
+    padding:27px;
+    background-position:center;
+  }
+
+  .poster-row {grid-auto-columns:145px}
+  .poster-art {height:205px}
 }
-@media(max-width:480px){
-  header{height:60px}
-  .topbar{padding:0 16px}
-  .logo{font-size:19px}
-  .profile-button{font-size:11px;padding:0 10px}
-  main{padding:13px 13px 30px}
-  .hero{
+
+@media(max-width:480px) {
+  header {height:60px}
+  .topbar {padding:0 16px}
+  .logo {font-size:19px}
+
+  .profile-button {
+    font-size:11px;
+    padding:0 10px;
+  }
+
+  main {padding:13px 13px 30px}
+
+  .hero {
     min-height:390px;
     border-radius:14px;
     padding:22px;
     background-position:58% center;
   }
-  .hero h1{font-size:37px}
-  .hero p{font-size:13px}
-  .poster-row{grid-auto-columns:132px;gap:12px}
-  .poster-art{height:190px}
-  .poster-symbol{font-size:52px}
-  .section-heading h2{font-size:18px}
-  .community{
+
+  .hero h1 {font-size:37px}
+  .hero p {font-size:13px}
+
+  .poster-row {
+    grid-auto-columns:132px;
+    gap:12px;
+  }
+
+  .poster-art {height:190px}
+  .poster-symbol {font-size:52px}
+  .section-heading h2 {font-size:18px}
+
+  .community {
     flex-direction:column;
     align-items:flex-start;
     padding:22px;
   }
-  .community button{width:100%}
+
+  .community button {width:100%}
 }
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{
+
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
     animation:none!important;
     transition:none!important;
     scroll-behavior:auto!important;
@@ -487,7 +537,7 @@ footer strong{color:var(--cyan)}
 
 <header>
   <div class="topbar">
-    <a href="#accueil" class="logo">SHADOW <span>WATCH</span></a>
+    <a href="#" class="logo">SHADOW <span>WATCH</span></a>
 
     <nav class="desktop-nav">
       <a href="#accueil" class="active">Accueil</a>
@@ -518,11 +568,14 @@ footer strong{color:var(--cyan)}
   <section class="hero" id="accueil">
     <div class="hero-content">
       <div class="hero-tag">✦ L'UNIVERS ANIME COMMENCE ICI</div>
+
       <h1>SHADOW<br><span>WATCH</span></h1>
+
       <p>
         Découvre de nouveaux univers, retrouve tes animes préférés
         et rejoins une communauté passionnée.
       </p>
+
       <div class="hero-buttons">
         <a href="#tendances" class="btn btn-primary">▶ Explorer</a>
         <a href="#nouveautes" class="btn btn-secondary">Découvrir</a>
@@ -537,13 +590,12 @@ footer strong{color:var(--cyan)}
     <button class="category" data-category="Fantasy">Fantasy</button>
     <button class="category" data-category="Surnaturel">Surnaturel</button>
     <button class="category" data-category="Comédie">Comédie</button>
-    <button class="category" data-category="Sport">Sport</button>
   </div>
 
   <section class="section" id="tendances">
     <div class="section-heading">
       <h2>🔥 Tendances <span>du moment</span></h2>
-      <small id="trendCount">5 animes</small>
+      <small>À découvrir</small>
     </div>
     <div class="poster-row" id="trendingRow"></div>
   </section>
@@ -551,7 +603,7 @@ footer strong{color:var(--cyan)}
   <section class="section" id="nouveautes">
     <div class="section-heading">
       <h2>✦ Nouveautés</h2>
-      <small id="newCount">5 animes</small>
+      <small>Les découvertes</small>
     </div>
     <div class="poster-row" id="newRow"></div>
   </section>
@@ -615,28 +667,16 @@ footer strong{color:var(--cyan)}
   <p style="margin-top:7px">© 2026 SHADOW WATCH</p>
 </footer>
 
-<!-- FICHE ANIME -->
-<div class="modal" id="animeModal" onclick="closeModalOutside(event)">
-  <div class="modal-content">
-    <div class="modal-art" id="modalArt">
-      <span id="modalSymbol">⚔️</span>
-    </div>
-    <div class="modal-details">
-      <button class="modal-close" onclick="closeAnime()">✕</button>
-      <h2 id="modalTitle">Anime</h2>
-      <p id="modalGenre"></p>
-      <p id="modalDescription" style="margin-top:12px"></p>
-      <button class="btn btn-primary" style="margin-top:18px" onclick="modalFavorite()">
-        ♡ Ajouter à ma liste
-      </button>
-    </div>
-  </div>
-</div>
-
 <script>
-/* SUPABASE */
-const SUPABASE_URL = "https://ycjbzxzwdvmujdawaewh.supabase.co";
-const SUPABASE_KEY = "sb_publishable_SRzPt8W5qQkrwX5OV0HT4Q_TloQzh0c";
+/* =====================================
+   SUPABASE
+===================================== */
+
+const SUPABASE_URL =
+  "https://ycjbzxzwdvmujdawaewh.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_SRzPt8W5qQkrwX5OV0HT4Q_TloQzh0c";
 
 let supabaseClient = null;
 
@@ -647,116 +687,86 @@ try {
       SUPABASE_KEY
     );
   }
-} catch(error) {
+} catch (error) {
   console.error("Supabase :", error);
 }
 
-/* CATALOGUE : 10 ANIMES */
+/* =====================================
+   CATALOGUE ANIME
+===================================== */
+
 const animeList = [
   {
-    id:1,
     title:"Demon Slayer",
     genre:"Action",
     symbol:"⚔️",
     colors:["#702d37","#171a32"],
-    type:"trend",
-    description:"Tanjiro se lance dans une aventure pour protéger ses proches et affronter les démons."
+    type:"trend"
   },
   {
-    id:2,
     title:"Jujutsu Kaisen",
     genre:"Surnaturel",
     symbol:"🌌",
     colors:["#293a75","#17152c"],
-    type:"trend",
-    description:"Un univers où des combattants affrontent des créatures surnaturelles."
+    type:"trend"
   },
   {
-    id:3,
     title:"Solo Leveling",
     genre:"Fantasy",
     symbol:"🗡️",
     colors:["#164b70","#101626"],
-    type:"trend",
-    description:"Un chasseur découvre un mystérieux système qui lui permet de progresser."
+    type:"trend"
   },
   {
-    id:4,
     title:"One Piece",
     genre:"Aventure",
     symbol:"🏴‍☠️",
     colors:["#a44c25","#22213b"],
-    type:"trend",
-    description:"Luffy et son équipage parcourent les océans à la recherche du légendaire trésor."
+    type:"trend"
   },
   {
-    id:5,
     title:"Attack on Titan",
     genre:"Action",
     symbol:"🛡️",
     colors:["#53604a","#20202b"],
-    type:"trend",
-    description:"L'humanité lutte pour survivre derrière de gigantesques murailles."
+    type:"new"
   },
   {
-    id:6,
     title:"Blue Lock",
-    genre:"Sport",
+    genre:"Action",
     symbol:"⚽",
     colors:["#176da4","#151d40"],
-    type:"new",
-    description:"De jeunes joueurs participent à un programme exigeant pour devenir un grand attaquant."
+    type:"new"
   },
   {
-    id:7,
     title:"My Hero Academia",
     genre:"Action",
     symbol:"⚡",
     colors:["#236b54","#17223b"],
-    type:"new",
-    description:"Dans un monde de super-pouvoirs, un jeune garçon poursuit son rêve de devenir héros."
+    type:"new"
   },
   {
-    id:8,
     title:"Spy x Family",
     genre:"Comédie",
     symbol:"🕵️",
     colors:["#a66b35","#30213b"],
-    type:"new",
-    description:"Une famille pas comme les autres cache des secrets étonnants."
-  },
-  {
-    id:9,
-    title:"Naruto",
-    genre:"Aventure",
-    symbol:"🍥",
-    colors:["#d66a24","#29213d"],
-    type:"new",
-    description:"Naruto rêve de devenir le chef de son village et de faire reconnaître sa valeur."
-  },
-  {
-    id:10,
-    title:"Frieren",
-    genre:"Fantasy",
-    symbol:"✨",
-    colors:["#356b80","#17253b"],
-    type:"new",
-    description:"Une magicienne elfique découvre le sens du temps et des liens après une grande aventure."
+    type:"new"
   }
 ];
 
 let currentCategory = "Tous";
 let currentSearch = "";
-let selectedAnime = null;
 
-/* FAVORIS */
+/* =====================================
+   FAVORIS
+===================================== */
+
 function getFavorites() {
   try {
-    const data = JSON.parse(
+    return JSON.parse(
       localStorage.getItem("shadowWatchFavorites") || "[]"
     );
-    return Array.isArray(data) ? data : [];
-  } catch(error) {
+  } catch {
     return [];
   }
 }
@@ -767,102 +777,221 @@ function saveFavorites(items) {
       "shadowWatchFavorites",
       JSON.stringify(items)
     );
-  } catch(error) {
-    console.error("Impossible d'enregistrer les favoris :",error);
+  } catch (error) {
+    console.error("Sauvegarde favoris :",error);
   }
 }
 
-function isFavorite(id) {
-  return getFavorites().includes(id);
+/* =====================================
+   CACHE DES AFFICHES
+===================================== */
+
+const IMAGE_CACHE_KEY = "shadowWatchAnimeImages";
+const IMAGE_CACHE_DURATION = 30 * 24 * 60 * 60 * 1000;
+
+function getImageCache() {
+  try {
+    return JSON.parse(
+      localStorage.getItem(IMAGE_CACHE_KEY) || "{}"
+    );
+  } catch {
+    return {};
+  }
 }
 
-/* CREATION DES AFFICHES */
+function saveImageCache(cache) {
+  try {
+    localStorage.setItem(
+      IMAGE_CACHE_KEY,
+      JSON.stringify(cache)
+    );
+  } catch (error) {
+    console.warn("Cache images :",error);
+  }
+}
+
+function normalizeTitle(value) {
+  return (value || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .replace(/[^a-z0-9]/g,"");
+}
+
+function wait(milliseconds) {
+  return new Promise(resolve =>
+    setTimeout(resolve,milliseconds)
+  );
+}
+
+/* =====================================
+   RECHERCHE DES VRAIES AFFICHES
+   Source : API Jikan
+===================================== */
+
+async function fetchAnimeImage(anime) {
+  const cache = getImageCache();
+  const cached = cache[anime.title];
+
+  if (
+    cached &&
+    cached.url &&
+    Date.now() - cached.savedAt < IMAGE_CACHE_DURATION
+  ) {
+    return cached.url;
+  }
+
+  const endpoint =
+    "https://api.jikan.moe/v4/anime?q=" +
+    encodeURIComponent(anime.title) +
+    "&limit=10&sfw=true";
+
+  try {
+    let response = await fetch(endpoint);
+
+    /* Petite nouvelle tentative si l'API limite les requêtes */
+    if (response.status === 429) {
+      await wait(1800);
+      response = await fetch(endpoint);
+    }
+
+    if (!response.ok) {
+      throw new Error("Erreur API : " + response.status);
+    }
+
+    const result = await response.json();
+    const entries = result.data || [];
+
+    if (!entries.length) {
+      return null;
+    }
+
+    const wanted = normalizeTitle(anime.title);
+
+    /* Cherche le titre qui correspond le mieux */
+    let selected = entries.find(item => {
+      return (
+        normalizeTitle(item.title) === wanted ||
+        normalizeTitle(item.title_english) === wanted
+      );
+    });
+
+    if (!selected) {
+      selected = entries[0];
+    }
+
+    const imageUrl =
+      selected.images?.webp?.large_image_url ||
+      selected.images?.jpg?.large_image_url ||
+      selected.images?.webp?.image_url ||
+      selected.images?.jpg?.image_url ||
+      null;
+
+    if (imageUrl) {
+      cache[anime.title] = {
+        url:imageUrl,
+        savedAt:Date.now()
+      };
+
+      saveImageCache(cache);
+    }
+
+    return imageUrl;
+
+  } catch (error) {
+    console.warn(
+      "Affiche indisponible pour " + anime.title,
+      error
+    );
+
+    return null;
+  }
+}
+
+/* Charge les affiches une par une pour limiter les requêtes */
+async function loadAnimeImages() {
+  const status = document.getElementById("imageStatus");
+
+  for (let i = 0; i < animeList.length; i++) {
+    const anime = animeList[i];
+
+    if (anime.imageUrl) continue;
+
+    anime.imageUrl = await fetchAnimeImage(anime);
+
+    /* Actualise les cartes dès qu'une affiche arrive */
+    renderCatalog();
+
+    if (status) {
+      const loaded = animeList.filter(item => item.imageUrl).length;
+      status.textContent =
+        loaded + " / " + animeList.length + " affiches chargées";
+    }
+
+    /* Respecte les limites de l'API */
+    await wait(500);
+  }
+
+  if (status) {
+    const loaded = animeList.filter(item => item.imageUrl).length;
+
+    status.textContent = loaded
+      ? loaded + " affiches disponibles"
+      : "Les affiches n'ont pas pu être chargées. Réessaie plus tard.";
+  }
+
+  renderCatalog();
+}
+
+/* =====================================
+   CREATION DES CARTES
+===================================== */
+
 function createPoster(anime) {
   const card = document.createElement("article");
   card.className = "poster";
 
   const art = document.createElement("div");
   art.className = "poster-art";
+
   art.style.setProperty("--color1",anime.colors[0]);
   art.style.setProperty("--color2",anime.colors[1]);
   art.style.setProperty("--glow",anime.colors[0]);
 
+  /* Image réelle */
+  if (anime.imageUrl) {
+    const image = document.createElement("img");
+
+    image.className = "poster-image";
+    image.src = anime.imageUrl;
+    image.alt = "Affiche de " + anime.title;
+    image.loading = "lazy";
+    image.decoding = "async";
+
+    image.addEventListener("load",() => {
+      image.classList.add("loaded");
+    });
+
+    image.addEventListener("error",() => {
+      image.remove();
+    });
+
+    art.appendChild(image);
+  }
+
+  /* Image de secours */
   const symbol = document.createElement("div");
   symbol.className = "poster-symbol";
   symbol.textContent = anime.symbol;
+
+  art.appendChild(symbol);
 
   const name = document.createElement("div");
   name.className = "poster-name";
   name.textContent = anime.title;
 
-  art.append(symbol,name);
+  art.appendChild(name);
 
   const info = document.createElement("div");
-  info.className = "poster-info";
-
-  const title = document.createElement("h3");
-  title.textContent = anime.title;
-
-  const genre = document.createElement("p");
-  genre.textContent = anime.genre;
-
-  const badge = document.createElement("span");
-  badge.className = "poster-badge";
-  badge.textContent = "✦ ANIME";
-
-  const favoriteButton = document.createElement("button");
-  favoriteButton.className = "favorite-button";
-  favoriteButton.textContent = isFavorite(anime.id)
-    ? "♥ Dans ma liste"
-    : "♡ Ajouter aux favoris";
-
-  favoriteButton.addEventListener("click",event => {
-    event.stopPropagation();
-    toggleFavorite(anime.id);
-  });
-
-  info.append(
-    title,
-    genre,
-    badge,
-    document.createElement("br"),
-    favoriteButton
-  );
-
-  card.append(art,info);
-
-  card.addEventListener("click",() => {
-    showAnime(anime.id);
-  });
-
-  return card;
-}
-
-/* FILTRAGE */
-function getVisibleAnime() {
-  return animeList.filter(anime => {
-    const categoryMatch =
-      currentCategory === "Tous" ||
-      anime.genre === currentCategory;
-
-    const searchMatch =
-      anime.title.toLowerCase().includes(currentSearch) ||
-      anime.genre.toLowerCase().includes(currentSearch);
-
-    return categoryMatch && searchMatch;
-  });
-}
-
-/* AFFICHAGE DU CATALOGUE */
-function renderCatalog() {
-  const trend = document.getElementById("trendingRow");
-  const news = document.getElementById("newRow");
-
-  trend.innerHTML = "";
-  news.innerHTML = "";
-
-  const visible = getVisibleAnime();
-  const trends = visible.filter(anime => 
-  
-  
+  info.clas
                         
