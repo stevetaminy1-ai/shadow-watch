@@ -6,194 +6,320 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SHADOW WATCH</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 :root{
-  --green:#19d879;
-  --black:#080d0b;
-  --panel:#111a15;
-  --white:#f5fff8;
-  --muted:#a4b4aa;
+  --green:#159957;
+  --green-dark:#08713d;
+  --green-light:#e6f7ed;
+  --white:#ffffff;
+  --background:#f7fbf8;
+  --text:#153b28;
+  --muted:#718579;
+  --border:#dceee2;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
 body{
-  background:var(--black);
-  color:var(--white);
+  background:var(--background);
+  color:var(--text);
   font-family:Arial,sans-serif;
   overflow-x:hidden;
 }
+
+/* NAVIGATION */
 header{
-  height:75px;
-  padding:0 5%;
+  min-height:76px;
+  padding:12px 5%;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  background:linear-gradient(180deg,#050906,transparent);
-  position:absolute;
-  width:100%;
-  z-index:10;
+  gap:20px;
+  background:rgba(255,255,255,.96);
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:20;
+  box-shadow:0 3px 15px #174b2b0a;
 }
 .logo{
-  font-size:25px;
+  font-size:23px;
   font-weight:900;
-  letter-spacing:2px;
-  color:var(--green);
+  letter-spacing:1.5px;
+  color:var(--green-dark);
+  white-space:nowrap;
 }
-nav{display:flex;gap:25px}
-nav a{
-  color:white;
-  text-decoration:none;
-  font-size:14px;
-  cursor:pointer;
-}
-nav a:hover{color:var(--green)}
-.header-right{display:flex;align-items:center;gap:15px}
-.search{
-  background:#ffffff18;
-  border:1px solid #ffffff35;
-  border-radius:20px;
-  padding:10px 15px;
-  color:white;
-  width:180px;
-  outline:none;
-}
-.avatar{
-  width:37px;height:37px;
-  border-radius:50%;
-  background:var(--green);
-  color:#07110b;
-  display:grid;
-  place-items:center;
-  font-weight:bold;
-}
-.hero{
-  min-height:570px;
+nav{
   display:flex;
   align-items:center;
-  padding:130px 7% 80px;
-  background:
-  linear-gradient(90deg,#050906 2%,#050906d9 40%,transparent 100%),
-  linear-gradient(0deg,#080d0b 1%,transparent 55%),
-  url("from-PixAI-2078003211904014643-逆転世界.png") center 35%/cover no-repeat;
+  gap:22px;
 }
-.hero-content{max-width:590px}
+nav a{
+  color:#365d46;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:.2s;
+}
+nav a:hover{color:var(--green)}
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.search{
+  width:175px;
+  padding:11px 15px;
+  background:#f5faf6;
+  border:1px solid var(--border);
+  border-radius:25px;
+  color:var(--text);
+  outline:none;
+}
+.search:focus{border-color:var(--green)}
+.avatar{
+  width:39px;height:39px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:var(--green-light);
+  border:1px solid #bce8cc;
+  color:var(--green-dark);
+  font-weight:bold;
+}
+
+/* BANNIÈRE */
+.hero{
+  min-height:550px;
+  display:flex;
+  align-items:center;
+  padding:85px 7%;
+  position:relative;
+  background:
+    linear-gradient(90deg,rgba(5,25,13,.86),rgba(5,25,13,.46) 55%,rgba(5,25,13,.05)),
+    linear-gradient(0deg,rgba(5,25,13,.35),transparent),
+    url("from-PixAI-2078003211904014643-逆転世界.png")
+    center 35%/cover no-repeat;
+}
+.hero-content{
+  max-width:590px;
+  color:white;
+}
 .tag{
-  color:var(--green);
+  color:#a9f3c4;
   letter-spacing:4px;
   font-size:12px;
   font-weight:bold;
   margin-bottom:20px;
 }
 .hero h1{
-  font-size:clamp(42px,6vw,75px);
-  line-height:1.02;
+  font-size:clamp(42px,6vw,72px);
+  line-height:1.04;
   margin-bottom:20px;
 }
-.hero h1 span{color:var(--green)}
+.hero h1 span{color:#a4f0bd}
 .hero p{
-  color:#d1ddd5;
+  color:#effaf2;
+  max-width:490px;
   line-height:1.7;
-  max-width:480px;
-  margin-bottom:27px;
+  margin-bottom:28px;
 }
-.actions{display:flex;gap:12px;flex-wrap:wrap}
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+}
 .btn{
-  border:0;
-  border-radius:5px;
-  padding:14px 23px;
+  padding:13px 22px;
+  border-radius:8px;
   font-weight:bold;
-  cursor:pointer;
   font-size:14px;
+  border:1px solid transparent;
+  cursor:pointer;
+  transition:.25s;
 }
-.primary{background:var(--green);color:#06130a}
-.secondary{background:#ffffff20;color:white;border:1px solid #ffffff45}
-.btn:hover{transform:translateY(-2px)}
-main{padding:15px 5% 70px}
-.section{margin-bottom:38px}
+.primary{
+  background:var(--green);
+  color:white;
+}
+.primary:hover{
+  background:#08713d;
+  transform:translateY(-2px);
+}
+.secondary{
+  background:#ffffffed;
+  color:var(--green-dark);
+  border-color:#ffffff;
+}
+.secondary:hover{
+  background:#e7f8ed;
+  transform:translateY(-2px);
+}
+
+/* CONTENU */
+main{
+  max-width:1450px;
+  margin:auto;
+  padding:38px 5% 70px;
+}
+.section{margin-bottom:48px}
 .section h2{
-  font-size:21px;
-  margin-bottom:17px;
+  font-size:23px;
+  margin-bottom:20px;
+  color:var(--text);
 }
 .section h2 span{color:var(--green)}
+
+/* CARTES ANIMÉS */
 .cards{
   display:flex;
-  gap:15px;
+  gap:17px;
   overflow-x:auto;
-  padding:5px 2px 15px;
+  padding:5px 3px 16px;
   scrollbar-width:thin;
-  scrollbar-color:var(--green) #172019;
+  scrollbar-color:#75c995 #edf6ef;
 }
 .anime-card{
   flex:0 0 190px;
-  height:265px;
-  position:relative;
+  height:260px;
   overflow:hidden;
-  border-radius:9px;
-  background:linear-gradient(145deg,#173b27,#101511 65%);
-  border:1px solid #ffffff12;
+  position:relative;
+  border-radius:12px;
+  background:linear-gradient(145deg,#dff5e6,#b9e7c9);
+  border:1px solid var(--border);
+  box-shadow:0 5px 16px #184b2b0d;
   transition:.25s;
   cursor:pointer;
 }
-.anime-card:hover{transform:scale(1.045);border-color:var(--green)}
+.anime-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 10px 24px #15995725;
+}
 .poster{
   height:100%;
   display:flex;
   flex-direction:column;
   justify-content:flex-end;
-  padding:16px;
-  background:linear-gradient(0deg,#030805 0%,transparent 85%);
+  padding:17px;
+  background:linear-gradient(0deg,#123e27ed,transparent 85%);
+  color:white;
 }
 .poster .symbol{
   position:absolute;
-  top:25px;left:0;right:0;
+  top:32px;
+  left:0;right:0;
   text-align:center;
-  font-size:65px;
-  opacity:.75;
+  font-size:66px;
 }
-.poster h3{font-size:18px;z-index:1}
-.poster small{color:var(--green);margin-top:7px;z-index:1}
-.room-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-  gap:15px;
+.poster h3{
+  font-size:18px;
+  position:relative;
 }
-.room{
-  background:var(--panel);
-  border:1px solid #ffffff15;
-  padding:22px;
-  border-radius:10px;
+.poster small{
+  color:#c1f6d2;
+  margin-top:7px;
+  position:relative;
 }
-.room h3{margin-bottom:8px}
-.room p{color:var(--muted);font-size:13px;line-height:1.5}
-.room button{margin-top:15px}
 .empty{
   display:none;
   padding:20px;
   color:var(--muted);
 }
+
+/* SALONS */
+.room-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:18px;
+}
+.room{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:25px;
+  box-shadow:0 5px 20px #16492b0b;
+  transition:.25s;
+}
+.room:hover{
+  transform:translateY(-4px);
+  border-color:#a7dfba;
+  box-shadow:0 10px 25px #15995718;
+}
+.room-icon{
+  width:53px;height:53px;
+  border-radius:15px;
+  display:grid;
+  place-items:center;
+  background:var(--green-light);
+  color:var(--green-dark);
+  font-size:25px;
+  margin-bottom:17px;
+}
+.room h3{
+  margin-bottom:10px;
+  color:var(--green-dark);
+  font-size:19px;
+}
+.room p{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.6;
+}
+.room .btn{margin-top:20px;width:100%}
+
+/* AUTRES ÉLÉMENTS */
+.empty-list{
+  background:white;
+  border:1px solid var(--border);
+  padding:23px;
+  border-radius:12px;
+  color:var(--muted);
+  font-size:14px;
+}
 footer{
+  background:white;
+  border-top:1px solid var(--border);
   padding:30px 5%;
-  color:#87968c;
-  border-top:1px solid #ffffff12;
+  color:var(--muted);
   font-size:13px;
 }
-.green{color:var(--green)}
-@media(max-width:750px){
-  header{height:auto;min-height:70px;padding:15px 4%;flex-wrap:wrap;gap:13px}
-  .logo{font-size:20px}
-  nav{order:3;width:100%;overflow-x:auto;gap:20px;padding:8px 0}
-  nav a{white-space:nowrap;font-size:13px}
-  .search{width:125px;padding:9px}
-  .hero{min-height:580px;padding:180px 6% 65px;background-position:60% center}
-  .hero h1{font-size:43px}
-  main{padding:10px 4% 50px}
+footer strong{color:var(--green-dark)}
+@media(max-width:900px){
+  header{flex-wrap:wrap}
+  nav{
+    order:3;
+    width:100%;
+    overflow-x:auto;
+    padding:8px 0 3px;
+    gap:19px;
+  }
+  .header-right{margin-left:auto}
+}
+@media(max-width:600px){
+  header{padding:13px 4%;gap:12px}
+  .logo{font-size:19px}
+  .search{width:125px;padding:10px}
+  .hero{
+    min-height:540px;
+    padding:75px 6%;
+    background-position:60% center;
+  }
+  .hero h1{font-size:44px}
+  main{padding:30px 4% 55px}
   .anime-card{flex-basis:155px;height:225px}
+  .section h2{font-size:20px}
+  .room-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
+
 <body>
 
 <header>
   <div class="logo">SHADOW WATCH</div>
+
   <nav>
     <a onclick="scrollToTop()">Accueil</a>
     <a onclick="showSection('anime')">Animés</a>
@@ -201,8 +327,14 @@ footer{
     <a onclick="showSection('popular')">Tendances</a>
     <a onclick="showSection('mylist')">Ma liste</a>
   </nav>
+
   <div class="header-right">
-    <input class="search" id="search" placeholder="Rechercher..." oninput="searchAnime()">
+    <input
+      class="search"
+      id="search"
+      placeholder="Rechercher..."
+      oninput="searchAnime()"
+    >
     <div class="avatar" id="avatar">S</div>
   </div>
 </header>
@@ -216,13 +348,18 @@ footer{
       et construis ton aventure avec la communauté SHADOW WATCH.
     </p>
     <div class="actions">
-      <button class="btn primary" onclick="showSection('anime')">▶ Explorer les animés</button>
-      <button class="btn secondary" onclick="showSection('rooms')">✦ Découvrir les salons</button>
+      <button class="btn primary" onclick="showSection('anime')">
+        ▶ Explorer les animés
+      </button>
+      <button class="btn secondary" onclick="showSection('rooms')">
+        ✦ Découvrir les salons
+      </button>
     </div>
   </div>
 </section>
 
 <main>
+
   <section class="section" id="anime">
     <h2>🔥 À découvrir <span>maintenant</span></h2>
     <div class="cards" id="animeCards"></div>
@@ -234,55 +371,70 @@ footer{
     <div class="cards" id="popularCards"></div>
   </section>
 
-  <section class="section" id="mylist">
-    <h2>♡ Ma <span>liste</span></h2>
-    <p style="color:var(--muted);font-size:14px">
-      Ta sélection personnelle apparaîtra ici prochainement.
-    </p>
-  </section>
-
   <section class="section" id="rooms">
-    <h2>👥 Les <span>salons</span> SHADOW</h2>
+    <h2>👥 Espace <span>Salons</span></h2>
     <div class="room-grid">
+
       <div class="room">
-        <h3>🌌 Salon des passionnés</h3>
-        <p>Retrouve les membres de la communauté et échange autour des animés.</p>
-        <button class="btn primary" onclick="roomNotice()">Rejoindre</button>
+        <div class="room-icon">＋</div>
+        <h3>Créer un salon</h3>
+        <p>
+          Crée ton propre espace et prépare une aventure
+          avec tes amis et les membres de la communauté.
+        </p>
+        <button class="btn primary" onclick="roomNotice('créer')">
+          Créer un salon
+        </button>
       </div>
+
       <div class="room">
-        <h3>🎬 Watch Party</h3>
-        <p>Un espace prévu pour regarder des vidéos ensemble et partager tes réactions.</p>
-        <button class="btn primary" onclick="roomNotice()">Découvrir</button>
+        <div class="room-icon">♧</div>
+        <h3>Rejoindre un salon</h3>
+        <p>
+          Retrouve un salon existant et rejoins les autres
+          passionnés pour partager tes moments anime.
+        </p>
+        <button class="btn primary" onclick="roomNotice('rejoindre')">
+          Rejoindre un salon
+        </button>
       </div>
-      <div class="room">
-        <h3>⚡ Créer un salon</h3>
-        <p>Prépare ton propre espace pour retrouver tes amis.</p>
-        <button class="btn secondary" onclick="roomNotice()">Créer</button>
-      </div>
+
     </div>
   </section>
+
+  <section class="section" id="mylist">
+    <h2>♡ Ma <span>liste</span></h2>
+    <div class="empty-list">
+      Ta sélection personnelle apparaîtra ici prochainement.
+    </div>
+  </section>
+
 </main>
 
 <footer>
-  <strong class="green">SHADOW WATCH</strong> — L'ombre nous rassemble.
-  <br><br>Animés • Passion • Communauté
+  <strong>SHADOW WATCH</strong> — L'ombre nous rassemble.
+  <br><br>
+  Animés • Passion • Communauté
 </footer>
 
 <script>
-const SUPABASE_URL = "https://ycjbzxzwdvmujdawaewh.supabase.co";
-const SUPABASE_KEY = "sb_publishable_SRzPt8W5qQkrwX5OV0HT4Q_TloQzh0c";
+const SUPABASE_URL =
+  "https://ycjbzxzwdvmujdawaewh.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_SRzPt8W5qQkrwX5OV0HT4Q_TloQzh0c";
 
 let supabaseClient = null;
 
-try {
-  if (window.supabase) {
+try{
+  if(window.supabase){
     supabaseClient = window.supabase.createClient(
       SUPABASE_URL,
       SUPABASE_KEY
     );
   }
-} catch(error) {
-  console.error("Connexion Supabase :", error);
+}catch(error){
+  console.error("Connexion Supabase :",error);
 }
 
 const animeList = [
@@ -296,79 +448,117 @@ const animeList = [
   {name:"Dragon Ball",genre:"Aventure • Combat",symbol:"🐉"}
 ];
 
-function createCard(anime) {
+function createCard(anime){
   const card = document.createElement("div");
   card.className = "anime-card";
+
   card.innerHTML = `
     <div class="poster">
       <div class="symbol">${anime.symbol}</div>
       <h3></h3>
       <small></small>
-    </div>`;
+    </div>
+  `;
+
   card.querySelector("h3").textContent = anime.name;
   card.querySelector("small").textContent = anime.genre;
-  card.addEventListener("click", () => {
-    alert("La fiche de " + anime.name + " sera disponible dans une prochaine version.");
+
+  card.addEventListener("click",()=>{
+    alert(
+      "La fiche de " + anime.name +
+      " sera disponible dans une prochaine version."
+    );
   });
+
   return card;
 }
 
-function renderAnime(list, container) {
+function renderAnime(list,container){
   container.innerHTML = "";
-  list.forEach(anime => container.appendChild(createCard(anime)));
+  list.forEach(anime=>{
+    container.appendChild(createCard(anime));
+  });
 }
 
-renderAnime(animeList, document.getElementById("animeCards"));
+renderAnime(
+  animeList,
+  document.getElementById("animeCards")
+);
+
 renderAnime(
   [animeList[2],animeList[5],animeList[3],animeList[0]],
   document.getElementById("popularCards")
 );
 
-function searchAnime() {
-  const query = document.getElementById("search").value
-    .toLowerCase().trim();
-  const results = animeList.filter(anime =>
+function searchAnime(){
+  const query = document
+    .getElementById("search")
+    .value.toLowerCase().trim();
+
+  const results = animeList.filter(anime=>
     anime.name.toLowerCase().includes(query) ||
     anime.genre.toLowerCase().includes(query)
   );
-  renderAnime(results, document.getElementById("animeCards"));
+
+  renderAnime(
+    results,
+    document.getElementById("animeCards")
+  );
+
   document.getElementById("empty").style.display =
     results.length ? "none" : "block";
-  document.getElementById("anime").scrollIntoView({behavior:"smooth"});
 }
 
-function scrollToTop() {
+function scrollToTop(){
   window.scrollTo({top:0,behavior:"smooth"});
 }
 
-function showSection(id) {
+function showSection(id){
   const section = document.getElementById(id);
-  if(section) section.scrollIntoView({behavior:"smooth"});
+  if(section){
+    section.scrollIntoView({behavior:"smooth"});
+  }
 }
 
-function roomNotice() {
-  alert("Les salons multijoueurs seront activés après la connexion du système de chat et de synchronisation.");
+function roomNotice(action){
+  if(action === "créer"){
+    alert("La création de salons sera disponible après activation du système multijoueur.");
+  }else{
+    alert("La liste des salons sera disponible après activation du système multijoueur.");
+  }
 }
 
-async function loadProfile() {
+async function loadProfile(){
   if(!supabaseClient) return;
-  try {
-    const {data,error} = await supabaseClient.auth.getSession();
+
+  try{
+    const {data,error} =
+      await supabaseClient.auth.getSession();
+
     if(error) throw error;
+
     const user = data.session?.user;
-    if(user) {
-      const pseudo = user.user_metadata?.pseudo || user.email?.[0] || "S";
+
+    if(user){
+      const pseudo =
+        user.user_metadata?.pseudo ||
+        user.email?.[0] ||
+        "S";
+
       document.getElementById("avatar").textContent =
         pseudo.charAt(0).toUpperCase();
     }
-  } catch(error) {
+  }catch(error){
     console.error("Profil :",error.message);
   }
 }
+
 loadProfile();
 </script>
+
 </body>
-      </html>
+  </html>
+    
                                          
   
 
