@@ -2,313 +2,420 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080810">
-  <title>SHADOW WATCH</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHADOW WATCH - Univers Anime</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #080810;
-      color: white;
-      text-align: center;
-    }
+body{
+  font-family:Arial,sans-serif;
+  background:#fff;
+  color:#17152b;
+}
 
-    header {
-      padding: 28px 15px;
-      background: #100c1c;
-      border-bottom: 2px solid #7040b8;
-    }
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 7%;
+  border-bottom:1px solid #eee;
+}
 
-    header h1 {
-      color: #b58cff;
-      letter-spacing: 4px;
-      font-size: 30px;
-    }
+.logo{
+  font-size:25px;
+  font-weight:900;
+  color:#7045d5;
+  letter-spacing:1px;
+}
 
-    header p {
-      color: #ddd;
-    }
+header span{
+  color:#56516b;
+  font-size:13px;
+}
 
-    .container {
-      width: 90%;
-      max-width: 440px;
-      margin: 35px auto;
-      padding: 25px;
-      background: #151321;
-      border: 1px solid #6841a5;
-      border-radius: 18px;
-      box-shadow: 0 0 25px #32175a55;
-    }
+main{
+  max-width:1100px;
+  margin:45px auto;
+  padding:20px;
+  display:grid;
+  grid-template-columns:1fr 420px;
+  gap:45px;
+  align-items:center;
+}
 
-    h2 {
-      color: #b58cff;
-    }
+.hero h1{
+  font-size:48px;
+  line-height:1.12;
+  margin:20px 0;
+}
 
-    input, button {
-      width: 100%;
-      padding: 14px;
-      margin: 9px 0;
-      border-radius: 9px;
-      font-size: 15px;
-    }
+.hero h1 strong{color:#7045d5}
 
-    input {
-      background: #090812;
-      color: white;
-      border: 1px solid #554078;
-    }
+.hero p{
+  color:#68647a;
+  line-height:1.7;
+  font-size:16px;
+  max-width:480px;
+}
 
-    button {
-      background: #7040b8;
-      color: white;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-    }
+.tag{
+  display:inline-block;
+  background:#f0eaff;
+  color:#7045d5;
+  padding:10px 15px;
+  border-radius:30px;
+  font-weight:bold;
+  font-size:12px;
+}
 
-    button:hover {
-      background: #2678c9;
-    }
+.anime-art{
+  margin-top:28px;
+  min-height:190px;
+  border-radius:25px;
+  background:linear-gradient(120deg,#eee8ff,#e6f3ff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  font-size:65px;
+}
 
-    .green {
-      background: #176b45;
-    }
+.art-caption{
+  margin-top:12px;
+  color:#777187;
+  font-size:12px;
+}
 
-    .blue {
-      background: #176b9c;
-    }
+.card{
+  background:white;
+  padding:30px;
+  border:1px solid #eeeaf5;
+  border-radius:24px;
+  box-shadow:0 15px 45px #34205c12;
+}
 
-    #message {
-      color: #8fe5a5;
-      overflow-wrap: anywhere;
-    }
+.card h2{
+  font-size:27px;
+  margin-bottom:8px;
+}
 
-    #compte {
-      display: none;
-    }
+.subtitle{
+  color:#777187;
+  font-size:14px;
+  margin-bottom:22px;
+}
 
-    .anime {
-      margin-top: 25px;
-      padding: 18px;
-      background: #100c1c;
-      border: 1px solid #354c91;
-      border-radius: 12px;
-    }
+.google{
+  width:100%;
+  padding:13px;
+  background:white;
+  border:1px solid #ddd;
+  border-radius:10px;
+  font-weight:bold;
+  cursor:pointer;
+  color:#242238;
+}
 
-    footer {
-      padding: 25px;
-      color: #888;
-    }
-  </style>
+.separator{
+  text-align:center;
+  color:#999;
+  font-size:12px;
+  margin:20px 0;
+}
+
+label{
+  display:block;
+  font-size:13px;
+  font-weight:bold;
+  margin:14px 0 7px;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  border:1px solid #ddd9e8;
+  border-radius:10px;
+  outline:none;
+  font-size:14px;
+}
+
+input:focus{
+  border-color:#7045d5;
+  box-shadow:0 0 0 3px #7045d51a;
+}
+
+.primary{
+  width:100%;
+  border:0;
+  padding:15px;
+  margin-top:20px;
+  background:linear-gradient(100deg,#7045d5,#477be8);
+  color:white;
+  border-radius:10px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.primary:hover{opacity:.9}
+
+.switch{
+  text-align:center;
+  margin-top:20px;
+  font-size:13px;
+  color:#777187;
+}
+
+.switch button{
+  border:0;
+  background:none;
+  color:#7045d5;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+#message{
+  margin-top:15px;
+  font-size:13px;
+  line-height:1.5;
+  color:#5940a5;
+}
+
+footer{
+  text-align:center;
+  padding:30px;
+  color:#999;
+  font-size:12px;
+}
+
+.hidden{display:none}
+
+@media(max-width:800px){
+  main{
+    grid-template-columns:1fr;
+    margin:15px auto;
+    gap:25px;
+  }
+  .hero h1{font-size:37px}
+  .card{padding:23px}
+  header{padding:18px 5%}
+}
+</style>
 </head>
 
 <body>
 
-  <header>
-    <h1>SHADOW WATCH</h1>
-    <p>L'ombre nous rassemble.</p>
-  </header>
+<header>
+  <div class="logo">SHADOW WATCH</div>
+  <span>L'ombre nous rassemble.</span>
+</header>
 
-  <main class="container">
+<main>
 
-    <section id="auth">
-      <h2>Bienvenue dans l'ombre</h2>
-      <p>Retrouve tes amis et rejoins la communauté anime.</p>
+<section class="hero">
+  <span class="tag">✦ L'UNIVERS DES ANIMÉS ✦</span>
 
-      <input
-        id="pseudo"
-        type="text"
-        placeholder="Choisis ton pseudo"
-        maxlength="30"
-      >
+  <h1>
+    ENTRE DANS<br>
+    L'UNIVERS <strong>ANIME !</strong>
+  </h1>
 
-      <input
-        id="email"
-        type="email"
-        placeholder="Ton adresse email"
-      >
+  <p>
+    Découvre un monde rempli d'animés, retrouve les passionnés
+    et construis ton aventure au sein de la communauté SHADOW WATCH.
+  </p>
 
-      <input
-        id="password"
-        type="password"
-        placeholder="Ton mot de passe"
-      >
+  <div class="anime-art">
+    <span>⚔️</span>
+    <span>🌌</span>
+    <span>✨</span>
+  </div>
 
-      <button onclick="inscription()">
+  <div class="art-caption">
+    ANIMÉS • PASSION • COMMUNAUTÉ
+  </div>
+</section>
+
+<section class="card">
+
+  <div id="signup">
+    <h2>Rejoins l'ombre</h2>
+    <p class="subtitle">Crée ton compte gratuitement.</p>
+
+    <button class="google" onclick="googleLogin()">
+      🌐 Continuer avec Google
+    </button>
+
+    <div class="separator">OU AVEC TON EMAIL</div>
+
+    <form id="signupForm">
+      <label>Ton pseudo</label>
+      <input id="pseudo" type="text"
+        placeholder="Ex : Shadow_01" required maxlength="25">
+
+      <label>Adresse email</label>
+      <input id="email" type="email"
+        placeholder="toi@exemple.com" required>
+
+      <label>Mot de passe</label>
+      <input id="password" type="password"
+        placeholder="Au moins 8 caractères" required minlength="8">
+
+      <button class="primary" type="submit">
         CRÉER MON COMPTE
       </button>
+    </form>
 
-      <button class="green" onclick="connexion()">
+    <div class="switch">
+      Déjà membre ?
+      <button onclick="showLogin()">Se connecter</button>
+    </div>
+  </div>
+
+  <div id="login" class="hidden">
+    <h2>Bon retour !</h2>
+    <p class="subtitle">Retrouve la communauté SHADOW WATCH.</p>
+
+    <form id="loginForm">
+      <label>Adresse email</label>
+      <input id="loginEmail" type="email"
+        placeholder="toi@exemple.com" required>
+
+      <label>Mot de passe</label>
+      <input id="loginPassword" type="password"
+        placeholder="Ton mot de passe" required>
+
+      <button class="primary" type="submit">
         SE CONNECTER
       </button>
+    </form>
 
-      <p id="message" aria-live="polite"></p>
-    </section>
+    <div class="switch">
+      Pas encore de compte ?
+      <button onclick="showSignup()">S'inscrire</button>
+    </div>
+  </div>
 
-    <section id="compte">
-      <h2>Bienvenue dans l'ombre !</h2>
-      <p id="bienvenue"></p>
+  <div id="message" role="status" aria-live="polite"></div>
 
-      <div class="anime">
-        <h3>SHADOW WATCH</h3>
-        <p>Ta communauté anime commence ici.</p>
-        <p>Les salons et le chat multijoueur arrivent dans cette interface.</p>
-      </div>
+</section>
+</main>
 
-      <button class="blue" onclick="deconnexion()">
-        SE DÉCONNECTER
-      </button>
-    </section>
+<footer>
+  SHADOW WATCH © 2026 — L'ombre nous rassemble.
+</footer>
 
-  </main>
+<script>
+const SUPABASE_URL =
+  "https://ycjbzxzwdvmujdawaewh.supabase.co";
 
-  <footer>
-    SHADOW WATCH © 2026
-    <p>L'ombre nous rassemble.</p>
-  </footer>
+const SUPABASE_KEY =
+  "sb_publishable_SRzPt8W5qQkrwX5OV0HT4Q_TloQzh0c";
 
-  <script>
-    const SUPABASE_URL =
-      "https://ycjbzxzwdvmujdawaewh.supabase.co";
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
-    const SUPABASE_KEY =
-      "sb_publishable_SRzPt8W5qQkrwX5OV0HT4Q_TloQzh0c";
+const message = document.getElementById("message");
 
-    const db = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
+function showMessage(text){
+  message.textContent = text;
+}
+
+function showLogin(){
+  document.getElementById("signup").classList.add("hidden");
+  document.getElementById("login").classList.remove("hidden");
+  showMessage("");
+}
+
+function showSignup(){
+  document.getElementById("login").classList.add("hidden");
+  document.getElementById("signup").classList.remove("hidden");
+  showMessage("");
+}
+
+document.getElementById("signupForm")
+.addEventListener("submit", async (event)=>{
+  event.preventDefault();
+
+  const pseudo = document.getElementById("pseudo").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  if(pseudo.length < 3){
+    showMessage("Ton pseudo doit contenir au moins 3 caractères.");
+    return;
+  }
+
+  showMessage("Création de ton compte en cours...");
+
+  const {data,error} = await db.auth.signUp({
+    email,
+    password,
+    options:{
+      emailRedirectTo:
+        "https://stevetaminy1-ai.github.io/shadow-watch/",
+      data:{pseudo}
+    }
+  });
+
+  if(error){
+    showMessage("Erreur : " + error.message);
+    return;
+  }
+
+  if(data.session){
+    showMessage("Bienvenue dans SHADOW WATCH !");
+  }else{
+    showMessage(
+      "Compte créé ! Vérifie ta boîte email pour confirmer ton inscription."
     );
+  }
+});
 
-    function afficher(texte) {
-      document.getElementById("message").textContent = texte;
+document.getElementById("loginForm")
+.addEventListener("submit", async (event)=>{
+  event.preventDefault();
+
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value;
+
+  showMessage("Connexion en cours...");
+
+  const {data,error} = await db.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if(error){
+    showMessage("Erreur : " + error.message);
+    return;
+  }
+
+  showMessage("Connexion réussie ! Bienvenue dans l'ombre.");
+});
+
+async function googleLogin(){
+  const {error} = await db.auth.signInWithOAuth({
+    provider:"google",
+    options:{
+      redirectTo:
+        "https://stevetaminy1-ai.github.io/shadow-watch/"
     }
+  });
 
-    async function inscription() {
-      const pseudo = document.getElementById("pseudo").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-
-      if (!pseudo || !email || !password) {
-        afficher("Remplis tous les champs.");
-        return;
-      }
-
-      if (password.length < 6) {
-        afficher("Le mot de passe doit contenir au moins 6 caractères.");
-        return;
-      }
-
-      afficher("Création du compte en cours...");
-
-      const { data, error } = await db.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            pseudo: pseudo
-          }
-        }
-      });
-
-      if (error) {
-        afficher(error.message);
-        return;
-      }
-
-      if (data.session) {
-        afficher("Compte créé avec succès !");
-        afficherCompte(data.user);
-      } else {
-        afficher(
-          "Compte créé ! Vérifie ton email pour confirmer ton inscription."
-        );
-      }
-    }
-
-    async function connexion() {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-
-      if (!email || !password) {
-        afficher("Entre ton email et ton mot de passe.");
-        return;
-      }
-
-      afficher("Connexion en cours...");
-
-      const { data, error } = await db.auth.signInWithPassword({
-        email,
-        password
-      });
-
-      if (error) {
-        afficher(error.message);
-        return;
-      }
-
-      afficherCompte(data.user);
-    }
-
-    function afficherCompte(user) {
-      const pseudo = user.user_metadata?.pseudo || "Membre";
-
-      document.getElementById("auth").style.display = "none";
-      document.getElementById("compte").style.display = "block";
-
-      document.getElementById("bienvenue").textContent =
-        "Connecté en tant que " + pseudo;
-    }
-
-    async function deconnexion() {
-      const { error } = await db.auth.signOut();
-
-      if (error) {
-        afficher(error.message);
-        return;
-      }
-
-      document.getElementById("compte").style.display = "none";
-      document.getElementById("auth").style.display = "block";
-
-      afficher("Tu es déconnecté.");
-    }
-
-    async function verifierSession() {
-      const { data, error } = await db.auth.getSession();
-
-      if (error) {
-        afficher(error.message);
-        return;
-      }
-
-      if (data.session) {
-        afficherCompte(data.session.user);
-      }
-    }
-
-    verifierSession();
-  </script>
+  if(error){
+    showMessage("Google : " + error.message);
+  }
+}
+</script>
 
 </body>
-  </html>
-
-    
-
-
-
-
-  
+        </html>
   
 
-  
-
-  
+        
