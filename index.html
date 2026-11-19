@@ -23,7 +23,7 @@
     }
 
     header {
-      padding: 30px 15px;
+      padding: 28px 15px;
       background: #100c1c;
       border-bottom: 2px solid #7040b8;
     }
@@ -31,13 +31,15 @@
     header h1 {
       color: #b58cff;
       letter-spacing: 4px;
+      font-size: 30px;
     }
 
     header p {
-      color: #aaa;
+      color: #ddd;
     }
 
     .container {
+      width: 90%;
       max-width: 440px;
       margin: 35px auto;
       padding: 25px;
@@ -77,8 +79,12 @@
       background: #2678c9;
     }
 
-    .secondary {
+    .green {
       background: #176b45;
+    }
+
+    .blue {
+      background: #176b9c;
     }
 
     #message {
@@ -90,9 +96,17 @@
       display: none;
     }
 
+    .anime {
+      margin-top: 25px;
+      padding: 18px;
+      background: #100c1c;
+      border: 1px solid #354c91;
+      border-radius: 12px;
+    }
+
     footer {
       padding: 25px;
-      color: #777;
+      color: #888;
     }
   </style>
 </head>
@@ -108,12 +122,13 @@
 
     <section id="auth">
       <h2>Bienvenue dans l'ombre</h2>
-      <p>Crée ton compte et rejoins la communauté.</p>
+      <p>Retrouve tes amis et rejoins la communauté anime.</p>
 
       <input
         id="pseudo"
         type="text"
         placeholder="Choisis ton pseudo"
+        maxlength="30"
       >
 
       <input
@@ -132,30 +147,41 @@
         CRÉER MON COMPTE
       </button>
 
-      <button class="secondary" onclick="connexion()">
+      <button class="green" onclick="connexion()">
         SE CONNECTER
       </button>
 
-      <p id="message"></p>
+      <p id="message" aria-live="polite"></p>
     </section>
 
     <section id="compte">
       <h2>Bienvenue dans l'ombre !</h2>
       <p id="bienvenue"></p>
-      <button onclick="deconnexion()">SE DÉCONNECTER</button>
+
+      <div class="anime">
+        <h3>SHADOW WATCH</h3>
+        <p>Ta communauté anime commence ici.</p>
+        <p>Les salons et le chat multijoueur arrivent dans cette interface.</p>
+      </div>
+
+      <button class="blue" onclick="deconnexion()">
+        SE DÉCONNECTER
+      </button>
     </section>
 
   </main>
 
   <footer>
     SHADOW WATCH © 2026
+    <p>L'ombre nous rassemble.</p>
   </footer>
 
   <script>
     const SUPABASE_URL =
       "https://ycjbzxzwdvmujdawaewh.supabase.co";
 
-    const SUPABASE_KEY = "TON_ANON_KEY";
+    const SUPABASE_KEY =
+      "sb_publishable_SRzPt8W5qQkrwX5OV0HT4Q_TloQzh0c";
 
     const db = window.supabase.createClient(
       SUPABASE_URL,
@@ -187,7 +213,9 @@
         email,
         password,
         options: {
-          data: { pseudo }
+          data: {
+            pseudo: pseudo
+          }
         }
       });
 
@@ -198,9 +226,11 @@
 
       if (data.session) {
         afficher("Compte créé avec succès !");
-        await verifierConnexion();
+        afficherCompte(data.user);
       } else {
-        afficher("Compte créé ! Vérifie ton email pour confirmer l'inscription.");
+        afficher(
+          "Compte créé ! Vérifie ton email pour confirmer ton inscription."
+        );
       }
     }
 
@@ -215,7 +245,7 @@
 
       afficher("Connexion en cours...");
 
-      const { error } = await db.auth.signInWithPassword({
+      const { data, error } = await db.auth.signInWithPassword({
         email,
         password
       });
@@ -225,22 +255,17 @@
         return;
       }
 
-      await verifierConnexion();
+      afficherCompte(data.user);
     }
 
-    async function verifierConnexion() {
-      const { data } = await db.auth.getUser();
-
-      if (!data.user) return;
-
-      const pseudo =
-        data.user.user_metadata?.pseudo || "Membre";
+    function afficherCompte(user) {
+      const pseudo = user.user_metadata?.pseudo || "Membre";
 
       document.getElementById("auth").style.display = "none";
       document.getElementById("compte").style.display = "block";
 
       document.getElementById("bienvenue").textContent =
-        "Tu es connecté en tant que " + pseudo + ".";
+        "Connecté en tant que " + pseudo;
     }
 
     async function deconnexion() {
@@ -253,21 +278,30 @@
 
       document.getElementById("compte").style.display = "none";
       document.getElementById("auth").style.display = "block";
+
       afficher("Tu es déconnecté.");
     }
 
-    db.auth.onAuthStateChange((event, session) => {
-      if (session) {
-        verifierConnexion();
-      }
-    });
+    async function verifierSession() {
+      const { data, error } = await db.auth.getSession();
 
-    verifierConnexion();
+      if (error) {
+        afficher(error.message);
+        return;
+      }
+
+      if (data.session) {
+        afficherCompte(data.session.user);
+      }
+    }
+
+    verifierSession();
   </script>
 
 </body>
-    </html>
+  </html>
 
+    
 
 
 
