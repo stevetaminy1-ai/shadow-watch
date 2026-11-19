@@ -5,314 +5,371 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SHADOW WATCH</title>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+:root{
+  --green:#19d879;
+  --black:#080d0b;
+  --panel:#111a15;
+  --white:#f5fff8;
+  --muted:#a4b4aa;
 }
-
-body {
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
-  color: white;
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--black);
+  color:var(--white);
+  font-family:Arial,sans-serif;
+  overflow-x:hidden;
+}
+header{
+  height:75px;
+  padding:0 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:linear-gradient(180deg,#050906,transparent);
+  position:absolute;
+  width:100%;
+  z-index:10;
+}
+.logo{
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:2px;
+  color:var(--green);
+}
+nav{display:flex;gap:25px}
+nav a{
+  color:white;
+  text-decoration:none;
+  font-size:14px;
+  cursor:pointer;
+}
+nav a:hover{color:var(--green)}
+.header-right{display:flex;align-items:center;gap:15px}
+.search{
+  background:#ffffff18;
+  border:1px solid #ffffff35;
+  border-radius:20px;
+  padding:10px 15px;
+  color:white;
+  width:180px;
+  outline:none;
+}
+.avatar{
+  width:37px;height:37px;
+  border-radius:50%;
+  background:var(--green);
+  color:#07110b;
+  display:grid;
+  place-items:center;
+  font-weight:bold;
+}
+.hero{
+  min-height:570px;
+  display:flex;
+  align-items:center;
+  padding:130px 7% 80px;
   background:
-    linear-gradient(90deg,
-      rgba(8,5,20,.12) 0%,
-      rgba(8,5,20,.15) 48%,
-      rgba(12,7,30,.75) 100%),
-    url("from-PixAI-2078003211904014643-逆転世界.png")
-    center center / cover no-repeat fixed;
+  linear-gradient(90deg,#050906 2%,#050906d9 40%,transparent 100%),
+  linear-gradient(0deg,#080d0b 1%,transparent 55%),
+  url("from-PixAI-2078003211904014643-逆転世界.png") center 35%/cover no-repeat;
 }
-
-header {
-  height: 75px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 5%;
-  background: rgba(10,7,25,.35);
-  backdrop-filter: blur(8px);
+.hero-content{max-width:590px}
+.tag{
+  color:var(--green);
+  letter-spacing:4px;
+  font-size:12px;
+  font-weight:bold;
+  margin-bottom:20px;
 }
-
-.logo {
-  font-size: 25px;
-  font-weight: 900;
-  letter-spacing: 2px;
+.hero h1{
+  font-size:clamp(42px,6vw,75px);
+  line-height:1.02;
+  margin-bottom:20px;
 }
-
-.logo span {
-  color: #a98aff;
+.hero h1 span{color:var(--green)}
+.hero p{
+  color:#d1ddd5;
+  line-height:1.7;
+  max-width:480px;
+  margin-bottom:27px;
 }
-
-nav {
-  display: flex;
-  gap: 28px;
+.actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn{
+  border:0;
+  border-radius:5px;
+  padding:14px 23px;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:14px;
 }
-
-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
+.primary{background:var(--green);color:#06130a}
+.secondary{background:#ffffff20;color:white;border:1px solid #ffffff45}
+.btn:hover{transform:translateY(-2px)}
+main{padding:15px 5% 70px}
+.section{margin-bottom:38px}
+.section h2{
+  font-size:21px;
+  margin-bottom:17px;
 }
-
-main {
-  min-height: calc(100vh - 75px);
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 35px 8%;
+.section h2 span{color:var(--green)}
+.cards{
+  display:flex;
+  gap:15px;
+  overflow-x:auto;
+  padding:5px 2px 15px;
+  scrollbar-width:thin;
+  scrollbar-color:var(--green) #172019;
 }
-
-.login-panel {
-  width: 390px;
-  max-width: 100%;
-  padding: 38px;
-  border-radius: 22px;
-  background: rgba(20,15,42,.78);
-  border: 1px solid rgba(190,160,255,.4);
-  backdrop-filter: blur(18px);
-  box-shadow: 0 15px 60px rgba(0,0,0,.35);
+.anime-card{
+  flex:0 0 190px;
+  height:265px;
+  position:relative;
+  overflow:hidden;
+  border-radius:9px;
+  background:linear-gradient(145deg,#173b27,#101511 65%);
+  border:1px solid #ffffff12;
+  transition:.25s;
+  cursor:pointer;
 }
-
-.login-panel h1 {
-  font-size: 29px;
-  margin-bottom: 10px;
+.anime-card:hover{transform:scale(1.045);border-color:var(--green)}
+.poster{
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding:16px;
+  background:linear-gradient(0deg,#030805 0%,transparent 85%);
 }
-
-.subtitle {
-  color: #d0c4ec;
-  margin-bottom: 28px;
-  line-height: 1.5;
+.poster .symbol{
+  position:absolute;
+  top:25px;left:0;right:0;
+  text-align:center;
+  font-size:65px;
+  opacity:.75;
 }
-
-input {
-  width: 100%;
-  padding: 15px;
-  margin-bottom: 15px;
-  border-radius: 10px;
-  border: 1px solid #7962a8;
-  background: rgba(255,255,255,.09);
-  color: white;
-  font-size: 15px;
+.poster h3{font-size:18px;z-index:1}
+.poster small{color:var(--green);margin-top:7px;z-index:1}
+.room-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:15px;
 }
-
-input::placeholder {
-  color: #c7bdd9;
+.room{
+  background:var(--panel);
+  border:1px solid #ffffff15;
+  padding:22px;
+  border-radius:10px;
 }
-
-button {
-  width: 100%;
-  padding: 15px;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(110deg,#7950df,#3979ed);
-  color: white;
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 8px;
+.room h3{margin-bottom:8px}
+.room p{color:var(--muted);font-size:13px;line-height:1.5}
+.room button{margin-top:15px}
+.empty{
+  display:none;
+  padding:20px;
+  color:var(--muted);
 }
-
-button:hover {
-  filter: brightness(1.15);
+footer{
+  padding:30px 5%;
+  color:#87968c;
+  border-top:1px solid #ffffff12;
+  font-size:13px;
 }
-
-.switch {
-  text-align: center;
-  margin-top: 23px;
-  color: #ddd2f5;
-  font-size: 14px;
-}
-
-.switch a {
-  color: #b99aff;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-#message {
-  margin-top: 15px;
-  font-size: 13px;
-  line-height: 1.5;
-  color: #e2d7ff;
-}
-
-.hidden {
-  display: none;
-}
-
-@media(max-width:700px) {
-  body {
-    background-attachment: scroll;
-    background-position: center;
-  }
-
-  header {
-    height: 65px;
-    padding: 0 18px;
-  }
-
-  .logo {
-    font-size: 19px;
-  }
-
-  nav {
-    gap: 12px;
-  }
-
-  nav a {
-    font-size: 11px;
-  }
-
-  main {
-    min-height: calc(100vh - 65px);
-    justify-content: center;
-    padding: 25px 16px;
-  }
-
-  .login-panel {
-    padding: 27px 22px;
-    background: rgba(20,15,42,.88);
-  }
+.green{color:var(--green)}
+@media(max-width:750px){
+  header{height:auto;min-height:70px;padding:15px 4%;flex-wrap:wrap;gap:13px}
+  .logo{font-size:20px}
+  nav{order:3;width:100%;overflow-x:auto;gap:20px;padding:8px 0}
+  nav a{white-space:nowrap;font-size:13px}
+  .search{width:125px;padding:9px}
+  .hero{min-height:580px;padding:180px 6% 65px;background-position:60% center}
+  .hero h1{font-size:43px}
+  main{padding:10px 4% 50px}
+  .anime-card{flex-basis:155px;height:225px}
 }
 </style>
 </head>
-
 <body>
 
 <header>
-  <div class="logo">SHADOW <span>WATCH</span></div>
+  <div class="logo">SHADOW WATCH</div>
   <nav>
-    <a href="#">Animés</a>
-    <a href="#">Salons</a>
-    <a href="#">Communauté</a>
+    <a onclick="scrollToTop()">Accueil</a>
+    <a onclick="showSection('anime')">Animés</a>
+    <a onclick="showSection('rooms')">Salons</a>
+    <a onclick="showSection('popular')">Tendances</a>
+    <a onclick="showSection('mylist')">Ma liste</a>
   </nav>
+  <div class="header-right">
+    <input class="search" id="search" placeholder="Rechercher..." oninput="searchAnime()">
+    <div class="avatar" id="avatar">S</div>
+  </div>
 </header>
 
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="tag">✦ L'UNIVERS SHADOW ✦</div>
+    <h1>ENTRE DANS<br><span>L'OMBRE.</span></h1>
+    <p>
+      Découvre un univers rempli d'animés, retrouve les passionnés
+      et construis ton aventure avec la communauté SHADOW WATCH.
+    </p>
+    <div class="actions">
+      <button class="btn primary" onclick="showSection('anime')">▶ Explorer les animés</button>
+      <button class="btn secondary" onclick="showSection('rooms')">✦ Découvrir les salons</button>
+    </div>
+  </div>
+</section>
+
 <main>
-  <section class="login-panel">
+  <section class="section" id="anime">
+    <h2>🔥 À découvrir <span>maintenant</span></h2>
+    <div class="cards" id="animeCards"></div>
+    <div class="empty" id="empty">Aucun animé trouvé.</div>
+  </section>
 
-    <div id="login">
-      <h1>Bienvenue dans l'ombre</h1>
-      <p class="subtitle">Retrouve ta communauté anime.</p>
+  <section class="section" id="popular">
+    <h2>✦ Les <span>tendances</span></h2>
+    <div class="cards" id="popularCards"></div>
+  </section>
 
-      <input id="loginEmail" type="email"
-        placeholder="Adresse e-mail">
+  <section class="section" id="mylist">
+    <h2>♡ Ma <span>liste</span></h2>
+    <p style="color:var(--muted);font-size:14px">
+      Ta sélection personnelle apparaîtra ici prochainement.
+    </p>
+  </section>
 
-      <input id="loginPassword" type="password"
-        placeholder="Mot de passe">
-
-      <button onclick="signIn()">Se connecter</button>
-
-      <p class="switch">
-        Pas encore de compte ?
-        <a onclick="showSignup()">S'inscrire</a>
-      </p>
+  <section class="section" id="rooms">
+    <h2>👥 Les <span>salons</span> SHADOW</h2>
+    <div class="room-grid">
+      <div class="room">
+        <h3>🌌 Salon des passionnés</h3>
+        <p>Retrouve les membres de la communauté et échange autour des animés.</p>
+        <button class="btn primary" onclick="roomNotice()">Rejoindre</button>
+      </div>
+      <div class="room">
+        <h3>🎬 Watch Party</h3>
+        <p>Un espace prévu pour regarder des vidéos ensemble et partager tes réactions.</p>
+        <button class="btn primary" onclick="roomNotice()">Découvrir</button>
+      </div>
+      <div class="room">
+        <h3>⚡ Créer un salon</h3>
+        <p>Prépare ton propre espace pour retrouver tes amis.</p>
+        <button class="btn secondary" onclick="roomNotice()">Créer</button>
+      </div>
     </div>
-
-    <div id="signup" class="hidden">
-      <h1>Rejoins-nous</h1>
-      <p class="subtitle">Crée ton identité dans l'univers Shadow.</p>
-
-      <input id="pseudo" type="text" placeholder="Ton pseudo">
-      <input id="signupEmail" type="email"
-        placeholder="Adresse e-mail">
-      <input id="signupPassword" type="password"
-        placeholder="Mot de passe (6 caractères minimum)">
-
-      <button onclick="signUp()">Créer mon compte</button>
-
-      <p class="switch">
-        Déjà membre ?
-        <a onclick="showLogin()">Se connecter</a>
-      </p>
-    </div>
-
-    <p id="message"></p>
   </section>
 </main>
 
+<footer>
+  <strong class="green">SHADOW WATCH</strong> — L'ombre nous rassemble.
+  <br><br>Animés • Passion • Communauté
+</footer>
+
 <script>
-const SUPABASE_URL =
-  "https://ycjbzxzwdvmujdawaewh.supabase.co";
+const SUPABASE_URL = "https://ycjbzxzwdvmujdawaewh.supabase.co";
+const SUPABASE_KEY = "sb_publishable_SRzPt8W5qQkrwX5OV0HT4Q_TloQzh0c";
 
-const SUPABASE_KEY =
-  "sb_publishable_SRzPt8W5qQkrwX5OV0HT4Q_TloQzh0c";
+let supabaseClient = null;
 
-const db = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
+try {
+  if (window.supabase) {
+    supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+  }
+} catch(error) {
+  console.error("Connexion Supabase :", error);
+}
+
+const animeList = [
+  {name:"One Punch Man",genre:"Action • Comédie",symbol:"👊"},
+  {name:"Naruto",genre:"Aventure • Ninja",symbol:"🍥"},
+  {name:"Demon Slayer",genre:"Action • Fantastique",symbol:"⚔️"},
+  {name:"Jujutsu Kaisen",genre:"Action • Surnaturel",symbol:"👁️"},
+  {name:"Attack on Titan",genre:"Action • Drame",symbol:"🪽"},
+  {name:"Solo Leveling",genre:"Action • Fantasy",symbol:"⚡"},
+  {name:"Death Note",genre:"Mystère • Thriller",symbol:"📓"},
+  {name:"Dragon Ball",genre:"Aventure • Combat",symbol:"🐉"}
+];
+
+function createCard(anime) {
+  const card = document.createElement("div");
+  card.className = "anime-card";
+  card.innerHTML = `
+    <div class="poster">
+      <div class="symbol">${anime.symbol}</div>
+      <h3></h3>
+      <small></small>
+    </div>`;
+  card.querySelector("h3").textContent = anime.name;
+  card.querySelector("small").textContent = anime.genre;
+  card.addEventListener("click", () => {
+    alert("La fiche de " + anime.name + " sera disponible dans une prochaine version.");
+  });
+  return card;
+}
+
+function renderAnime(list, container) {
+  container.innerHTML = "";
+  list.forEach(anime => container.appendChild(createCard(anime)));
+}
+
+renderAnime(animeList, document.getElementById("animeCards"));
+renderAnime(
+  [animeList[2],animeList[5],animeList[3],animeList[0]],
+  document.getElementById("popularCards")
 );
 
-function showSignup() {
-  document.getElementById("login").classList.add("hidden");
-  document.getElementById("signup").classList.remove("hidden");
-  document.getElementById("message").textContent = "";
+function searchAnime() {
+  const query = document.getElementById("search").value
+    .toLowerCase().trim();
+  const results = animeList.filter(anime =>
+    anime.name.toLowerCase().includes(query) ||
+    anime.genre.toLowerCase().includes(query)
+  );
+  renderAnime(results, document.getElementById("animeCards"));
+  document.getElementById("empty").style.display =
+    results.length ? "none" : "block";
+  document.getElementById("anime").scrollIntoView({behavior:"smooth"});
 }
 
-function showLogin() {
-  document.getElementById("signup").classList.add("hidden");
-  document.getElementById("login").classList.remove("hidden");
-  document.getElementById("message").textContent = "";
+function scrollToTop() {
+  window.scrollTo({top:0,behavior:"smooth"});
 }
 
-async function signUp() {
-  const pseudo = document.getElementById("pseudo").value.trim();
-  const email = document.getElementById("signupEmail").value.trim();
-  const password = document.getElementById("signupPassword").value;
+function showSection(id) {
+  const section = document.getElementById(id);
+  if(section) section.scrollIntoView({behavior:"smooth"});
+}
 
-  const message = document.getElementById("message");
+function roomNotice() {
+  alert("Les salons multijoueurs seront activés après la connexion du système de chat et de synchronisation.");
+}
 
-  if (!pseudo || !email || password.length < 6) {
-    message.textContent = "Remplis tous les champs correctement.";
-    return;
-  }
-
-  message.textContent = "Création du compte...";
-
-  const { error } = await db.auth.signUp({
-    email,
-    password,
-    options: {
-      data: { pseudo },
-      emailRedirectTo: "https://stevetaminy1-ai.github.io/shadow-watch/"
+async function loadProfile() {
+  if(!supabaseClient) return;
+  try {
+    const {data,error} = await supabaseClient.auth.getSession();
+    if(error) throw error;
+    const user = data.session?.user;
+    if(user) {
+      const pseudo = user.user_metadata?.pseudo || user.email?.[0] || "S";
+      document.getElementById("avatar").textContent =
+        pseudo.charAt(0).toUpperCase();
     }
-  });
-
-  message.textContent = error
-    ? error.message
-    : "Compte créé ! Vérifie ta boîte mail pour confirmer ton adresse.";
-}
-
-async function signIn() {
-  const email = document.getElementById("loginEmail").value.trim();
-  const password = document.getElementById("loginPassword").value;
-  const message = document.getElementById("message");
-
-  if (!email || !password) {
-    message.textContent = "Entre ton e-mail et ton mot de passe.";
-    return;
+  } catch(error) {
+    console.error("Profil :",error.message);
   }
-
-  message.textContent = "Connexion...";
-
-  const { error } = await db.auth.signInWithPassword({
-    email,
-    password
-  });
-
-  message.textContent = error
-    ? error.message
-    : "Connexion réussie ! Bienvenue dans SHADOW WATCH.";
 }
+loadProfile();
 </script>
-
 </body>
-  </html>
+      </html>
+                                         
   
 
 
