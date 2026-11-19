@@ -4,736 +4,705 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101b35">
-<meta name="description" content="SHADOW WATCH, l'univers des animés et de la communauté.">
-<title>SHADOW WATCH</title>
+<meta name="theme-color" content="#07152d">
+<title>SHADOW WATCH — Univers Anime</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-:root{
-  --night:#101b35;
-  --night-soft:#1b2c4b;
-  --green:#087e61;
-  --green-dark:#075b49;
-  --green-light:#b8e8d2;
-  --white:#ffffff;
-  --background:#f2f8f8;
-  --text:#142b35;
-  --muted:#71858b;
-  --border:#d5e9e5;
-  --shadow:0 10px 28px rgba(16,27,53,.10);
+:root {
+  --bg: #07152d;
+  --bg2: #0b2040;
+  --panel: rgba(15, 36, 67, .88);
+  --green: #25d995;
+  --green-dark: #119c68;
+  --white: #eaf4f7;
+  --muted: #a9bed0;
+  --border: rgba(150, 205, 230, .17);
+  --blue: #55cfff;
+  --purple: #a88bff;
 }
 
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-html{scroll-behavior:smooth}
-
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:var(--background);
-  color:var(--text);
-  overflow-x:hidden;
+html {
+  scroll-behavior: smooth;
 }
 
-button,input{font:inherit}
-button{cursor:pointer}
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 15% 10%, #183b68 0%, transparent 38%),
+    radial-gradient(ellipse at 85% 75%, #19234d 0%, transparent 42%),
+    var(--bg);
+  color: var(--white);
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input {
+  font: inherit;
+}
+
+/* PAILLETTES GALAXIE */
+.galaxy-sparkles {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: .55;
+  mix-blend-mode: screen;
+}
+
+.galaxy-sparkles::before,
+.galaxy-sparkles::after {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background-image:
+    radial-gradient(2px 2px at 10% 20%, #fff 90%, transparent),
+    radial-gradient(2px 2px at 30% 70%, #8deaff 90%, transparent),
+    radial-gradient(3px 3px at 50% 40%, #fff 90%, transparent),
+    radial-gradient(2px 2px at 70% 80%, #b99aff 90%, transparent),
+    radial-gradient(2px 2px at 90% 30%, #a8ffe0 90%, transparent),
+    radial-gradient(3px 3px at 20% 90%, #8bcaff 90%, transparent),
+    radial-gradient(2px 2px at 80% 10%, #fff 90%, transparent);
+  background-size: 350px 350px;
+  animation: sparkle 9s ease-in-out infinite alternate;
+}
+
+.galaxy-sparkles::after {
+  background-size: 230px 230px;
+  animation-duration: 13s;
+  animation-delay: -4s;
+  opacity: .7;
+}
+
+@keyframes sparkle {
+  from {
+    opacity: .2;
+    transform: translateY(0);
+  }
+  to {
+    opacity: .9;
+    transform: translateY(-15px);
+  }
+}
 
 /* NAVIGATION */
-
-header{
-  position:sticky;
-  top:0;
-  z-index:100;
-  background:rgba(255,255,255,.97);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--border);
-  padding:15px 5%;
+header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: rgba(5, 17, 36, .88);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
 }
 
-.header-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:20px;
+.navbar {
+  max-width: 1250px;
+  margin: auto;
+  min-height: 75px;
+  padding: 12px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
 }
 
-.logo{
-  color:var(--green);
-  font-size:28px;
-  font-weight:900;
-  letter-spacing:2px;
-  white-space:nowrap;
+.logo {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  white-space: nowrap;
 }
 
-.header-right{
-  display:flex;
-  align-items:center;
-  gap:14px;
+.logo span {
+  color: var(--green);
 }
 
-.search-box{
-  width:240px;
-  padding:12px 18px;
-  border:2px solid var(--border);
-  border-radius:30px;
-  background:#f5faf8;
-  outline:none;
-  color:var(--text);
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  color: var(--muted);
+  font-size: 14px;
 }
 
-.search-box:focus{
-  border-color:var(--green);
+.nav-links a:hover {
+  color: var(--green);
 }
 
-.profile{
-  width:48px;
-  height:48px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:#e4f5ed;
-  color:var(--green-dark);
-  border:2px solid #c5e8d7;
-  font-weight:800;
-  font-size:20px;
-  text-decoration:none;
-}
-
-nav{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:30px;
-  margin-top:22px;
-  flex-wrap:wrap;
-}
-
-nav a{
-  text-decoration:none;
-  color:#365d52;
-  font-weight:700;
-  font-size:16px;
-  transition:.2s;
-}
-
-nav a:hover,
-nav a.active{
-  color:var(--green);
-}
-
-/* IMAGE PRINCIPALE */
-
-.hero{
-  min-height:300px;
-  position:relative;
-  display:flex;
-  align-items:center;
-  padding:45px 7%;
-  overflow:hidden;
-  background:
-    linear-gradient(90deg,rgba(10,20,43,.88),rgba(10,20,43,.30)),
-    url("shadow_watch_accueil_optimisee.webp") center/cover no-repeat;
-  color:white;
-}
-
-.hero-content{
-  max-width:650px;
-  position:relative;
-  z-index:2;
-}
-
-.hero-tag{
-  display:inline-block;
-  padding:8px 15px;
-  border:1px solid rgba(184,232,210,.5);
-  border-radius:30px;
-  color:var(--green-light);
-  background:rgba(8,126,97,.2);
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:2px;
-  margin-bottom:18px;
-}
-
-.hero h1{
-  font-size:clamp(30px,5vw,48px);
-  line-height:1.12;
-  margin-bottom:15px;
-}
-
-.hero h1 span{color:#75ddb1}
-
-.hero p{
-  color:#e0edf0;
-  font-size:16px;
-  line-height:1.7;
-  max-width:550px;
-  margin-bottom:24px;
-}
-
-.hero-buttons{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-}
-
-.btn{
-  display:inline-block;
-  border:0;
-  border-radius:30px;
-  padding:13px 22px;
-  font-weight:800;
-  text-decoration:none;
-  transition:.2s;
-}
-
-.btn-primary{
-  background:var(--green);
-  color:white;
-}
-
-.btn-primary:hover{background:#0a9874}
-
-.btn-light{
-  color:white;
-  border:1px solid rgba(255,255,255,.7);
-  background:rgba(255,255,255,.10);
-}
-
-.btn-light:hover{background:rgba(255,255,255,.2)}
-
-/* BANDEAU */
-
-.banner{
-  height:12px;
-  background:linear-gradient(90deg,var(--night),var(--green),var(--night));
+.account {
+  color: var(--green);
+  font-size: 13px;
+  border: 1px solid rgba(37, 217, 149, .4);
+  border-radius: 30px;
+  padding: 10px 15px;
+  white-space: nowrap;
 }
 
 /* CONTENU */
-
-main{
-  max-width:1250px;
-  margin:auto;
-  padding:45px 5%;
+main {
+  position: relative;
+  z-index: 1;
 }
 
-.section{
-  margin-bottom:85px;
-  scroll-margin-top:150px;
+.container {
+  max-width: 1250px;
+  margin: auto;
+  padding: 30px 25px;
 }
 
-.section-heading{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin-bottom:28px;
-  font-size:30px;
-  color:var(--night);
+.hero {
+  min-height: 420px;
+  border: 1px solid var(--border);
+  border-radius: 25px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 55px;
+  background:
+    linear-gradient(90deg, rgba(4, 15, 34, .94), rgba(4, 15, 34, .65), rgba(4, 15, 34, .12)),
+    url("shadow_watch_accueil_optimisee.webp") center 40% / cover no-repeat,
+    linear-gradient(135deg, #123b63, #101d42);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .25);
 }
 
-.section-heading span{color:var(--green)}
-
-.section-subtitle{
-  color:var(--muted);
-  margin-top:-17px;
-  margin-bottom:25px;
-  line-height:1.6;
+.hero-content {
+  max-width: 570px;
 }
 
-/* CARTES ANIMES */
-
-.anime-grid{
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:22px;
+.eyebrow {
+  color: var(--green);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  margin-bottom: 18px;
 }
 
-.anime-card{
-  min-height:330px;
-  position:relative;
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
-  padding:22px;
-  border-radius:23px;
-  color:white;
-  background:linear-gradient(160deg,#d9f4e8 0%,#70b99b 45%,#123c36 100%);
-  border:1px solid #c4e8d8;
-  box-shadow:var(--shadow);
-  transition:transform .25s,box-shadow .25s;
+.hero h1 {
+  font-size: clamp(35px, 6vw, 62px);
+  line-height: 1.08;
+  margin-bottom: 20px;
 }
 
-.anime-card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 15px 30px rgba(16,27,53,.17);
+.hero h1 span {
+  color: var(--green);
 }
 
-.anime-icon{
-  position:absolute;
-  inset:0;
-  display:grid;
-  place-items:center;
-  padding-bottom:45px;
-  font-size:95px;
-  text-shadow:0 5px 15px rgba(0,0,0,.12);
+.hero p {
+  color: #d0e1ec;
+  line-height: 1.7;
+  font-size: 15px;
+  margin-bottom: 27px;
 }
 
-.anime-card::after{
-  content:"";
-  position:absolute;
-  inset:35% 0 0;
-  background:linear-gradient(transparent,rgba(5,35,31,.94));
+.primary-btn,
+.secondary-btn {
+  display: inline-block;
+  border: none;
+  border-radius: 30px;
+  padding: 13px 22px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .25s;
 }
 
-.anime-info{
-  position:relative;
-  z-index:2;
+.primary-btn {
+  background: linear-gradient(135deg, var(--green), #13a875);
+  color: #04251b;
+  box-shadow: 0 0 22px rgba(37, 217, 149, .22);
 }
 
-.anime-info h3{
-  font-size:23px;
-  margin-bottom:9px;
+.primary-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 28px rgba(37, 217, 149, .4);
 }
 
-.anime-info p{
-  color:#d7f5e7;
-  font-size:15px;
+.secondary-btn {
+  color: var(--white);
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, .07);
+  margin-left: 8px;
 }
 
-.anime-actions{
-  display:flex;
-  gap:8px;
-  margin-top:14px;
+.secondary-btn:hover {
+  border-color: var(--green);
 }
 
-.small-btn{
-  border:1px solid rgba(255,255,255,.65);
-  border-radius:20px;
-  padding:8px 12px;
-  color:white;
-  background:rgba(255,255,255,.13);
-  font-size:12px;
-  font-weight:700;
+/* RECHERCHE */
+.search-area {
+  margin: 28px 0 35px;
+  display: flex;
+  gap: 12px;
 }
 
-.small-btn:hover{background:rgba(255,255,255,.28)}
-
-.empty-message{
-  display:none;
-  color:var(--muted);
-  padding:20px 0;
+.search-area input {
+  flex: 1;
+  min-width: 0;
+  padding: 15px 19px;
+  border-radius: 15px;
+  border: 1px solid var(--border);
+  outline: none;
+  background: rgba(16, 39, 72, .85);
+  color: var(--white);
 }
 
-/* TENDANCES */
-
-.trend-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:20px;
+.search-area input:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 15px rgba(37, 217, 149, .12);
 }
 
-.trend-card{
-  min-height:175px;
-  display:flex;
-  align-items:center;
-  gap:22px;
-  padding:25px;
-  border-radius:22px;
-  background:linear-gradient(120deg,#e0f5eb,#dce8f5);
-  border:1px solid var(--border);
-  box-shadow:var(--shadow);
+.search-area input::placeholder {
+  color: #91a9bf;
 }
 
-.trend-icon{font-size:55px}
-
-.trend-card h3{
-  color:var(--night);
-  margin-bottom:8px;
-  font-size:21px;
+/* SECTIONS */
+.section {
+  margin: 42px 0;
 }
 
-.trend-card p{
-  color:var(--muted);
-  line-height:1.5;
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
 }
 
-/* SALONS */
-
-.rooms-panel{
-  background:linear-gradient(130deg,var(--night),var(--night-soft));
-  border-radius:25px;
-  padding:35px;
-  color:white;
-  box-shadow:var(--shadow);
+.section-heading h2 {
+  font-size: 23px;
 }
 
-.rooms-panel h3{
-  font-size:25px;
-  margin-bottom:12px;
+.section-heading h2 span {
+  color: var(--green);
 }
 
-.rooms-panel p{
-  color:#d4e4ed;
-  line-height:1.7;
-  max-width:650px;
-  margin-bottom:22px;
+.section-heading small {
+  color: var(--muted);
 }
 
-.room-actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:12px;
+.anime-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
 }
 
-/* MA LISTE */
-
-.favorites-list{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:15px;
+.anime-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  overflow: hidden;
+  transition: .25s;
 }
 
-.favorite-item{
-  padding:18px;
-  border-radius:17px;
-  background:white;
-  border:1px solid var(--border);
-  box-shadow:var(--shadow);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
+.anime-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(37, 217, 149, .5);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .2);
 }
 
-.favorite-item strong{color:var(--night)}
-
-.remove-favorite{
-  border:0;
-  background:#fce8e8;
-  color:#a33333;
-  padding:8px 11px;
-  border-radius:20px;
-  font-weight:700;
+.anime-art {
+  height: 180px;
+  display: grid;
+  place-items: center;
+  font-size: 48px;
+  position: relative;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(85, 207, 255, .35), transparent 45%),
+    linear-gradient(135deg, #172d55, #111a3b);
 }
 
-.empty-favorites{
-  color:var(--muted);
-  padding:15px 0;
+.anime-card:nth-child(2) .anime-art {
+  background: linear-gradient(135deg, #263b64, #241d4a);
 }
 
-/* PIED DE PAGE */
-
-footer{
-  background:var(--night);
-  color:white;
-  text-align:center;
-  padding:35px 20px;
+.anime-card:nth-child(3) .anime-art {
+  background: linear-gradient(135deg, #174b56, #171d43);
 }
 
-footer strong{
-  color:#75ddb1;
-  letter-spacing:2px;
-  font-size:20px;
+.anime-card:nth-child(4) .anime-art {
+  background: linear-gradient(135deg, #45305e, #17264b);
 }
 
-footer p{
-  color:#c7d8df;
-  margin-top:10px;
-  font-size:13px;
+.anime-info {
+  padding: 15px;
 }
 
-/* RESPONSIVE */
-
-@media(max-width:900px){
-  .anime-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .favorites-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+.anime-info h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
 }
 
-@media(max-width:600px){
-  header{padding:15px 4%}
-  .header-top{
-    align-items:flex-start;
-    flex-direction:column;
-    gap:18px;
+.anime-info p {
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 13px;
+}
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.card-actions button {
+  border: 1px solid var(--border);
+  color: var(--white);
+  background: rgba(255,255,255,.06);
+  padding: 8px 10px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.card-actions button:hover,
+.card-actions button.fav-active {
+  color: var(--green);
+  border-color: var(--green);
+}
+
+/* SALON */
+.room-panel {
+  padding: 30px;
+  border-radius: 22px;
+  border: 1px solid rgba(37, 217, 149, .25);
+  background:
+    radial-gradient(circle at 90% 10%, rgba(37, 217, 149, .12), transparent 35%),
+    rgba(13, 34, 62, .9);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+}
+
+.room-panel h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.room-panel p {
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.room-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* FAVORIS */
+.empty-message {
+  color: var(--muted);
+  padding: 20px;
+  border: 1px dashed var(--border);
+  border-radius: 15px;
+  text-align: center;
+}
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 20px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 50px;
+}
+
+footer strong {
+  color: var(--green);
+}
+
+/* MOBILE */
+@media (max-width: 850px) {
+  .nav-links {
+    display: none;
   }
-  .logo{font-size:26px}
-  .header-right{width:100%}
-  .search-box{width:100%;flex:1;min-width:0}
-  nav{
-    justify-content:space-between;
-    gap:12px;
-    margin-top:22px;
+
+  .anime-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  nav a{font-size:14px}
-  .hero{
-    min-height:310px;
-    padding:35px 6%;
-    background-position:center;
+
+  .hero {
+    min-height: 390px;
+    padding: 35px 25px;
+    background-position: center;
   }
-  .hero p{font-size:14px}
-  main{padding:35px 4%}
-  .section{margin-bottom:65px}
-  .section-heading{font-size:25px}
-  .anime-grid{gap:13px}
-  .anime-card{
-    min-height:250px;
-    padding:14px;
-    border-radius:18px;
+
+  .room-panel {
+    align-items: flex-start;
+    flex-direction: column;
   }
-  .anime-icon{font-size:70px}
-  .anime-info h3{font-size:18px}
-  .anime-info p{font-size:12px}
-  .anime-actions{flex-wrap:wrap}
-  .small-btn{font-size:11px;padding:7px 9px}
-  .trend-grid{grid-template-columns:1fr}
-  .trend-card{min-height:130px;padding:18px}
-  .trend-icon{font-size:42px}
-  .rooms-panel{padding:25px 20px}
-  .favorites-list{grid-template-columns:1fr}
 }
 
-@media(prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  *,*::before,*::after{transition:none!important}
+@media (max-width: 480px) {
+  .navbar {
+    padding: 13px 16px;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+
+  .account {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .container {
+    padding: 20px 15px;
+  }
+
+  .hero {
+    min-height: 390px;
+    padding: 27px 20px;
+    border-radius: 18px;
+    background-position: 55% center;
+  }
+
+  .hero p {
+    font-size: 13px;
+  }
+
+  .secondary-btn {
+    margin: 10px 0 0;
+  }
+
+  .anime-grid {
+    gap: 12px;
+  }
+
+  .anime-art {
+    height: 135px;
+  }
+
+  .anime-info {
+    padding: 11px;
+  }
+
+  .anime-info h3 {
+    font-size: 14px;
+  }
+
+  .section-heading h2 {
+    font-size: 19px;
+  }
+
+  .room-panel {
+    padding: 22px;
+  }
+
+  .room-actions {
+    width: 100%;
+  }
+
+  .room-actions button {
+    flex: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
 }
 </style>
 </head>
 
 <body>
 
+<div class="galaxy-sparkles" aria-hidden="true"></div>
+
 <header>
-  <div class="header-top">
-    <a href="#accueil" class="logo" style="text-decoration:none">SHADOW WATCH</a>
+  <nav class="navbar">
+    <a class="logo" href="#">SHADOW <span>WATCH</span></a>
 
-    <div class="header-right">
-      <input
-        type="search"
-        id="searchInput"
-        class="search-box"
-        placeholder="Rechercher..."
-        aria-label="Rechercher un animé"
-      >
-      <a href="#profil" class="profile" id="profileAvatar" aria-label="Profil">S</a>
+    <div class="nav-links">
+      <a href="#accueil">Accueil</a>
+      <a href="#animes">Animes</a>
+      <a href="#favoris">Favoris</a>
+      <a href="#salon">Salons</a>
     </div>
-  </div>
 
-  <nav>
-    <a href="#accueil" class="active">Accueil</a>
-    <a href="#animes">Animés</a>
-    <a href="#salons">Salons</a>
-    <a href="#tendances">Tendances</a>
-    <a href="#ma-liste">Ma liste</a>
+    <a class="account" id="accountStatus" href="#salon">
+      Mon espace
+    </a>
   </nav>
 </header>
 
-<section class="hero" id="accueil">
-  <div class="hero-content">
-    <div class="hero-tag">✦ L'UNIVERS ANIME ✦</div>
-    <h1>Entre dans l'univers <span>SHADOW WATCH</span></h1>
-    <p>
-      Découvre tes animés préférés, retrouve les passionnés
-      et construis ton aventure au sein de notre communauté.
-    </p>
-    <div class="hero-buttons">
-      <a href="#animes" class="btn btn-primary">Découvrir les animés</a>
-      <a href="#salons" class="btn btn-light">Rejoindre un salon</a>
-    </div>
-  </div>
-</section>
-
-<div class="banner"></div>
-
 <main>
+  <div class="container">
 
-  <section class="section" id="animes">
-    <h2 class="section-heading">🔥 À découvrir <span>maintenant</span></h2>
-    <p class="section-subtitle">Explore les univers qui font vibrer la communauté.</p>
+    <section class="hero" id="accueil">
+      <div class="hero-content">
+        <div class="eyebrow">BIENVENUE DANS UN AUTRE UNIVERS</div>
 
-    <div class="anime-grid" id="animeGrid">
+        <h1>
+          ENTRE DANS<br>
+          SHADOW <span>WATCH</span>
+        </h1>
 
-      <article class="anime-card" data-title="death note">
-        <div class="anime-icon">📓</div>
-        <div class="anime-info">
-          <h3>Death Note</h3>
-          <p>Mystère • Thriller</p>
-          <div class="anime-actions">
-            <button class="small-btn favorite-btn" data-name="Death Note">＋ Ma liste</button>
-          </div>
-        </div>
-      </article>
+        <p>
+          Découvre ton univers anime, retrouve tes favoris
+          et partage ta passion avec la communauté.
+          Une nouvelle aventure commence ici.
+        </p>
 
-      <article class="anime-card" data-title="dragon ball">
-        <div class="anime-icon">🐉</div>
-        <div class="anime-info">
-          <h3>Dragon Ball</h3>
-          <p>Aventure • Combat</p>
-          <div class="anime-actions">
-            <button class="small-btn favorite-btn" data-name="Dragon Ball">＋ Ma liste</button>
-          </div>
-        </div>
-      </article>
-
-      <article class="anime-card" data-title="naruto">
-        <div class="anime-icon">🍥</div>
-        <div class="anime-info">
-          <h3>Naruto</h3>
-          <p>Ninja • Aventure</p>
-          <div class="anime-actions">
-            <button class="small-btn favorite-btn" data-name="Naruto">＋ Ma liste</button>
-          </div>
-        </div>
-      </article>
-
-      <article class="anime-card" data-title="demon slayer">
-        <div class="anime-icon">⚔️</div>
-        <div class="anime-info">
-          <h3>Demon Slayer</h3>
-          <p>Action • Fantastique</p>
-          <div class="anime-actions">
-            <button class="small-btn favorite-btn" data-name="Demon Slayer">＋ Ma liste</button>
-          </div>
-        </div>
-      </article>
-
-      <article class="anime-card" data-title="jujutsu kaisen">
-        <div class="anime-icon">🔮</div>
-        <div class="anime-info">
-          <h3>Jujutsu Kaisen</h3>
-          <p>Action • Surnaturel</p>
-          <div class="anime-actions">
-            <button class="small-btn favorite-btn" data-name="Jujutsu Kaisen">＋ Ma liste</button>
-          </div>
-        </div>
-      </article>
-
-      <article class="anime-card" data-title="attack on titan">
-        <div class="anime-icon">🛡️</div>
-        <div class="anime-info">
-          <h3>Attack on Titan</h3>
-          <p>Drame • Action</p>
-          <div class="anime-actions">
-            <button class="small-btn favorite-btn" data-name="Attack on Titan">＋ Ma liste</button>
-          </div>
-        </div>
-      </article>
-
-      <article class="anime-card" data-title="solo leveling">
-        <div class="anime-icon">⚡</div>
-        <div class="anime-info">
-          <h3>Solo Leveling</h3>
-          <p>Action • Fantasy</p>
-          <div class="anime-actions">
-            <button class="small-btn favorite-btn" data-name="Solo Leveling">＋ Ma liste</button>
-          </div>
-        </div>
-      </article>
-
-      <article class="anime-card" data-title="one punch man">
-        <div class="anime-icon">👊</div>
-        <div class="anime-info">
-          <h3>One Punch Man</h3>
-          <p>Action • Comédie</p>
-          <div class="anime-actions">
-            <button class="small-btn favorite-btn" data-name="One Punch Man">＋ Ma liste</button>
-          </div>
-        </div>
-      </article>
-
-    </div>
-
-    <p class="empty-message" id="noResults">Aucun animé ne correspond à ta recherche.</p>
-  </section>
-
-  <section class="section" id="tendances">
-    <h2 class="section-heading">✦ Les <span>tendances</span></h2>
-    <p class="section-subtitle">Les univers et les sujets qui attirent l'attention.</p>
-
-    <div class="trend-grid">
-      <article class="trend-card">
-        <div class="trend-icon">⚔️</div>
-        <div>
-          <h3>Combats légendaires</h3>
-          <p>Retrouve les affrontements les plus mémorables des animés.</p>
-        </div>
-      </article>
-
-      <article class="trend-card">
-        <div class="trend-icon">⚡</div>
-        <div>
-          <h3>Les nouveaux héros</h3>
-          <p>Découvre les personnages qui font parler les fans.</p>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <section class="section" id="salons">
-    <h2 class="section-heading">💬 Les <span>salons</span></h2>
-
-    <div class="rooms-panel">
-      <h3>Retrouve la communauté SHADOW WATCH</h3>
-      <p>
-        Échange autour de tes animés favoris, partage tes découvertes
-        et discute avec les autres passionnés.
-      </p>
-      <div class="room-actions">
-        <button class="btn btn-primary" id="createRoomBtn">＋ Créer un salon</button>
-        <button class="btn btn-light" id="joinRoomBtn">Rejoindre un salon</button>
+        <a href="#animes" class="primary-btn">Explorer les animes</a>
+        <a href="#salon" class="secondary-btn">Voir les salons</a>
       </div>
+    </section>
+
+    <div class="search-area">
+      <input
+        type="search"
+        id="searchInput"
+        placeholder="Rechercher un anime..."
+        aria-label="Rechercher un anime"
+      >
     </div>
-  </section>
 
-  <section class="section" id="ma-liste">
-    <h2 class="section-heading">♡ Ma <span>liste</span></h2>
-    <p class="section-subtitle">Les animés que tu souhaites retrouver facilement.</p>
+    <section class="section" id="animes">
+      <div class="section-heading">
+        <h2>À découvrir <span>✦</span></h2>
+        <small>Ton prochain univers t'attend</small>
+      </div>
 
-    <div id="favoritesList" class="favorites-list"></div>
-    <p id="emptyFavorites" class="empty-favorites">
-      Ta liste est vide. Ajoute un animé avec le bouton « Ma liste ».
-    </p>
-  </section>
+      <div class="anime-grid" id="animeGrid">
 
-  <section class="section" id="profil">
-    <h2 class="section-heading">👤 Mon <span>profil</span></h2>
-    <div class="rooms-panel">
-      <h3 id="profileName">Bienvenue sur SHADOW WATCH</h3>
-      <p id="profileStatus">
-        Connecte-toi pour retrouver ton compte et ton espace personnel.
+        <article class="anime-card" data-title="Demon Slayer">
+          <div class="anime-art">⚔️</div>
+          <div class="anime-info">
+            <h3>Demon Slayer</h3>
+            <p>Action · Aventure · Fantastique</p>
+            <div class="card-actions">
+              <button onclick="toggleFavorite('Demon Slayer', this)">♡ Favori</button>
+              <button onclick="showAnime('Demon Slayer')">Découvrir</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="anime-card" data-title="Jujutsu Kaisen">
+          <div class="anime-art">🌌</div>
+          <div class="anime-info">
+            <h3>Jujutsu Kaisen</h3>
+            <p>Action · Surnaturel</p>
+            <div class="card-actions">
+              <button onclick="toggleFavorite('Jujutsu Kaisen', this)">♡ Favori</button>
+              <button onclick="showAnime('Jujutsu Kaisen')">Découvrir</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="anime-card" data-title="Solo Leveling">
+          <div class="anime-art">🗡️</div>
+          <div class="anime-info">
+            <h3>Solo Leveling</h3>
+            <p>Action · Fantasy</p>
+            <div class="card-actions">
+              <button onclick="toggleFavorite('Solo Leveling', this)">♡ Favori</button>
+              <button onclick="showAnime('Solo Leveling')">Découvrir</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="anime-card" data-title="One Piece">
+          <div class="anime-art">🏴‍☠️</div>
+          <div class="anime-info">
+            <h3>One Piece</h3>
+            <p>Aventure · Action · Comédie</p>
+            <div class="card-actions">
+              <button onclick="toggleFavorite('One Piece', this)">♡ Favori</button>
+              <button onclick="showAnime('One Piece')">Découvrir</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+      <p id="noResults" class="empty-message" hidden>
+        Aucun anime ne correspond à ta recherche.
       </p>
-    </div>
-  </section>
+    </section>
 
+    <section class="section" id="favoris">
+      <div class="section-heading">
+        <h2>Mes <span>favoris</span> ♡</h2>
+        <small>Ta collection personnelle</small>
+      </div>
+
+      <div id="favoritesList" class="empty-message">
+        Tu n'as pas encore ajouté de favoris.
+      </div>
+    </section>
+
+    <section class="section" id="salon">
+      <div class="room-panel">
+        <div>
+          <div class="eyebrow">COMMUNAUTÉ SHADOW WATCH</div>
+          <h2>Retrouve les passionnés d'anime</h2>
+          <p>
+            Les salons de discussion multijoueurs sont
+            en préparation. La prochaine étape sera de
+            connecter les salons et les messages à Supabase.
+          </p>
+        </div>
+
+        <div class="room-actions">
+          <button class="primary-btn" onclick="roomComingSoon()">
+            Créer un salon
+          </button>
+          <button class="secondary-btn" onclick="roomComingSoon()">
+            Rejoindre
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </div>
 </main>
 
 <footer>
-  <strong>SHADOW WATCH</strong>
-  <p>L'ombre nous rassemble. • Animés • Passion • Communauté</p>
-  <p>© 2026 SHADOW WATCH</p>
+  <p><strong>SHADOW WATCH</strong> — Un univers, une communauté, une passion.</p>
+  <p style="margin-top:8px">© 2026 Shadow Watch</p>
 </footer>
 
 <script>
 /* CONFIGURATION SUPABASE */
-
 const SUPABASE_URL = "https://ycjbzxzwdvmujdawaewh.supabase.co";
 const SUPABASE_KEY = "sb_publishable_SRzPt8W5qQkrwX5OV0HT4Q_TloQzh0c";
 
 let supabaseClient = null;
 
-if (window.supabase && SUPABASE_URL && SUPABASE_KEY) {
-  supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+try {
+  if (window.supabase && SUPABASE_URL && SUPABASE_KEY) {
+    supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+  }
+} catch (error) {
+  console.error("Connexion Supabase impossible :", error);
 }
 
 /* RECHERCHE */
-
 const searchInput = document.getElementById("searchInput");
 const animeCards = document.querySelectorAll(".anime-card");
 const noResults = document.getElementById("noResults");
@@ -743,110 +712,124 @@ searchInput.addEventListener("input", function () {
   let visibleCount = 0;
 
   animeCards.forEach(card => {
-    const title = card.dataset.title || "";
+    const title = card.dataset.title.toLowerCase();
     const visible = title.includes(search);
 
-    card.style.display = visible ? "flex" : "none";
+    card.style.display = visible ? "" : "none";
 
     if (visible) visibleCount++;
   });
 
-  noResults.style.display = visibleCount === 0 ? "block" : "none";
+  noResults.hidden = visibleCount !== 0;
 });
 
-/* MA LISTE */
-
-const FAVORITES_KEY = "shadow_watch_favorites";
-
+/* FAVORIS LOCAUX */
 function getFavorites() {
   try {
-    const saved = JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]");
-    return Array.isArray(saved) ? saved : [];
-  } catch (error) {
+    return JSON.parse(localStorage.getItem("shadowWatchFavorites")) || [];
+  } catch {
     return [];
   }
 }
 
 function saveFavorites(favorites) {
-  localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+  localStorage.setItem(
+    "shadowWatchFavorites",
+    JSON.stringify(favorites)
+  );
+}
+
+function toggleFavorite(name, button) {
+  let favorites = getFavorites();
+
+  if (favorites.includes(name)) {
+    favorites = favorites.filter(item => item !== name);
+    button.textContent = "♡ Favori";
+    button.classList.remove("fav-active");
+  } else {
+    favorites.push(name);
+    button.textContent = "♥ Favori";
+    button.classList.add("fav-active");
+  }
+
+  saveFavorites(favorites);
+  renderFavorites();
 }
 
 function renderFavorites() {
   const favorites = getFavorites();
-  const list = document.getElementById("favoritesList");
-  const empty = document.getElementById("emptyFavorites");
+  const container = document.getElementById("favoritesList");
 
-  list.replaceChildren();
-  empty.style.display = favorites.length ? "none" : "block";
+  if (favorites.length === 0) {
+    container.className = "empty-message";
+    container.textContent = "Tu n'as pas encore ajouté de favoris.";
+    return;
+  }
+
+  container.className = "";
+  container.innerHTML = "";
 
   favorites.forEach(name => {
     const item = document.createElement("div");
-    item.className = "favorite-item";
+    item.style.cssText =
+      "padding:12px;margin-bottom:8px;border:1px solid rgba(150,205,230,.17);border-radius:12px;background:rgba(15,36,67,.8);";
 
-    const title = document.createElement("strong");
-    title.textContent = name;
+    const title = document.createElement("span");
+    title.textContent = "♡ " + name;
 
     const remove = document.createElement("button");
-    remove.className = "remove-favorite";
     remove.textContent = "Retirer";
+    remove.style.cssText =
+      "float:right;background:transparent;border:0;color:#25d995;cursor:pointer;";
+
     remove.addEventListener("click", () => {
       saveFavorites(getFavorites().filter(f => f !== name));
       renderFavorites();
-      updateFavoriteButtons();
+      restoreFavoriteButtons();
     });
 
     item.append(title, remove);
-    list.appendChild(item);
+    container.appendChild(item);
   });
 }
 
-function updateFavoriteButtons() {
+function restoreFavoriteButtons() {
   const favorites = getFavorites();
 
-  document.querySelectorAll(".favorite-btn").forEach(button => {
-    const name = button.dataset.name;
-    const saved = favorites.includes(name);
+  document.querySelectorAll(".anime-card").forEach(card => {
+    const name = card.dataset.title;
+    const button = card.querySelector(".card-actions button");
 
-    button.textContent = saved ? "✓ Dans ma liste" : "＋ Ma liste";
+    if (favorites.includes(name)) {
+      button.textContent = "♥ Favori";
+      button.classList.add("fav-active");
+    } else {
+      button.textContent = "♡ Favori";
+      button.classList.remove("fav-active");
+    }
   });
 }
 
-document.querySelectorAll(".favorite-btn").forEach(button => {
-  button.addEventListener("click", () => {
-    const name = button.dataset.name;
-    let favorites = getFavorites();
-
-    if (favorites.includes(name)) {
-      favorites = favorites.filter(item => item !== name);
-    } else {
-      favorites.push(name);
-    }
-
-    saveFavorites(favorites);
-    renderFavorites();
-    updateFavoriteButtons();
-  });
-});
-
-renderFavorites();
-updateFavoriteButtons();
+/* FICHE ANIME */
+function showAnime(name) {
+  alert(
+    name + "\n\nLa fiche détaillée de cet anime sera ajoutée dans une prochaine mise à jour."
+  );
+}
 
 /* SALONS */
+function roomComingSoon() {
+  alert(
+    "Les salons multijoueurs sont en préparation. Ils nécessitent encore la connexion des tables Supabase et la configuration des permissions."
+  );
+}
 
-document.getElementById("createRoomBtn").addEventListener("click", () => {
-  alert("La création de salons sera activée lors de la prochaine étape de SHADOW WATCH.");
-});
-
-document.getElementById("joinRoomBtn").addEventListener("click", () => {
-  alert("La connexion aux salons sera activée lors de la prochaine étape de SHADOW WATCH.");
-});
-
-/* PROFIL ET SESSION SUPABASE */
-
+/* PROFIL SUPABASE */
 async function loadProfile() {
+  const status = document.getElementById("accountStatus");
+
   if (!supabaseClient) {
-    document.getElementById("profileStatus").textContent =
-      "Le service de connexion n'est pas disponible pour le moment.";
+    status.textContent = "Mon espace";
     return;
   }
 
@@ -855,41 +838,24 @@ async function loadProfile() {
 
     if (error) throw error;
 
-    const user = data.session?.user;
-
-    if (!user) {
-      document.getElementById("profileName").textContent =
-        "Bienvenue sur SHADOW WATCH";
-
-      document.getElementById("profileStatus").textContent =
-        "Tu n'es pas connecté. Connecte-toi pour retrouver ton compte.";
-
-      document.getElementById("profileAvatar").textContent = "S";
-      return;
+    if (data.session) {
+      status.textContent = "Connecté";
+    } else {
+      status.textContent = "Mon espace";
     }
-
-    const pseudo =
-      user.user_metadata?.pseudo ||
-      user.user_metadata?.nom_utilisateur ||
-      user.email?.split("@")[0] ||
-      "Membre";
-
-    document.getElementById("profileName").textContent =
-      "Bienvenue, " + pseudo;
-
-    document.getElementById("profileStatus").textContent =
-      "Ta session SHADOW WATCH est active.";
-
-    document.getElementById("profileAvatar").textContent =
-      pseudo.charAt(0).toUpperCase();
-
   } catch (error) {
-    console.error("Erreur de chargement du profil :", error);
-
-    document.getElementById("profileStatus").textContent =
-      "Impossible de récupérer la session pour le moment.";
+    console.error("Erreur de profil :", error);
+    status.textContent = "Mon espace";
   }
 }
 
-loadProfile()
+/* INITIALISATION */
+renderFavorites();
+restoreFavoriteButtons();
+loadProfile();
+</script>
+
+</body>
+  </html>
+  
                         
