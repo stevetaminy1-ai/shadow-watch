@@ -4,257 +4,569 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#08051a">
+<meta name="theme-color" content="#080510">
+<meta name="description" content="SHADOW WATCH — CODE ZERO. Explore les univers anime et retrouve tes amis.">
 <title>SHADOW WATCH — CODE ZERO</title>
+
 <style>
-:root{--bg:#08051a;--panel:#11102b;--purple:#741cff;--blue:#18caff;--text:#fff;--muted:#aaa6c5}
+:root{
+ --bg:#080510;
+ --panel:#120d20;
+ --panel2:#1a1230;
+ --purple:#8b19ff;
+ --purple2:#bd52ff;
+ --blue:#276bff;
+ --text:#fff;
+ --muted:#aaa1bd;
+ --border:#34204e;
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
-header{height:65px;background:#100c27;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid #30205b;position:sticky;top:0;z-index:5}
-.logo{font-size:19px;font-weight:900;letter-spacing:2px}
-.logo span{color:#a56aff}
+html{scroll-behavior:smooth}
+body{
+ margin:0;background:var(--bg);color:var(--text);
+ font-family:Arial,Helvetica,sans-serif;
+ padding-bottom:0;
+}
 button,input{font:inherit}
-button{cursor:pointer;border:1px solid #443078;background:#191338;color:white;border-radius:10px;padding:10px 14px}
-button:hover,.active{background:var(--purple)}
-.layout{display:flex;min-height:calc(100vh - 65px)}
-aside{width:190px;background:#0d0a20;padding:20px 12px;flex-shrink:0}
-aside button{width:100%;text-align:left;margin:5px 0;background:transparent;border-color:transparent}
-aside button.active{background:#321078;border-color:#783dff}
-main{flex:1;min-width:0}
-.page{display:none;padding:24px}
+button{cursor:pointer;color:white}
+button:focus-visible,input:focus-visible{
+ outline:2px solid var(--purple2);outline-offset:3px
+}
+header{
+ height:70px;position:sticky;top:0;z-index:20;
+ display:flex;align-items:center;justify-content:space-between;
+ padding:0 28px;background:#090611ed;
+ border-bottom:1px solid #29163e;backdrop-filter:blur(16px)
+}
+.logo{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:2px}
+.logo-mark{
+ width:42px;height:42px;border-radius:14px;
+ display:grid;place-items:center;
+ background:linear-gradient(135deg,#9c20ff,#4010a0);
+ box-shadow:0 0 25px #861cff66;font-size:24px
+}
+.logo span{color:#a72cff}
+.logo small{display:block;text-align:center;font-size:9px;letter-spacing:5px;color:#d3c6e8;margin-top:3px}
+.header-actions{display:flex;gap:10px;align-items:center}
+.icon-btn{
+ width:42px;height:42px;border-radius:50%;
+ background:#171020;border:1px solid #39254d;font-size:19px
+}
+.layout{display:flex;min-height:calc(100vh - 70px)}
+aside{
+ width:210px;flex-shrink:0;background:#0b0814;
+ border-right:1px solid #241631;padding:24px 14px
+}
+.side-label{
+ color:#796b8e;font-size:10px;letter-spacing:2px;
+ padding:10px 12px
+}
+aside button{
+ width:100%;display:flex;align-items:center;gap:13px;
+ padding:14px;border:1px solid transparent;
+ border-radius:12px;background:transparent;
+ color:#bcb1ce;text-align:left;margin:4px 0
+}
+aside button:hover,aside button.active{
+ background:linear-gradient(100deg,#48108066,#171020);
+ border-color:#6423a4;color:white
+}
+.side-icon{font-size:19px;width:23px;text-align:center}
+main{flex:1;min-width:0;overflow:hidden}
+.page{display:none;padding:25px 30px 55px;max-width:1500px;margin:auto}
 .page.active{display:block}
-.hero{min-height:330px;border-radius:20px;padding:35px;display:flex;align-items:center;background:linear-gradient(90deg,#08051a,#08051a88),url('shadow_watch_accueil_optimisee.webp') center/cover}
-.hero h1{font-size:clamp(38px,6vw,65px);margin:10px 0}
-.hero h1 span{color:#a66aff}
-.primary{background:linear-gradient(100deg,#681bff,#168fff);border:0;font-weight:bold}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:15px;margin-top:18px}
-.card,.panel{background:var(--panel);border:1px solid #30205b;border-radius:14px;overflow:hidden}
-.poster{aspect-ratio:3/4;background:#1c1740;display:grid;place-items:center;color:#bca6ff}
-.poster img{width:100%;height:100%;object-fit:cover}
-.info{padding:10px}
-.info h3{font-size:14px;margin:0 0 6px}
-.muted{color:var(--muted);font-size:13px}
-input{background:#100d29;border:1px solid #443078;color:white;padding:12px;border-radius:10px;width:100%;max-width:360px;margin:6px 0}
-.panel{padding:18px;margin:12px 0}
-.room{display:flex;justify-content:space-between;align-items:center;gap:10px}
+
+/* ACCUEIL */
+.hero{
+ position:relative;min-height:440px;overflow:hidden;
+ border-radius:22px;display:flex;align-items:center;
+ background:#171020;
+ border:1px solid #34204e;
+}
+.hero-image{
+ position:absolute;inset:0;width:100%;height:100%;
+ object-fit:cover;object-position:center 30%;
+ opacity:.83
+}
+.hero:after{
+ content:"";position:absolute;inset:0;
+ background:linear-gradient(90deg,#080510 0%,#080510e8 28%,#08051055 65%,transparent 100%),
+ linear-gradient(0deg,#080510 0%,transparent 40%)
+}
+.hero-content{position:relative;z-index:2;padding:38px;max-width:580px}
+.feature-label{
+ display:inline-flex;padding:8px 14px;border-radius:30px;
+ background:#6415c9;color:white;font-weight:bold;font-size:13px;
+ box-shadow:0 0 18px #8b19ff55
+}
+.hero h1{
+ font-size:clamp(43px,6vw,76px);margin:18px 0 5px;
+ letter-spacing:-2px;text-transform:uppercase;
+ text-shadow:0 3px 25px #000
+}
+.hero-subtitle{font-size:21px;font-weight:bold;margin:8px 0}
+.hero-description{color:#e0d8ec;line-height:1.6;max-width:430px}
+.hero-buttons{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
+.btn{
+ padding:13px 20px;border-radius:12px;
+ background:#1a1328;border:1px solid #49345f;
+ font-weight:bold
+}
+.btn-primary{
+ background:linear-gradient(105deg,#9c12ff,#5411d8);
+ border:0;box-shadow:0 5px 24px #7917ff55
+}
+.btn-primary:hover{filter:brightness(1.2)}
+.hero-dots{display:flex;gap:10px;margin-top:28px}
+.hero-dots span{height:9px;width:9px;border-radius:20px;background:#554b62}
+.hero-dots span:first-child{width:27px;background:#a21cff}
+.section{margin-top:35px}
+.section-heading{
+ display:flex;align-items:center;justify-content:space-between;
+ gap:12px;margin-bottom:17px
+}
+.section-heading h2{font-size:22px;margin:0}
+.section-heading button{
+ border:0;background:transparent;color:#bd83ff
+}
+.cards{
+ display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:15px
+}
+.anime-card{
+ min-width:0;position:relative;overflow:hidden;
+ background:var(--panel);border:1px solid #332143;
+ border-radius:13px;cursor:pointer;transition:.2s
+}
+.anime-card:hover{
+ transform:translateY(-5px);border-color:#9c36ff;
+ box-shadow:0 8px 25px #871cff33
+}
+.poster{
+ position:relative;aspect-ratio:3/4;background:#1c1430;overflow:hidden
+}
+.poster img{width:100%;height:100%;object-fit:cover;display:block}
+.poster-fallback{
+ position:absolute;inset:0;display:grid;place-items:center;
+ color:#d6b5ff;font-weight:bold;text-align:center;padding:12px;
+ background:linear-gradient(145deg,#32145a,#100b1d)
+}
+.poster-overlay{
+ position:absolute;inset:35% 0 0;
+ background:linear-gradient(transparent,#080510ee)
+}
+.anime-info{padding:11px}
+.anime-info h3{font-size:14px;margin:0 0 7px;line-height:1.3}
+.rating{color:#c27bff;font-size:13px}
+.genre-tag{
+ position:absolute;top:9px;left:9px;padding:5px 9px;
+ background:#7514dc;border-radius:20px;font-size:11px;font-weight:bold
+}
+
+/* CATEGORIES */
+.category-grid{
+ display:grid;grid-template-columns:repeat(5,1fr);gap:12px
+}
+.category{
+ border:1px solid #57238a;border-radius:13px;
+ padding:18px 8px;text-align:center;
+ background:linear-gradient(145deg,#211035,#0d0918);
+ transition:.2s
+}
+.category:hover,.category.selected{
+ border-color:#bd4aff;box-shadow:0 0 18px #871cff55;
+ background:linear-gradient(145deg,#5613a0,#1b0d2b)
+}
+.category-icon{font-size:27px;display:block;margin-bottom:9px}
+.category-name{font-weight:bold;font-size:13px}
+
+/* SALONS */
+.room-banner{
+ min-height:130px;border:1px solid #55238b;border-radius:17px;
+ background:linear-gradient(90deg,#3b087b,#10091d 65%);
+ padding:23px;display:flex;align-items:center;justify-content:space-between;
+ gap:15px;margin-top:40px
+}
+.room-banner h3{margin:0 0 7px}
+.room-banner p{color:#ddd1ed;margin:0;line-height:1.5}
+.room-banner-icon{font-size:36px;color:#d8a4ff}
+.panel{
+ background:var(--panel);border:1px solid var(--border);
+ border-radius:15px;padding:20px;margin:15px 0
+}
+input{
+ background:#0d0917;border:1px solid #49325e;color:white;
+ padding:13px;border-radius:10px;width:100%;max-width:420px;
+ margin:7px 0
+}
+input::placeholder{color:#837891}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.chat{height:190px;overflow:auto;background:#09071a;padding:12px;border-radius:10px;margin:12px 0}
-.chat p{font-size:13px}
-.video{width:100%;max-height:430px;background:#000;border-radius:14px}
+.row input{flex:1;min-width:180px}
+.muted{color:var(--muted);font-size:13px}
+.room-item{
+ display:flex;justify-content:space-between;align-items:center;
+ gap:12px;background:#171020;border:1px solid #39234e;
+ border-radius:12px;padding:15px;margin:10px 0
+}
+.room-item p{margin:5px 0}
+.chat{
+ height:210px;overflow-y:auto;background:#090611;
+ border:1px solid #30203d;border-radius:10px;padding:12px;margin:12px 0
+}
+.chat p{font-size:13px;overflow-wrap:anywhere}
+.video{width:100%;max-height:430px;background:#000;border-radius:12px}
+.details-layout{display:flex;gap:20px;flex-wrap:wrap}
+.details-layout img{width:170px;border-radius:12px;object-fit:cover}
 .settings button{margin:5px}
-.bottom{display:none}
+.empty{color:var(--muted);padding:15px}
+
+/* NAVIGATION MOBILE */
+.bottom{
+ display:none;position:fixed;bottom:0;left:0;right:0;z-index:30;
+ background:#0c0815f5;border-top:1px solid #492066;
+ justify-content:space-around;padding:9px 3px calc(9px + env(safe-area-inset-bottom));
+ backdrop-filter:blur(16px)
+}
+.bottom button{
+ border:0;background:transparent;color:#a99ab9;
+ font-size:11px;min-width:58px;padding:5px
+}
+.bottom button span{display:block;font-size:21px;margin-bottom:4px}
+.bottom button.active{color:#c44aff}
+.search-box{margin:15px 0}
+.status{color:#b7ffcb;font-size:13px}
+
+@media(max-width:1050px){
+ .cards{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
 @media(max-width:700px){
+ header{height:62px;padding:0 14px}
+ .logo{font-size:16px;letter-spacing:1px}
+ .logo-mark{width:36px;height:36px}
+ .logo small{font-size:8px}
+ .layout{display:block}
  aside{display:none}
- .page{padding:15px}
- .hero{min-height:280px;padding:20px}
- .bottom{display:flex;position:fixed;bottom:0;left:0;right:0;background:#100c27;justify-content:space-around;padding:8px 2px;z-index:10;border-top:1px solid #30205b}
- .bottom button{font-size:11px;padding:8px 5px}
- body{padding-bottom:60px}
+ .page{padding:15px 13px 95px}
+ .hero{min-height:440px;border-radius:14px;align-items:flex-end}
+ .hero-image{object-position:62% center}
+ .hero:after{
+  background:linear-gradient(0deg,#080510 0%,#080510e8 25%,#08051033 75%,transparent)
+ }
+ .hero-content{padding:20px;width:100%}
+ .hero h1{font-size:43px;letter-spacing:-1px}
+ .hero-subtitle{font-size:18px}
+ .hero-description{font-size:13px}
+ .hero-buttons{gap:8px}
+ .btn{padding:12px 13px;font-size:12px}
+ .section{margin-top:27px}
+ .section-heading h2{font-size:18px}
+ .cards{
+  display:flex;overflow-x:auto;gap:12px;
+  padding-bottom:8px;scroll-snap-type:x mandatory
+ }
+ .anime-card{flex:0 0 145px;scroll-snap-align:start}
+ .anime-info h3{font-size:13px}
+ .category-grid{display:flex;overflow-x:auto;gap:9px;padding-bottom:8px}
+ .category{flex:0 0 112px;padding:15px 5px}
+ .room-banner{padding:17px;min-height:120px;margin-top:28px}
+ .room-banner-icon{font-size:26px}
+ .room-banner p{font-size:12px}
+ .room-banner .btn{font-size:11px}
+ .bottom{display:flex}
+ body{padding-bottom:0}
+ .details-layout img{width:115px}
+}
+@media(min-width:701px) and (max-width:950px){
+ .cards{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 </style>
 </head>
+
 <body>
 <header>
- <div class="logo">SHADOW <span>WATCH</span> ✦</div>
- <button onclick="showPage('profile')">◉ Profil</button>
+ <div class="logo">
+  <div class="logo-mark">✦</div>
+  <div>SHADOW <span>WATCH</span><small>— CODE ZERO —</small></div>
+ </div>
+ <div class="header-actions">
+  <button class="icon-btn" onclick="showPage('animes')" aria-label="Rechercher">⌕</button>
+  <button class="icon-btn" onclick="showPage('profile')" aria-label="Profil">◉</button>
+ </div>
 </header>
 
 <div class="layout">
-<aside id="sidebar">
- <button class="active" data-page="home" onclick="showPage('home')">⌂ Accueil</button>
- <button data-page="animes" onclick="showPage('animes')">▣ Animes</button>
- <button data-page="rooms" onclick="showPage('rooms')">♧ Salons</button>
- <button data-page="profile" onclick="showPage('profile')">◉ Profil</button>
- <button data-page="settings" onclick="showPage('settings')">⚙ Paramètres</button>
+<aside>
+ <div class="side-label">MENU PRINCIPAL</div>
+ <button class="active" data-page="home" onclick="showPage('home')"><span class="side-icon">⌂</span>Accueil</button>
+ <button data-page="animes" onclick="showPage('animes')"><span class="side-icon">▣</span>Animes</button>
+ <button data-page="rooms" onclick="showPage('rooms')"><span class="side-icon">♧</span>Salons</button>
+ <div class="side-label">MON ESPACE</div>
+ <button data-page="profile" onclick="showPage('profile')"><span class="side-icon">◉</span>Profil</button>
+ <button data-page="settings" onclick="showPage('settings')"><span class="side-icon">⚙</span>Paramètres</button>
 </aside>
 
 <main>
+<!-- ACCUEIL -->
 <section class="page active" id="home">
  <div class="hero">
-  <div>
-   <p>✦ L'UNIVERS ANIME COMMENCE ICI</p>
-   <h1>SHADOW WATCH<br><span>CODE ZERO</span></h1>
-   <p>Découvre. Explore. Rejoins tes amis.</p>
-   <button class="primary" onclick="showPage('animes')">▶ Explorer</button>
-   <button onclick="showPage('rooms')">♧ Rejoindre un salon</button>
+  <img class="hero-image" id="heroImage"
+   src="https://cdn.myanimelist.net/images/anime/1244/138851l.jpg"
+   alt="Univers One Piece"
+   onerror="this.style.display='none'">
+  <div class="hero-content">
+   <span class="feature-label">★ Anime vedette</span>
+   <h1>ONE PIECE</h1>
+   <div class="hero-subtitle">L'aventure continue...</div>
+   <p class="hero-description">
+    Suivez Luffy et son équipage dans une quête légendaire à travers le monde !
+   </p>
+   <div class="hero-buttons">
+    <button class="btn btn-primary" onclick="showPage('animes')">▶ Explorer les animes</button>
+    <button class="btn" onclick="details('One Piece','Aventure')">ⓘ Détails</button>
+   </div>
+   <div class="hero-dots"><span></span><span></span><span></span><span></span><span></span></div>
   </div>
  </div>
- <h2>🔥 Tendances du moment</h2>
- <div class="grid" id="homeGrid"></div>
+
+ <div class="section">
+  <div class="section-heading">
+   <h2>🔥 Tendances du moment</h2>
+   <button onclick="showPage('animes')">Voir tout ›</button>
+  </div>
+  <div class="cards" id="homeGrid"></div>
+ </div>
+
+ <div class="section">
+  <div class="section-heading">
+   <h2>✦ Nouveautés</h2>
+   <button onclick="showPage('animes')">Voir tout ›</button>
+  </div>
+  <div class="cards" id="newGrid"></div>
+ </div>
+
+ <div class="section">
+  <div class="section-heading">
+   <h2>▦ Nos catégories</h2>
+   <button onclick="showPage('animes')">Voir tout ›</button>
+  </div>
+  <div class="category-grid" id="categoryGrid">
+   <button class="category" onclick="filterGenre('Action',this)"><span class="category-icon">⚔</span><span class="category-name">Action</span></button>
+   <button class="category" onclick="filterGenre('Aventure',this)"><span class="category-icon">◈</span><span class="category-name">Aventure</span></button>
+   <button class="category" onclick="filterGenre('Fantasy',this)"><span class="category-icon">♜</span><span class="category-name">Fantasy</span></button>
+   <button class="category" onclick="filterGenre('Comédie',this)"><span class="category-icon">◇</span><span class="category-name">Comédie</span></button>
+   <button class="category" onclick="filterGenre('Sport',this)"><span class="category-icon">◉</span><span class="category-name">Sport</span></button>
+  </div>
+ </div>
+
+ <div class="room-banner">
+  <div class="room-banner-icon">♧</div>
+  <div style="flex:1">
+   <h3>Salons entre amis</h3>
+   <p>Crée ton salon et regarde ensemble avec tes amis !</p>
+  </div>
+  <button class="btn btn-primary" onclick="showPage('rooms')">Rejoindre →</button>
+ </div>
 </section>
 
+<!-- ANIMES -->
 <section class="page" id="animes">
- <h2>▣ Explorer les animes</h2>
- <input id="search" placeholder="Rechercher un anime..." oninput="renderAnimes()">
- <div class="grid" id="animeGrid"></div>
+ <h2>Explorer les animes</h2>
+ <p class="muted">Trouve ton prochain univers.</p>
+ <div class="search-box">
+  <input id="search" placeholder="⌕ Rechercher un anime..." oninput="renderAnimes()">
+ </div>
+ <div class="category-grid" style="margin-bottom:20px">
+  <button class="category selected" onclick="filterGenre('Tous',this)">Tous</button>
+  <button class="category" onclick="filterGenre('Action',this)">Action</button>
+  <button class="category" onclick="filterGenre('Aventure',this)">Aventure</button>
+  <button class="category" onclick="filterGenre('Fantasy',this)">Fantasy</button>
+  <button class="category" onclick="filterGenre('Comédie',this)">Comédie</button>
+ </div>
+ <div class="cards" id="animeGrid"></div>
  <div class="panel" id="animeDetails" hidden></div>
+ <p class="muted" id="apiStatus"></p>
 </section>
 
+<!-- SALONS -->
 <section class="page" id="rooms">
- <h2>♧ Salons entre amis</h2>
+ <h2>Salons entre amis</h2>
+ <p class="muted">Retrouve tes amis dans un espace privé.</p>
+
  <div class="panel">
   <h3>Créer un salon privé</h3>
   <input id="roomName" placeholder="Nom du salon">
-  <button class="primary" onclick="createRoom()">＋ Créer un salon</button>
+  <br>
+  <button class="btn btn-primary" onclick="createRoom()">＋ Créer un salon</button>
  </div>
+
  <div class="panel">
   <h3>Rejoindre avec un code</h3>
   <input id="roomCode" placeholder="Code du salon">
-  <button class="primary" onclick="joinRoom()">Rejoindre</button>
+  <br>
+  <button class="btn btn-primary" onclick="joinRoom()">Rejoindre →</button>
  </div>
+
  <h3>Mes salons sur cet appareil</h3>
  <div id="roomList"></div>
+
  <div id="roomArea" hidden class="panel">
   <h3 id="roomTitle">Salon</h3>
   <p class="muted">Code : <strong id="roomCodeDisplay"></strong></p>
-  <button onclick="showPage('watch')">▶ Regarder ensemble</button>
+  <button class="btn btn-primary" onclick="showPage('watch')">▶ Regarder ensemble</button>
   <div class="chat" id="chatMessages"></div>
   <div class="row">
-   <input id="message" placeholder="Écrire un message...">
-   <button onclick="sendMessage()">Envoyer</button>
+   <input id="message" placeholder="Écrire un message..." onkeydown="if(event.key==='Enter')sendMessage()">
+   <button class="btn btn-primary" onclick="sendMessage()">Envoyer</button>
   </div>
  </div>
 </section>
 
+<!-- REGARDER -->
 <section class="page" id="watch">
- <h2>▶ Regarder ensemble</h2>
- <p class="muted">Choisis une vidéo dont tu as le droit de partager la lecture.</p>
+ <h2>Regarder ensemble</h2>
+ <p class="muted">Utilise une vidéo que tu es autorisé à partager.</p>
  <div class="panel">
   <input type="url" id="videoUrl" placeholder="Adresse d'une vidéo autorisée">
-  <button class="primary" onclick="loadVideo()">Charger la vidéo</button>
+  <button class="btn btn-primary" onclick="loadVideo()">Charger la vidéo</button>
   <video id="player" class="video" controls playsinline></video>
-  <p class="muted">La synchronisation entre amis sera activée après connexion Supabase.</p>
+  <p class="muted">La lecture fonctionne sur cet appareil. La synchronisation entre appareils reste à connecter à Supabase.</p>
  </div>
- <button onclick="showPage('rooms')">← Retour au salon</button>
+ <button class="btn" onclick="showPage('rooms')">← Retour au salon</button>
 </section>
 
+<!-- PROFIL -->
 <section class="page" id="profile">
- <h2>◉ Profil</h2>
+ <h2>Mon profil</h2>
  <div class="panel">
-  <h2>✦ Shadow Watch</h2>
-  <p>Ton espace personnel Code Zéro</p>
+  <div style="font-size:38px">◉</div>
+  <h3>Ton espace personnel</h3>
   <input id="username" placeholder="Ton pseudo">
-  <button class="primary" onclick="saveProfile()">Enregistrer le profil</button>
+  <br>
+  <button class="btn btn-primary" onclick="saveProfile()">Enregistrer le profil</button>
   <p id="profileStatus" class="muted"></p>
  </div>
- <div class="grid">
-  <div class="panel">♡ Favoris</div>
-  <div class="panel">♧ Mes salons</div>
-  <div class="panel">✦ Historique</div>
+ <div class="panel">
+  <h3>Mon activité</h3>
+  <p>♧ Mes salons</p>
+  <p>♡ Mes favoris</p>
+  <p>✦ Mon historique</p>
  </div>
 </section>
 
+<!-- PARAMETRES -->
 <section class="page" id="settings">
- <h2>⚙ Paramètres</h2>
+ <h2>Paramètres</h2>
  <div class="panel settings">
   <h3>Personnalisation</h3>
-  <button onclick="document.body.style.setProperty('--purple','#168fff')">Thème bleu</button>
-  <button onclick="document.body.style.setProperty('--purple','#741cff')">Thème violet</button>
+  <button onclick="setTheme('violet')">Thème violet</button>
+  <button onclick="setTheme('blue')">Thème bleu</button>
   <h3>Compte</h3>
   <button onclick="showPage('profile')">Modifier mon profil</button>
-  <button onclick="localStorage.clear();location.reload()">Réinitialiser les données locales</button>
+  <p class="muted">Tes salons et messages sont enregistrés sur cet appareil.</p>
  </div>
 </section>
 </main>
 </div>
 
 <nav class="bottom">
- <button onclick="showPage('home')">⌂<br>Accueil</button>
- <button onclick="showPage('animes')">▣<br>Animes</button>
- <button onclick="showPage('rooms')">♧<br>Salons</button>
- <button onclick="showPage('profile')">◉<br>Profil</button>
+ <button class="active" data-page="home" onclick="showPage('home')"><span>⌂</span>Accueil</button>
+ <button data-page="animes" onclick="showPage('animes')"><span>▷</span>Animes</button>
+ <button data-page="rooms" onclick="showPage('rooms')"><span>♧</span>Salons</button>
+ <button data-page="profile" onclick="showPage('profile')"><span>◉</span>Profil</button>
 </nav>
 
 <script>
+/* DONNÉES ANIMES */
 const animeList=[
- ["Solo Leveling","Action","Solo Leveling"],
- ["Demon Slayer","Action","Kimetsu no Yaiba"],
- ["Jujutsu Kaisen","Action","Jujutsu Kaisen"],
- ["Attack on Titan","Action","Shingeki no Kyojin"],
- ["Frieren","Fantasy","Sousou no Frieren"],
- ["One Piece","Aventure","One Piece"],
- ["Spy x Family","Comédie","Spy x Family"],
- ["Haikyuu!!","Sport","Haikyuu"]
+ {name:"One Piece",genre:"Aventure",id:21},
+ {name:"Naruto Shippuden",genre:"Action",id:1735},
+ {name:"Black Clover",genre:"Fantasy",id:34572},
+ {name:"Fairy Tail",genre:"Fantasy",id:6702},
+ {name:"Dr. Stone",genre:"Aventure",id:38691},
+ {name:"Solo Leveling",genre:"Action",id:52299},
+ {name:"Made in Abyss",genre:"Aventure",id:34599},
+ {name:"The Rising of the Shield Hero",genre:"Fantasy",id:35790},
+ {name:"Dungeon Meshi",genre:"Fantasy",id:52701},
+ {name:"Frieren",genre:"Fantasy",id:52991},
+ {name:"Jujutsu Kaisen",genre:"Action",id:40748},
+ {name:"Demon Slayer",genre:"Action",id:38000},
+ {name:"Attack on Titan",genre:"Action",id:16498},
+ {name:"Spy x Family",genre:"Comédie",id:50265},
+ {name:"Haikyuu!!",genre:"Sport",id:20583}
 ];
+
 let rooms=JSON.parse(localStorage.getItem("swRooms")||"[]");
 let currentRoom=null;
+let selectedGenre="Tous";
+let animeImages={};
 
+/* NAVIGATION */
 function showPage(id){
  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
- document.getElementById(id).classList.add("active");
- document.querySelectorAll("aside button").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
+ const page=document.getElementById(id);
+ if(!page)return;
+ page.classList.add("active");
+
+ document.querySelectorAll("[data-page]").forEach(b=>{
+  b.classList.toggle("active",b.dataset.page===id);
+ });
+
  if(id==="rooms")renderRooms();
+ if(id==="animes")renderAnimes();
+ window.scrollTo({top:0,behavior:"smooth"});
 }
 
+/* CARTES */
 function animeCard(a){
- return `<article class="card">
- <div class="poster" id="poster-${a[0].replace(/\W/g,'')}">✦ ${a[0]}</div>
- <div class="info"><h3>${a[0]}</h3><p class="muted">${a[1]}</p>
- <button onclick="details('${a[0]}','${a[1]}')">Voir détails</button></div></article>`;
+ const image=animeImages[a.id]||"";
+ return `
+ <article class="anime-card" onclick="details('${a.name.replace(/'/g,"\\'")}','${a.genre}')">
+  <div class="poster">
+   ${image?`<img src="${image}" alt="${a.name}" loading="lazy">`:`<div class="poster-fallback">${a.name}</div>`}
+   <div class="poster-overlay"></div>
+   <span class="genre-tag">${a.genre}</span>
+  </div>
+  <div class="anime-info">
+   <h3>${a.name}</h3>
+   <div class="rating">✦ Anime</div>
+  </div>
+ </article>`;
 }
+
+function renderHome(){
+ document.getElementById("homeGrid").innerHTML=
+ animeList.slice(0,5).map(animeCard).join("");
+ document.getElementById("newGrid").innerHTML=
+ animeList.slice(5,10).map(animeCard).join("");
+}
+
 function renderAnimes(){
- const q=(document.getElementById("search").value||"").toLowerCase();
- document.getElementById("animeGrid").innerHTML=animeList.filter(a=>a[0].toLowerCase().includes(q)).map(animeCard).join("");
+ const search=(document.getElementById("search")?.value||"").toLowerCase();
+ const filtered=animeList.filter(a=>
+  a.name.toLowerCase().includes(search)&&
+  (selectedGenre==="Tous"||a.genre===selectedGenre)
+ );
+ document.getElementById("animeGrid").innerHTML=
+ filtered.length?filtered.map(animeCard).join(""):"<p class='empty'>Aucun anime trouvé.</p>";
 }
+
+function filterGenre(genre,button){
+ selectedGenre=genre;
+ document.querySelectorAll(".category").forEach(b=>b.classList.remove("selected"));
+ if(button)button.classList.add("selected");
+ showPage("animes");
+ renderAnimes();
+}
+
+/* DETAILS */
 function details(name,genre){
  const box=document.getElementById("animeDetails");
  box.hidden=false;
- box.innerHTML=`<h2>${name}</h2><p>${genre}</p><p>Découvre les informations et les épisodes de cet anime.</p><button onclick="showPage('rooms')">Regarder avec des amis</button>`;
-}
-function createRoom(){
- const name=document.getElementById("roomName").value.trim();
- if(!name)return alert("Entre un nom de salon.");
- const code=Math.random().toString(36).slice(2,8).toUpperCase();
- rooms.push({name,code,messages:[]});
- localStorage.setItem("swRooms",JSON.stringify(rooms));
- document.getElementById("roomName").value="";
- renderRooms();openRoom(code);
-}
-function joinRoom(){
- const code=document.getElementById("roomCode").value.trim().toUpperCase();
- if(!code)return alert("Entre un code.");
- const room=rooms.find(r=>r.code===code);
- if(!room)return alert("Salon introuvable sur cet appareil. La recherche partagée nécessite Supabase.");
- openRoom(code);
-}
-function renderRooms(){
- document.getElementById("roomList").innerHTML=rooms.length?rooms.map(r=>`<div class="panel room"><div><b>${r.name}</b><p class="muted">Code : ${r.code}</p></div><button onclick="openRoom('${r.code}')">Rejoindre</button></div>`).join(""):"<p class='muted'>Aucun salon créé sur cet appareil.</p>";
-}
-function openRoom(code){
- currentRoom=rooms.find(r=>r.code===code);
- if(!currentRoom)return;
- document.getElementById("roomArea").hidden=false;
- document.getElementById("roomTitle").textContent=currentRoom.name;
- document.getElementById("roomCodeDisplay").textContent=code;
- renderMessages();
-}
-function renderMessages(){
- document.getElementById("chatMessages").innerHTML=currentRoom.messages.map(m=>`<p><b>${m.user} :</b> ${m.text}</p>`).join("");
-}
-function sendMessage(){
- const input=document.getElementById("message");
- const text=input.value.trim();
- if(!text||!currentRoom)return;
- currentRoom.messages.push({user:localStorage.getItem("swUser")||"Invité",text});
- localStorage.setItem("swRooms",JSON.stringify(rooms));
- input.value="";renderMessages();
-}
-function loadVideo(){
- const url=document.getElementById("videoUrl").value.trim();
- if(!url)return alert("Ajoute une adresse vidéo autorisée.");
- const player=document.getElementById("player");
- player.src=url;player.load();
-}
-function saveProfile(){
- const name=document.getElementById("username").value.trim();
- if(!name)return alert("Entre un pseudo.");
- localStorage.setItem("swUser",name);
- document.getElementById("profileStatus").textContent="Profil enregistré sur cet appareil.";
-}
-renderAnimes();
-document.getElementById("homeGrid").innerHTML=animeList.slice(0,6).map(animeCard).join("");
-renderRooms();
-</script>
-</body>
-     </html>
+ box.innerHTML=`
+  <h2>${name}</h2>
+  <div class="details-layout">
+   <div>
+    <p class="muted">Catégorie : ${genre}</p>
+    <p>Découvre cet univers anime sur SHADOW WATCH.</p>
+    <p class="muted">Les informations détaillées et les épisodes seront enrichis dans les prochaines versions.</p>
+    <button class="btn btn-primary" onclick="showPage('r
                                         
