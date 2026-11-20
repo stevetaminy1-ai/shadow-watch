@@ -785,7 +785,387 @@ function renderRooms() {
     info.append(title, code);
 
     const join = document.createElement("button");
-    join.className = "bt
+    
+ton btn = "btn btn-primary";
+    join.textContent = "Ouvrir le salon";
+    join.onclick = () => openRoom(room.code);
+
+    const remove = document.createElement("button");
+    remove.className = "btn btn-secondary";
+    remove.textContent = "Supprimer";
+    remove.onclick = () => {
+      if (confirm("Supprimer ce salon ?")) {
+        saveRooms(getRooms().filter(r => r.code !== room.code));
+        renderRooms();
+      }
+    };
+
+    item.append(info, join, remove);
+    container.appendChild(item);
+  });
+}
+
+/* REJOINDRE UN SALON */
+
+function joinRoom() {
+  const code = $("roomCode").value.trim().toUpperCase();
+
+  if (!code) {
+    alert("Entre le code du salon.");
+    return;
+  }
+
+  const room = getRooms().find(r => r.code === code);
+
+  if (!room) {
+    alert("Salon introuvable sur cet appareil. La connexion entre plusieurs appareils n'est pas encore activée.");
+    return;
+  }
+
+  openRoom(code);
+}
+
+/* OUVRIR UN SALON */
+
+function openRoom(code) {
+  const room = getRooms().find(r => r.code === code);
+  if (!room) return;
+
+  currentRoomCode = code;
+  showPage("watch");
+
+  const chat = $("watchChat");
+  if (chat) renderChat();
+
+  const area = $("videoArea");
+  if (area) {
+    area.textContent = "Salon : " + room.name + " — Code : " + room.code;
+  }
+}
+
+/* DISCUSSION */
+
+function renderChat() {
+  const container = $("watchChat");
+  if (!container) return;
+
+  if (!currentRoomCode) {
+    container.textContent = "Ouvre un salon pour commencer la discussion.";
+    return;
+  }
+
+  const room = getRooms().find(r => r.code === currentRoomCode);
+
+  if (!room) {
+    container.textContent = "Salon introuvable.";
+    return;
+  }
+
+  container.innerHTML = "";
+
+  const messages = room.messages || [];
+
+  if (messages.length === 0) {
+    container.textContent = "La discussion commence ici.";
+    return;
+  }
+
+  messages.forEach(message => {
+    const line = document.createElement("div");
+    line.className = "chat-message";
+
+    const author = document.createElement("strong");
+    author.textContent = message.user + " : ";
+
+    const content = document.createElement("span");
+    content.textContent = message.text;
+
+    line.append(author, content);
+    container.appendChild(line);
+  });
+
+  container.scrollTop = container.scrollHeight;
+}
+
+function sendMessage() {
+  if (!currentRoomCode) {
+    alert("Ouvre d'abord un salon.");
+    return;
+  }
+
+  const input = $("chatInput");
+  const message = input.value.trim();
+
+  if (!message) return;
+
+  const rooms = getRooms();
+  const room = rooms.find(r => r.code === currentRoomCode);
+
+  if (!room) {
+    alert("Salon introuvable.");
+    return;
+  }
+
+  const user = JSON.parse(localStorage.getItem("swUser") || "{}");
+
+  room.messages = room.messages || [];
+  room.messages.push({
+    user: user.name || "Membre",
+    text: message,
+    time: Date.now()
+  });
+
+  saveRooms(rooms);
+  input.value = "";
+  renderChat();
+}
+
+/* VIDEO */
+
+function loadVideo() {
+  const value = $("videoUrl").value.trim();
+  const area = $("videoArea");
+
+  try {
+    const url = new URL(value);
+
+    if (url.protocol !== "https:" && url.protocol !== "http:") {
+      throw new Error("Lien invalide");
+    }
+
+    area.innerHTML = "";
+
+    const text = document.createElement("p");
+    text.textContent = "Source vidéo prête à être ouverte.";
+
+    const link = document.createElement("a");
+    link.href = url.href;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.className = "btn btn-primary";
+    link.textContent = "Ouvrir la vidéo";
+
+    area.append(text, link);
+  } catch (error) {
+    area.textContent = "Entre un lien web valide.";
+  }
+}
+
+/* CATALOGUE ANILIST */
+
+async function loadAnimes() {
+  const query = `
+    query {
+      Page(page: 1, perPage: 30) {
+        media(
+          type: ANIME,
+          sort: POPULARITY_DESC,
+          isAdult: false,
+          format_in: [TV, MOVIE, OVA, ONA]
+        ) {
+          id
+          title {
+            romaji
+            english
+          }
+          coverImage {
+            large
+          }
+          genres
+          description(asHtml: false)
+          averageScore
+          episodes
+          seasonYear
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch("https://graphql.anilist.co", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({ query })
+    });
+
+    if (!response.ok) {
+      throw new Error("Catalogue indisponible");
+    }
+
+    const result = await response.json();
+
+    animeData = result.data.Page.media.map(anime => ({
+      id: anime.id,
+      title: anime.title.english || anime.title.romaji || "Anime",
+      image: anime.coverImage.large,
+      genres: anime.genres || [],
+      description: anime.description || "Aucune description disponible.",
+      score: anime.averageScore,
+      episodes: anime.episodes,
+      year: anime.seasonYear
+    }));
+
+    displayAnimes(animeData.slice(0, 10), "homeAnime");
+    displayAnimes(animeData.slice(10, 20), "newAnime");
+    displayAnimes(animeData, "animeResults");
+
+  } catch (error) {
+    const message =
+      '<p class="notice">Impossible de charger le catalogue pour le moment. Réessaie plus tard.</p>';
+
+    $("homeAnime").innerHTML = message;
+    $("newAnime").innerHTML = message;
+    $("animeResults").innerHTML = message;
+  }
+}
+
+/* AFFICHAGE DES ANIMES */
+
+function displayAnimes(list, containerId) {
+  const container = $(containerId);
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  if (!list.length) {
+    container.innerHTML = '<p class="notice">Aucun anime trouvé.</p>';
+    return;
+  }
+
+  list.forEach(anime => {
+    const card = document.createElement("article");
+    card.className = "anime-card";
+    card.onclick = () => showAnimeDetails(anime.id);
+
+    const poster = document.createElement("div");
+    poster.className = "poster-wrap";
+
+    const image = document.createElement("img");
+    image.src = anime.image;
+    image.alt = anime.title;
+    image.loading = "lazy";
+
+    const info = document.createElement("div");
+    info.className = "anime-info";
+
+    const title = document.createElement("strong");
+    title.textContent = anime.title;
+
+    const genre = document.createElement("small");
+    genre.textContent = (anime.genres || []).slice(0, 2).join(" • ");
+
+    const rating = document.createElement("small");
+    rating.className = "rating";
+    rating.textContent = anime.score
+      ? "★ " + (anime.score / 10).toFixed(1) + "/10"
+      : "À découvrir";
+
+    poster.appendChild(image);
+    info.append(title, genre, rating);
+    card.append(poster, info);
+    container.appendChild(card);
+  });
+}
+
+/* RECHERCHE */
+
+function searchAnime() {
+  const search = $("animeSearch").value.toLowerCase().trim();
+
+  const results = animeData.filter(anime =>
+    anime.title.toLowerCase().includes(search)
+  );
+
+  displayAnimes(results, "animeResults");
+}
+
+/* FILTRES */
+
+function filterAnime(genre) {
+  showPage("explore");
+
+  const translations = {
+    "Aventure": "Adventure",
+    "Comédie": "Comedy",
+    "Action": "Action",
+    "Fantasy": "Fantasy"
+  };
+
+  const selectedGenre = translations[genre] || genre;
+
+  const results = animeData.filter(anime =>
+    anime.genres.some(g =>
+      g.toLowerCase() === selectedGenre.toLowerCase()
+    )
+  );
+
+  $("animeSearch").value = "";
+  displayAnimes(results, "animeResults");
+}
+
+/* DÉTAILS ANIME */
+
+function showAnimeDetails(id) {
+  const anime = animeData.find(a => String(a.id) === String(id));
+  if (!anime) return;
+
+  const container = $("animeDetails");
+  container.innerHTML = "";
+
+  const layout = document.createElement("div");
+  layout.className = "details-layout";
+
+  const image = document.createElement("img");
+  image.src = anime.image;
+  image.alt = anime.title;
+  image.style.width = "100%";
+  image.style.maxWidth = "260px";
+  image.style.borderRadius = "13px";
+
+  const content = document.createElement("div");
+
+  const title = document.createElement("h2");
+  title.textContent = anime.title;
+
+  const genres = document.createElement("p");
+  genres.className = "status";
+  genres.textContent = anime.genres.join(" • ");
+
+  const description = document.createElement("p");
+  description.textContent = anime.description;
+
+  const facts = document.createElement("p");
+  facts.className = "notice";
+  facts.textContent =
+    "Année : " + (anime.year || "Non précisée") +
+    " | Épisodes : " + (anime.episodes || "Non précisés") +
+    " | Note : " + (anime.score || "Non notée");
+
+  const button = document.createElement("button");
+  button.className = "btn btn-green";
+  button.textContent = "Retrouver mes amis";
+  button.onclick = () => showPage("rooms");
+
+  content.append(title, genres, description, facts, button);
+  layout.append(image, content);
+  container.appendChild(layout);
+
+  showPage("animeDetailPage");
+}
+
+/* DÉMARRAGE */
+
+loadProfile();
+renderRooms();
+loadAnimes();
+
+</script>
+</body>
+</html>
+  
  
 
       
